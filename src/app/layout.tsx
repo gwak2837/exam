@@ -30,8 +30,12 @@ export const metadata: Metadata = {
   viewport: { width: 'device-width', initialScale: 1, viewportFit: 'cover' },
   robots: { index: true, follow: true },
   alternates: { canonical: CANONICAL_URL },
-  icons: { icon: '/favicon-32x32.png', apple: '/apple-touch-icon.png', shortcut: '/images/shortcut-icon.png' },
-  manifest: '/site.webmanifest',
+  icons: {
+    icon: '/icon.png',
+    apple: '/apple-icon.png',
+    shortcut: '/shortcut-icon.png',
+  },
+  manifest: '/manifest.webmanifest',
   openGraph: {
     title: APPLICATION_NAME,
     description: DESCRIPTION,
@@ -84,7 +88,7 @@ export default function RootLayout({ children }: Props) {
     <html lang="ko">
       <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
       <link rel="mask-icon" href="/safari-pinned-tab.svg" color={THEME_COLOR} />
-      <meta name="msapplication-TileColor" content="#0ea5e9" />
+      <meta name="msapplication-TileColor" content="#2b5797" />
       <meta name="mobile-web-app-capable" content="yes" />
       <meta name="subject" content={DESCRIPTION} />
       <meta name="rating" content="general" />
@@ -92,7 +96,6 @@ export default function RootLayout({ children }: Props) {
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
 
       <body className={myFont.className}>
-        {/* <body> */}
         {children}
         <ReactHotToast />
       </body>

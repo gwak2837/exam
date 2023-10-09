@@ -1,7 +1,7 @@
 import { APPLICATION_NAME, APPLICATION_SHORT_NAME, CANONICAL_URL, DESCRIPTION, THEME_COLOR } from '@/common/constants'
 import { MetadataRoute } from 'next'
 
-// https://nextjs.org/docs/app/api-reference/file-conventions/metadata/manifest#manifest-object
+// https://nextjs.org/docs/app/api-reference/file-conventions/metadata/manifest
 export default function manifest(): MetadataRoute.Manifest {
   return {
     id: CANONICAL_URL,
