@@ -6,8 +6,9 @@ export async function GET() {
 
 export async function POST() {
   try {
-    await kv.set('user_1_session', '123abc', { ex: 100, nx: true })
+    const data = await kv.set('user_1_session', '123abc', { ex: 100, nx: true })
+    return Response.json(data)
   } catch (error) {
-    console.error(error)
+    return Response.json(error)
   }
 }
