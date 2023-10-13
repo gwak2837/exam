@@ -2,10 +2,68 @@ import { PageProps } from '@/common/types'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export default async function Page({ params, searchParams }: PageProps) {
+export default async function Page() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-4 sm:p-8 md:p-12 lg:p-16">
-      <pre className="overflow-x-scroll">{JSON.stringify({}, null, 2)}</pre>
+    <main className="flex gap-12 min-h-screen flex-col items-center justify-center p-4 sm:p-8 md:p-12 lg:p-16">
+      <Link href="/" className="flex place-items-center gap-2 whitespace-nowrap">
+        By <Image src="/bdsm-logo.svg" alt="BDSM Logo" width={24} height={24} />
+      </Link>
+      <div className="grid text-center sm:mb-0  sm:grid-cols-2 sm:text-left lg:mb-0 lg:grid-cols-4 lg:text-left">
+        <Link
+          href="/exam/10"
+          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+        >
+          <h2 className="mb-3 text-2xl font-semibold">
+            Child{' '}
+            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
+              -{'>'}
+            </span>
+          </h2>
+          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
+            BDSM에 대한 초보자 또는 호기심 많은 사용자를 대상으로 한 기본적인 테스트
+          </p>
+        </Link>
+        <Link
+          href="/exam/20"
+          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+        >
+          <h2 className="mb-3 text-2xl font-semibold">
+            Teen{' '}
+            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
+              -{'>'}
+            </span>
+          </h2>
+          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
+            더 깊이 있는 지식을 시험해 보고 싶은 사용자를 위한 테스트
+          </p>
+        </Link>
+        <Link
+          href="/exam/30"
+          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+        >
+          <h2 className="mb-3 text-2xl font-semibold">
+            Adult{' '}
+            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
+              -{'>'}
+            </span>
+          </h2>
+          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
+            BDSM에 대한 깊은 경험을 가진 사람들을 위한 도전적인 테스트
+          </p>
+        </Link>
+        <Link
+          href="/exam/40"
+          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+        >
+          <h2 className="mb-3 text-2xl font-semibold">
+            Senior{' '}
+            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
+              -{'>'}
+            </span>
+          </h2>
+          <p className="m-0 max-w-[30ch] text-sm opacity-50">광범위한 지식을 가진 고수를 위한 테스트</p>
+        </Link>
+      </div>
     </main>
   )
 }
