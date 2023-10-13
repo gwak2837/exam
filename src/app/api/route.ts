@@ -1,9 +1,13 @@
 import { kv } from '@vercel/kv'
 
 export async function GET() {
-  return await kv.get('user_1_session')
+  return 'Hello world!'
 }
 
 export async function POST() {
-  return await kv.set('user_1_session', 'session_token_value')
+  try {
+    await kv.set('user_1_session', '123abc', { ex: 100, nx: true })
+  } catch (error) {
+    console.error(error)
+  }
 }

@@ -279,19 +279,19 @@ export const exam = [
     정답: ['1'],
   },
   {
-    id: '',
-    문제: '',
+    id: '26',
+    문제: "BDSM의 'M/s'는 무엇의 약어인가요?",
     선택지: [
-      { id: '1', label: '' },
-      { id: '2', label: '' },
-      { id: '3', label: '' },
-      { id: '4', label: '' },
+      { id: '1', label: 'Master/submissive' },
+      { id: '2', label: 'Master/servant' },
+      { id: '3', label: 'Master/subject' },
+      { id: '4', label: 'Master/switch' },
     ],
     정답: ['1'],
   },
   {
-    id: '',
-    문제: '',
+    id: '27',
+    문제: "'CBT'는 BDSM에서 어떤 활동을 나타내나요?",
     선택지: [
       { id: '1', label: '' },
       { id: '2', label: '' },
