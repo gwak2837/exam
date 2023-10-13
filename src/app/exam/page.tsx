@@ -4,8 +4,8 @@ import Link from 'next/link'
 
 export default async function Page({ params, searchParams }: PageProps) {
   return (
-    <div className="">
+    <main className="flex min-h-screen flex-col items-center justify-between p-4 sm:p-8 md:p-12 lg:p-16">
       <pre className="overflow-x-scroll">{JSON.stringify({}, null, 2)}</pre>
-    </div>
+    </main>
   )
 }

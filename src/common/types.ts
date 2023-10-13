@@ -7,3 +7,7 @@ export type ErrorProps = {
   error: Error
   reset: () => void
 }
+
+export type RouteProps = {
+  params: Record<string, string>
+}
