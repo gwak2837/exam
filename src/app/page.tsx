@@ -7,7 +7,7 @@ export default function Home() {
       <Link href="/" className="flex place-items-center gap-2 whitespace-nowrap">
         By <Image src="/bdsm-logo.svg" alt="BDSM Logo" width={24} height={24} />
       </Link>
-      <div className="relative flex place-items-center text-3xl whitespace-nowrap before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
+      <div className="relative flex place-items-center text-3xl whitespace-nowrap z-[-1] sm:before:absolute sm:before:h-[300px] sm:before:w-[480px] sm:before:-translate-x-1/2 sm:before:rounded-full sm:before:bg-gradient-radial sm:before:from-white sm:before:to-transparent sm:before:blur-2xl sm:before:content-[''] sm:after:absolute sm:after:-z-20 sm:after:h-[180px] sm:after:w-[240px] sm:after:translate-x-1/3 sm:after:bg-gradient-conic sm:after:from-sky-200 sm:after:via-blue-200 sm:after:blur-2xl sm:after:content-[''] sm:before:dark:bg-gradient-to-br sm:before:dark:from-transparent sm:before:dark:to-blue-700 sm:before:dark:opacity-10 sm:after:dark:from-sky-900 sm:after:dark:via-[#0141ff] sm:after:dark:opacity-40 sm:before:lg:h-[360px]">
         BDSM 고사
       </div>
       <Link
