@@ -14,7 +14,7 @@ export default async function Page({ params, searchParams }: PageProps) {
 }
 
 async function getQuestions(questionCount: number) {
-  const res = await fetch(`${CANONICAL_URL}/api/question/${questionCount}`)
+  const res = await fetch(`${CANONICAL_URL}/api/question/${questionCount}`, { next: { revalidate: 60 } })
   if (!res.ok) throw new Error('Failed to fetch data')
 
   return res.json()
