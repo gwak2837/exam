@@ -1,10 +1,10 @@
-import 테스트보기Link from '@/app/테스트보기Button'
+import 테스트보기Link from '@/app/테스트보기Link'
 import Image from 'next/image'
 import Link from 'next/link'
 
 export default function Home() {
   return (
-    <main className="flex min-h-[100dvh] flex-col items-center justify-between p-4 sm:p-8 md:p-12 lg:p-16">
+    <main className="flex flex-col justify-between items-center gap-12 min-h-[100dvh] p-4 sm:p-8 md:p-12 lg:p-16">
       <Link href="/" className="flex place-items-center gap-2 p-4 whitespace-nowrap">
         By <Image src="/bdsm-logo.svg" alt="BDSM Logo" width={24} height={24} />
       </Link>

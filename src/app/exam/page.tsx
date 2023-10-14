@@ -7,15 +7,15 @@ export default async function Page() {
       <Link href="/" className="flex place-items-center gap-2 whitespace-nowrap">
         By <Image src="/bdsm-logo.svg" alt="BDSM Logo" width={24} height={24} />
       </Link>
-      <div className="grid text-center sm:mb-0  sm:grid-cols-2 sm:text-left lg:mb-0 lg:grid-cols-4 lg:text-left">
+      <nav className="grid text-center sm:mb-0  sm:grid-cols-2 sm:text-left lg:mb-0 lg:grid-cols-4 lg:text-left">
         <Link
           href="/exam/10"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
         >
           <h2 className="mb-3 text-2xl font-semibold">
-            Child{' '}
+            Child &nbsp;
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -{'>'}
+              <Image src="/images/arrow-right.svg" alt="right-arrow" width={20} height={20} />
             </span>
           </h2>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
@@ -27,9 +27,9 @@ export default async function Page() {
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
         >
           <h2 className="mb-3 text-2xl font-semibold">
-            Teen{' '}
+            Teen &nbsp;
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -{'>'}
+              <Image src="/images/arrow-right.svg" alt="right-arrow" width={20} height={20} />
             </span>
           </h2>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
@@ -41,9 +41,9 @@ export default async function Page() {
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
         >
           <h2 className="mb-3 text-2xl font-semibold">
-            Adult{' '}
+            Adult &nbsp;
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -{'>'}
+              <Image src="/images/arrow-right.svg" alt="right-arrow" width={20} height={20} />
             </span>
           </h2>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
@@ -55,14 +55,14 @@ export default async function Page() {
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
         >
           <h2 className="mb-3 text-2xl font-semibold">
-            Senior{' '}
+            Senior &nbsp;
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -{'>'}
+              <Image src="/images/arrow-right.svg" alt="right-arrow" width={20} height={20} />
             </span>
           </h2>
           <p className="m-0 max-w-[30ch] text-sm opacity-50">광범위한 지식을 가진 고수를 위한 테스트</p>
         </Link>
-      </div>
+      </nav>
     </main>
   )
 }
