@@ -1,5 +1,5 @@
 {
-  "Page Component": {
+  "Page component": {
     "prefix": "page",
     "description": "Page Component",
     "body": [
@@ -17,7 +17,7 @@
       ""
     ]
   },
-  "Layout Component": {
+  "Layout component": {
     "prefix": "layout",
     "description": "Layout Component",
     "body": [
@@ -33,12 +33,40 @@
       ""
     ]
   },
-  "Function Component": {
+  "Error component": {
+    "prefix": "error",
+    "description": "Error component",
+    "body": [
+      "'use client' // Error components must be Client Components",
+      "",
+      "import { useEffect } from 'react'",
+      "",
+      "type Props = {",
+      "  error: Error & { digest?: string }",
+      "  reset: () => void",
+      "}",
+      "",
+      "export default function Error({ error, reset }: Props) {",
+      "  useEffect(() => {",
+      "    console.error(error)",
+      "  }, [error])",
+      "",
+      "  return (",
+      "    <main className=\"min-h-[100dvh] p-4 sm:p-8 md:p-16 lg:p-24\">",
+      "      <h2>Something went wrong!</h2>",
+      "      <button onClick={() => reset()}>Try again</button>",
+      "    </main>",
+      "  )",
+      "}",
+      ""
+    ]
+  },
+  "Function component": {
     "prefix": "fc",
     "body": ["export default function ${TM_FILENAME_BASE}() {", "  return <>$1</>", "}", ""],
     "description": "Function Component"
   },
-  "Function Component with Props": {
+  "Function component with props": {
     "prefix": "fcp",
     "description": "Function Component with Props",
     "body": [

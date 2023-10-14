@@ -12,6 +12,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@sinclair/typebox": "^0.31.17",
     "@vercel/analytics": "^1.1.0",
     "@vercel/kv": "^0.2.3",
     "next": "13.5.4",
