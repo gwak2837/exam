@@ -85,7 +85,7 @@ type Props = {
 
 export default function RootLayout({ children }: Props) {
   return (
-    <html lang="ko">
+    <html lang="ko" className="text-base md:text-lg">
       <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
       <link rel="mask-icon" href="/safari-pinned-tab.svg" color={THEME_COLOR} />
       <meta name="msapplication-TileColor" content="#2b5797" />

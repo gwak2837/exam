@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 export default async function Page() {
   return (
-    <main className="flex gap-12 min-h-screen flex-col items-center justify-center p-4 sm:p-8 md:p-12 lg:p-16">
+    <main className="flex gap-12 min-h-[100dvh] flex-col items-center justify-center p-4 sm:p-8 md:p-12 lg:p-16">
       <Link href="/" className="flex place-items-center gap-2 whitespace-nowrap">
         By <Image src="/bdsm-logo.svg" alt="BDSM Logo" width={24} height={24} />
       </Link>
