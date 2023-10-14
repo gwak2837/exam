@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { MouseEvent, useState } from 'react'
 import toast from 'react-hot-toast'
 
-export default function 테스트보기Button() {
+export default function 테스트보기Link() {
   const [checked, setChecked] = useState(false)
 
   function warnIfNotChecked(e: MouseEvent) {
@@ -19,7 +19,7 @@ export default function 테스트보기Button() {
     <>
       <Link
         href="/exam"
-        className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+        className="group rounded-lg border border-transparent px-5 py-4 my-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
         onClick={warnIfNotChecked}
       >
         <h2 className="mb-3 text-2xl font-semibold">

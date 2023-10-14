@@ -1,11 +1,11 @@
-import 테스트보기Button from '@/app/테스트보기Button'
+import 테스트보기Link from '@/app/테스트보기Button'
 import Image from 'next/image'
 import Link from 'next/link'
 
 export default function Home() {
   return (
-    <main className="flex min-h-[100dvh] flex-col items-center justify-between p-4 sm:p-8 md:p-16 lg:p-24">
-      <Link href="/" className="flex place-items-center gap-2 whitespace-nowrap">
+    <main className="flex min-h-[100dvh] flex-col items-center justify-between p-4 sm:p-8 md:p-12 lg:p-16">
+      <Link href="/" className="flex place-items-center gap-2 p-4 whitespace-nowrap">
         By <Image src="/bdsm-logo.svg" alt="BDSM Logo" width={24} height={24} />
       </Link>
 
@@ -13,8 +13,8 @@ export default function Home() {
         BDSM 고사
       </div>
 
-      <div className="flex flex-col items-center gap-4">
-        <테스트보기Button />
+      <div className="flex flex-col items-center gap-2">
+        <테스트보기Link />
         <div className="grid gap-2 p-2 max-w-prose max-h-80 sm:max-h-60 md:max-h-40 overflow-x-auto border rounded-lg text-sm text-slate-700 bg-white/50">
           <p>
             본 테스트는 BDSM에 대한 지식과 이해도를 검증하기 위한 목적으로 제작되었습니다. 테스트 문항 중에는 성적
@@ -36,6 +36,10 @@ export default function Home() {
           </p>
         </div>
       </div>
+      <footer className="flex gap-x-2 flex-wrap justify-center text-slate-400 whitespace-nowrap">
+        <span>COPYRIGHT AT bdsm.vercel.app</span>
+        <span>ALL RIGHT RESERVED</span>
+      </footer>
     </main>
   )
 }
