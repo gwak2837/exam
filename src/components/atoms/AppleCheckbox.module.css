@@ -1,0 +1,50 @@
+.span1:before,
+.span1:after {
+  content: '';
+  cursor: pointer;
+  position: absolute;
+}
+.span1:before {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background: #eee;
+  border-radius: 9999px;
+  transition:
+    opacity 0.2s ease-out 0.1s,
+    transform 0.2s ease-out 0.1s;
+  transform: scale(1);
+  opacity: 1;
+}
+.span1:after {
+  top: 50%;
+  z-index: 3;
+  transition: transform 0.4s cubic-bezier(0.44, -0.12, 0.07, 1.15);
+  transform: translate3d(0, -50%, 0);
+  background: #fff;
+  border-radius: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.input1:checked:focus ~ span {
+  box-shadow: 0 0 0 4px #fff;
+}
+.input1:checked ~ span:before {
+  transform: scale(0);
+  opacity: 0.7;
+}
+.input1:checked ~ span:after {
+  transform: translate3d(100%, -50%, 0);
+}
+.input1:disabled ~ span:before {
+  cursor: not-allowed;
+  background: #ddd;
+}
+.input1:disabled ~ span:after {
+  cursor: not-allowed;
+  background: #eee;
+}
+
+.label1:has(> input:disabled) {
+  background: rgb(100 116 139);
+}
