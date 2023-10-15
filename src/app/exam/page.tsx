@@ -1,3 +1,4 @@
+import 개수입력Modal from '@/app/exam/개수입력Modal'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -50,18 +51,7 @@ export default async function Page() {
             BDSM에 대한 깊은 경험을 가진 사람들을 위한 도전적인 테스트
           </p>
         </Link>
-        <Link
-          href="/exam/40"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Senior &nbsp;
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              <Image src="/images/arrow-right.svg" alt="right-arrow" width={20} height={20} />
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">광범위한 지식을 가진 고수를 위한 테스트</p>
-        </Link>
+        <개수입력Modal />
       </nav>
     </main>
   )

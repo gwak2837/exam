@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   compiler: {
-    removeConsole: { exclude: ['error'] },
+    ...(process.env.NODE_ENV === 'production' && { removeConsole: { exclude: ['error'] } }),
   },
   images: {
     remotePatterns: [{ protocol: 'https', hostname: 'storage.googleapis.com' }],
