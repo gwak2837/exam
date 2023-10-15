@@ -31,10 +31,12 @@ export default function Modal({ children, open, onClose, showCloseButton, showDr
 
       document.addEventListener('keydown', closeOnEscapeKey, false)
       bodyStyle.overflow = 'hidden'
+      bodyStyle.touchAction = 'none'
 
       return () => {
         document.removeEventListener('keydown', closeOnEscapeKey, false)
         bodyStyle.overflow = ''
+        bodyStyle.touchAction = ''
       }
     }
   }, [open])
