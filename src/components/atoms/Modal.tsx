@@ -82,6 +82,8 @@ export default function Modal({ children, open, onClose, showCloseButton, showDr
 
   const o = String(open)
 
+  if (typeof window !== 'object') return null
+
   return createPortal(
     <div
       className={`fixed inset-0 z-20 flex justify-center items-center bg-black/25 transition duration-300 ${c.show[o]}`}
