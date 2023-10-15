@@ -116,7 +116,7 @@ export default function Modal({ children, open, onClose, showCloseButton, showDr
       >
         {showDragButton && (
           <div
-            className="absolute top-0 left-0 right-0 z-10 flex justify-center h-4 p-2 cursor-move"
+            className="absolute top-0 left-0 right-0 z-10 flex justify-center h-4 p-2 pb-6 cursor-move"
             onDragStart={(e) => e.preventDefault()}
             onMouseDown={dragModalMouse}
             onTouchStart={dragModalTouch}
