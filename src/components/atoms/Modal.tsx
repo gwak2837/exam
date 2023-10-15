@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { MouseEvent, ReactNode, TouchEvent, useEffect, useRef } from 'react'
+import { MouseEvent, ReactNode, TouchEvent, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 type Props = {
@@ -39,6 +39,7 @@ export default function Modal({ children, open, onClose, showCloseButton, showDr
     }
   }, [open])
 
+  // --
   const modalRef = useRef<HTMLDivElement>(null)
 
   function dragModalMouse(event: MouseEvent) {
@@ -82,7 +83,14 @@ export default function Modal({ children, open, onClose, showCloseButton, showDr
 
   const o = String(open)
 
-  if (typeof window !== 'object') return null
+  // --
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  if (!isMounted) return null
 
   return createPortal(
     <div
