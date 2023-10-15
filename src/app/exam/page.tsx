@@ -1,4 +1,4 @@
-import 개수입력Modal from '@/app/exam/개수입력Modal'
+import CustomButton from '@/app/exam/CustomButton'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -8,7 +8,7 @@ export default async function Page() {
       <Link href="/" className="flex place-items-center gap-2 whitespace-nowrap">
         By <Image src="/bdsm-logo.svg" alt="BDSM Logo" width={24} height={24} />
       </Link>
-      <nav className="grid text-center sm:mb-0  sm:grid-cols-2 sm:text-left lg:mb-0 lg:grid-cols-4 lg:text-left">
+      <nav className="grid text-center sm:mb-0 sm:grid-cols-2 sm:text-left lg:mb-0 lg:grid-cols-4">
         <Link
           href="/exam/10"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
@@ -51,7 +51,7 @@ export default async function Page() {
             BDSM에 대한 깊은 경험을 가진 사람들을 위한 도전적인 테스트
           </p>
         </Link>
-        <개수입력Modal />
+        <CustomButton />
       </nav>
     </main>
   )

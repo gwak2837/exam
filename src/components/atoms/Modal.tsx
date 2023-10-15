@@ -53,8 +53,8 @@ export default function Modal({ children, open, onClose, showCloseButton, showDr
     let shiftY = event.clientY - modalRect.top
 
     function moveModal(event: globalThis.MouseEvent) {
-      modalStyle.left = event.clientX - shiftX + 'px'
-      modalStyle.top = event.clientY - shiftY + 'px'
+      modalStyle.left = Math.max(8, event.clientX - shiftX) + 'px'
+      modalStyle.top = Math.max(8, event.clientY - shiftY) + 'px'
     }
 
     document.addEventListener('mousemove', moveModal)
@@ -72,8 +72,8 @@ export default function Modal({ children, open, onClose, showCloseButton, showDr
     let shiftY = event.touches[0].clientY - modalRect.top
 
     function moveModal(event: globalThis.TouchEvent) {
-      modalStyle.left = event.touches[0].clientX - shiftX + 'px'
-      modalStyle.top = event.touches[0].clientY - shiftY + 'px'
+      modalStyle.left = Math.max(8, event.touches[0].clientX - shiftX) + 'px'
+      modalStyle.top = Math.max(8, event.touches[0].clientY - shiftY) + 'px'
     }
 
     document.addEventListener('touchmove', moveModal)
@@ -94,7 +94,7 @@ export default function Modal({ children, open, onClose, showCloseButton, showDr
 
   return createPortal(
     <div
-      className={`fixed inset-0 z-20 flex justify-center items-center bg-black/25 transition duration-300 ${c.show[o]}`}
+      className={`fixed inset-0 z-20 flex justify-center items-center bg-black/20 transition duration-300 ${c.show[o]}`}
       onClick={closeModal}
     >
       {showCloseButton && (

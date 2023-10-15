@@ -15,7 +15,7 @@ export default function Home() {
 
       <div className="flex flex-col items-center gap-2">
         <테스트보기Link />
-        <div className="grid gap-2 p-2 max-w-prose max-h-80 sm:max-h-60 md:max-h-40 overflow-x-auto border rounded-lg text-sm text-slate-700 bg-white/50">
+        <div className="grid gap-2 p-2 max-w-prose max-h-60 sm:max-h-52 md:max-h-40 overflow-x-auto border rounded-lg text-sm text-slate-700 bg-white/50">
           <p>
             본 테스트는 BDSM에 대한 지식과 이해도를 검증하기 위한 목적으로 제작되었습니다. 테스트 문항 중에는 성적
             행위와 관련된 내용이 포함되어 있을 수 있음을 알려 드립니다. 각 문항은 성인 대상의 성적 표현과 테마를 다루고
