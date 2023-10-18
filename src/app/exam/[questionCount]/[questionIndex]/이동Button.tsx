@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
-import { ReactNode, MouseEvent } from 'react'
+import { ReactNode } from 'react'
 
 type Props = {
   children: ReactNode
