@@ -40,6 +40,7 @@ export default function CustomButton() {
             min={0}
             max={50}
             name="문제개수"
+            pattern="[0-9]*"
             placeholder="풀고 싶은 문제 개수"
             type="number"
           />
