@@ -6,7 +6,6 @@ import { createPortal } from 'react-dom'
 
 type Props = {
   children: ReactNode
-  lazy?: boolean
   open: boolean
   onClose?: () => void
   showCloseButton?: boolean
