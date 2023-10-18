@@ -3,8 +3,6 @@ import { RouteProps } from '@/common/types'
 import { shuffle } from '@/utils/utils'
 import { NextRequest } from 'next/server'
 
-export const revalidate = 60
-
 export async function GET(_: NextRequest, { params }: RouteProps) {
   const questionCount = +params.count
   if (!questionCount || questionCount > 50) throw new Error(`Invalid number of questions`)
