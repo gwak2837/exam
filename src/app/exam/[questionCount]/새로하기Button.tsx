@@ -1,5 +1,6 @@
 'use client'
 
+import { useAnswerStore } from '@/app/exam/[questionCount]/zustand'
 import Modal from '@/components/atoms/Modal'
 import { useParams, useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -10,12 +11,14 @@ export default function 새로하기Button() {
   const { questionCount } = useParams()
 
   const router = useRouter()
+  const { resetAnswer } = useAnswerStore()
 
   function handle좋아요ButtonClick() {
     setShowModal(false)
     fetch(`/api/question/${questionCount}`, { method: 'POST' })
     router.push(`/exam/${questionCount}?i=1`)
     router.refresh()
+    resetAnswer()
   }
 
   return (

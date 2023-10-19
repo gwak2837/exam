@@ -26,6 +26,7 @@ export const useQuestionStore = create<QuestionState>()(
 type AnswerState = {
   answers: [number, number][]
   setAnswer: (_: [number, number]) => void
+  resetAnswer: () => void
 }
 
 export const useAnswerStore = create<AnswerState>()(
@@ -34,6 +35,7 @@ export const useAnswerStore = create<AnswerState>()(
       (set) => ({
         answers: [],
         setAnswer: (newAnswer) => set((state) => ({ answers: [...state.answers, newAnswer] })),
+        resetAnswer: () => set(() => ({ answers: [] })),
       }),
       options,
     ),
