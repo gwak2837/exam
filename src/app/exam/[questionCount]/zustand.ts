@@ -2,8 +2,8 @@ import { create } from 'zustand'
 import { createJSONStorage, devtools, persist } from 'zustand/middleware'
 
 type QuestionState = {
-  questions: number[]
-  setQuestions: (_: number[]) => void
+  questions: Record<string, unknown>[]
+  setQuestions: (_: Record<string, unknown>[]) => void
 }
 
 const options = {
@@ -25,7 +25,7 @@ export const useQuestionStore = create<QuestionState>()(
 
 type AnswerState = {
   answers: [number, number][]
-  setAnswer: (_: [number, number]) => void
+  addAnswer: (_: [number, number]) => void
   resetAnswer: () => void
 }
 
@@ -34,7 +34,7 @@ export const useAnswerStore = create<AnswerState>()(
     persist(
       (set) => ({
         answers: [],
-        setAnswer: (newAnswer) => set((state) => ({ answers: [...state.answers, newAnswer] })),
+        addAnswer: (newAnswer) => set((state) => ({ answers: [...state.answers, newAnswer] })),
         resetAnswer: () => set(() => ({ answers: [] })),
       }),
       options,

@@ -14,7 +14,7 @@ async function getQuestions(questionCount: number) {
 }
 
 export default async function Page({ params }: PageProps) {
-  const questions = await getQuestions(params.questionCount)
+  const { questions } = await getQuestions(params.questionCount)
 
   return (
     <main>

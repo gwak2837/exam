@@ -9,17 +9,18 @@ type Props = {
 
 export default function Question({ questions: newQuestions }: Props) {
   const { questions, setQuestions } = useQuestionStore()
-  const { answers, setAnswer } = useAnswerStore()
+  const { answers, addAnswer } = useAnswerStore()
+
+  const newQuestionIds = newQuestions?.map((q) => q.id).toString()
 
   useEffect(() => {
-    const 기존QuestionIds = questions.join(',')
-
-    // if(기존QuestionIds)
-  }, [])
+    if (questions.length > 0) return
+    setQuestions(newQuestions)
+  }, [newQuestionIds])
 
   return (
     <>
-      <button onClick={() => setAnswer([1, 2])}>asdf</button>
+      <button onClick={() => addAnswer([1, 2])}>asdf</button>
       <pre className="overflow-x-scroll">{JSON.stringify({ answers, newQuestions, questions }, null, 2)}</pre>
     </>
   )
