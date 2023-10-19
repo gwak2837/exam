@@ -1,3 +1,10 @@
+import { ReactNode } from 'react'
+
+export type LayoutProps = {
+  children: ReactNode
+  params: Record<string, any>
+}
+
 export type PageProps = {
   params: Record<string, any>
   searchParams?: { [key: string]: string | string[] | undefined }

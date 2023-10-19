@@ -1,14 +1,10 @@
 import 새로하기Button from '@/app/exam/[questionCount]/새로하기Button'
 import 이동Link from '@/app/exam/[questionCount]/이동Link'
+import { LayoutProps } from '@/common/types'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ReactNode } from 'react'
 
-type Props = {
-  children: ReactNode
-}
-
-export default function Layout({ children }: Props) {
+export default async function Layout({ children, params }: LayoutProps) {
   return (
     <div className="max-w-screen-lg min-h-[100dvh] mx-auto p-4 sm:p-8 md:p-12 lg:p-16">
       <div className="flex justify-between items-end gap-4">
