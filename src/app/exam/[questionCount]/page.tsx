@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
 
-// const Question = dynamic(() => import('@/app/exam/[questionCount]/[questionIndex]/Question'), { ssr: false })
+const Question = dynamic(() => import('@/app/exam/[questionCount]/Question'), { ssr: false })
 
 async function getQuestions(questionCount: number) {
   const res = await fetch(`${CANONICAL_URL}/api/question/${questionCount}`, { next: { tags: ['question'] } })
@@ -18,7 +18,8 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <main>
-      <pre className="overflow-x-scroll">{JSON.stringify(questions, null, 2)}</pre>
+      <Question questions={questions} />
+      <pre className="overflow-scroll h-full">{JSON.stringify(questions, null, 2)}</pre>
     </main>
   )
 }

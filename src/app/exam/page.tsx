@@ -10,7 +10,7 @@ export default async function Page() {
       </Link>
       <nav className="grid text-center sm:mb-0 sm:grid-cols-2 sm:text-left lg:mb-0 lg:grid-cols-4">
         <Link
-          href="/exam/10/1"
+          href="/exam/10?i=1"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
         >
           <h2 className="mb-3 text-2xl font-semibold">
@@ -24,7 +24,7 @@ export default async function Page() {
           </p>
         </Link>
         <Link
-          href="/exam/20/1"
+          href="/exam/20?i=1"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
         >
           <h2 className="mb-3 text-2xl font-semibold">
@@ -38,7 +38,7 @@ export default async function Page() {
           </p>
         </Link>
         <Link
-          href="/exam/30/1"
+          href="/exam/30?i=1"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
         >
           <h2 className="mb-3 text-2xl font-semibold">

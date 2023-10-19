@@ -21,7 +21,7 @@ export async function POST(_: NextRequest, { params }: RouteProps) {
   const questionCount = +params.count
   if (!questionCount || questionCount > 50) throw new Error('Invalid number of questions')
 
-  revalidatePath('/exam/[questionCount]/[questionIndex]', 'page')
+  revalidatePath('/exam/[questionCount]', 'page')
   revalidateTag('question')
 
   return Response.json({ revalidated: true, now: Date.now() })

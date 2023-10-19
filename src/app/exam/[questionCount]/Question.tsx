@@ -1,6 +1,6 @@
 'use client'
 
-import { useAnswerStore, useQuestionStore } from '@/app/exam/[questionCount]/[questionIndex]/zustand'
+import { useAnswerStore, useQuestionStore } from '@/app/exam/[questionCount]/zustand'
 import { useEffect } from 'react'
 
 type Props = {
@@ -19,7 +19,7 @@ export default function Question({ questions: newQuestions }: Props) {
 
   return (
     <>
-      <button onClick={() => fetch('/api/question/10', { method: 'POST' })}>asdf</button>
+      <button onClick={() => setAnswer([1, 2])}>asdf</button>
       <pre className="overflow-x-scroll">{JSON.stringify({ answers, newQuestions, questions }, null, 2)}</pre>
     </>
   )

@@ -14,7 +14,7 @@ export default function 새로하기Button() {
   function handle좋아요ButtonClick() {
     setShowModal(false)
     fetch(`/api/question/${questionCount}`, { method: 'POST' })
-    router.push(`/exam/${questionCount}/1`)
+    router.push(`/exam/${questionCount}?i=1`)
     router.refresh()
   }
 
@@ -27,7 +27,7 @@ export default function 새로하기Button() {
         새로하기
       </button>
       <Modal open={showModal} onClose={() => setShowModal(false)} showCloseButton showDragButton>
-        <div className="bg-white rounded-lg p-4">
+        <div className="bg-white rounded-lg p-4 shadow-xl">
           <h3 className="my-2 text-lg font-semibold">새로하기</h3>
           <div className="my-4">새로운 문제를 풀까요? 지금까지 작성한 답안은 모두 초기화돼요</div>
           <div className="flex justify-end gap-2">
