@@ -31,7 +31,7 @@ export default function 새로하기Button() {
       </button>
       <Modal open={showModal} onClose={() => setShowModal(false)} showCloseButton showDragButton>
         <div className="bg-white rounded-lg p-4 shadow-xl">
-          <h3 className="my-2 text-lg font-semibold">새로하기</h3>
+          <h3 className="my-2 text-lg font-medium">새로하기</h3>
           <div className="my-4">새로운 문제를 풀까요? 지금까지 작성한 답안은 모두 초기화돼요</div>
           <div className="flex justify-end gap-2">
             <button

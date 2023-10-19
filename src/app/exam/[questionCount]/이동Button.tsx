@@ -42,7 +42,7 @@ export default function 이동Button({ children, add }: Props) {
       </button>
       <Modal open={showModal} onClose={() => setShowModal(false)} showCloseButton showDragButton>
         <div className="bg-white rounded-lg p-4 shadow-xl">
-          <h3 className="my-1 text-lg font-semibold">제출하기</h3>
+          <h3 className="my-1 text-lg font-medium">제출하기</h3>
           <div className="my-4">지금까지 푼 답안을 제출할까요?</div>
           <div className="flex justify-end gap-2">
             <button
