@@ -12,7 +12,7 @@ export default function CustomButton() {
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
 
-    router.push(`/exam/${(e.target as any).문제개수.value}/1`)
+    router.push(`/exam/${+(e.target as any).문제개수.value}?i=1`)
   }
 
   return (
@@ -37,7 +37,7 @@ export default function CustomButton() {
           <input
             className="w-full px-2 border"
             required
-            min={0}
+            min={1}
             max={50}
             name="문제개수"
             pattern="[0-9]*"

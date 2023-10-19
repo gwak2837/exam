@@ -38,7 +38,7 @@ export default function Modal({ children, open, onClose, showCloseButton, showDr
         bodyStyle.touchAction = ''
       }
     }
-  }, [open])
+  }, [onClose, open])
 
   // --
   const modalRef = useRef<HTMLDivElement>(null)
