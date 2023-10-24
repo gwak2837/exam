@@ -20,10 +20,10 @@ export default function 새로하기Button() {
 
   async function handle좋아요ButtonClick() {
     await trigger()
-    setShowModal(false)
     router.push(`/exam/${questionCount}?i=1`)
     router.refresh()
     resetAnswer()
+    setShowModal(false)
   }
 
   return (
@@ -41,7 +41,7 @@ export default function 새로하기Button() {
           <div className="my-4">새로운 문제를 풀까요? 지금까지 작성한 답안은 모두 초기화돼요</div>
           <div className="flex justify-end gap-2">
             <button
-              className="flex gap-2 items-center w-20 px-4 py-2 text-sm text-violet-700 rounded-lg transition-color duration-300 bg-violet-200 hover:bg-violet-300"
+              className="flex gap-2 justify-center items-center w-20 px-4 py-2 text-sm text-violet-700 rounded-lg transition-color duration-300 bg-violet-200 hover:bg-violet-300"
               disabled={isMutating}
               onClick={handle좋아요ButtonClick}
             >
