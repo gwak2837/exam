@@ -539,9 +539,9 @@ export const exam = [
       { id: '1', label: '성적 플레이만 포함' },
       { id: '2', label: '로맨틱한 데이트' },
       { id: '3', label: '결혼을 전제한 생활' },
-      { id: '4', label: '' },
+      { id: '4', label: '구속을 당하거나 구속시키는 관계' },
     ],
-    정답: ['1'],
+    정답: ['1', '4'],
   },
   {
     id: '50',
@@ -566,6 +566,8 @@ export const exam = [
     정답: ['1'],
   },
 ]
+
+export type Question = (typeof exam)[number]
 
 export const sample = [
   {
