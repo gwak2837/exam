@@ -1,7 +1,7 @@
 import { exam } from '@/common/exam'
 import { RouteProps } from '@/common/types'
 import { shuffle } from '@/utils/utils'
-import { revalidatePath, revalidateTag } from 'next/cache'
+import { revalidateTag } from 'next/cache'
 import { NextRequest } from 'next/server'
 
 export const runtime = 'edge'
@@ -21,7 +21,6 @@ export async function POST(_: NextRequest, { params }: RouteProps) {
   const questionCount = +params.count
   if (!questionCount || questionCount > 50) throw new Error('Invalid number of questions')
 
-  revalidatePath('/exam/[questionCount]', 'page')
   revalidateTag('question')
 
   return Response.json({ revalidated: true, now: Date.now() })
