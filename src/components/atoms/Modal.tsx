@@ -95,7 +95,7 @@ export default function Modal({ children, open, onClose, showCloseButton, showDr
 
   return createPortal(
     <div
-      className={`fixed inset-0 z-20 flex justify-center items-center bg-black/20 transition duration-300 ${c.show[o]}`}
+      className={`fixed inset-0 z-20 flex items-center justify-center bg-black/20 transition duration-300 ${c.show[o]}`}
       onClick={closeModal}
     >
       {showCloseButton && (
@@ -104,7 +104,7 @@ export default function Modal({ children, open, onClose, showCloseButton, showDr
           alt="x"
           width="48"
           height="48"
-          className="absolute top-0 right-0 z-10 p-3 cursor-pointer"
+          className="absolute right-0 top-0 z-10 cursor-pointer p-3"
           onClick={closeModal}
         />
       )}
@@ -115,12 +115,12 @@ export default function Modal({ children, open, onClose, showCloseButton, showDr
       >
         {showDragButton && (
           <div
-            className="absolute top-0 left-0 right-0 z-10 flex justify-center h-4 p-2 pb-6 cursor-move"
+            className="absolute left-0 right-0 top-0 z-10 flex h-4 cursor-move justify-center p-2 pb-6"
             onDragStart={(e) => e.preventDefault()}
             onMouseDown={dragModalMouse}
             onTouchStart={dragModalTouch}
           >
-            <div className="w-8 h-1 rounded-full bg-slate-200" />
+            <div className="h-1 w-8 rounded-full bg-slate-200" />
           </div>
         )}
         {children}

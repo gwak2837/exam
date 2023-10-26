@@ -18,7 +18,7 @@ export default function CustomButton() {
   return (
     <>
       <button
-        className="group flex flex-col items-center sm:items-start rounded-lg border border-transparent px-5 py-4 transition sm:text-left hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+        className="group flex flex-col items-center rounded-lg border border-transparent px-5 py-4 transition hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 sm:items-start sm:text-left"
         onClick={() => setOpen(true)}
       >
         <h2 className="mb-3 text-2xl font-semibold">
@@ -32,10 +32,10 @@ export default function CustomButton() {
         </p>
       </button>
       <Modal open={open} onClose={() => setOpen(false)} showCloseButton showDragButton>
-        <form className=" grid gap-3 px-4 pt-5 pb-4 rounded-lg bg-white shadow-xl" onSubmit={handleSubmit}>
-          <h3 className="pr-4 font-medium text-lg">문제 개수를 입력해주세요</h3>
+        <form className=" grid gap-3 rounded-lg bg-white px-4 pb-4 pt-5 shadow-xl" onSubmit={handleSubmit}>
+          <h3 className="pr-4 text-lg font-medium">문제 개수를 입력해주세요</h3>
           <input
-            className="w-full px-2 border"
+            className="w-full border px-2"
             required
             min={1}
             max={50}
@@ -45,7 +45,7 @@ export default function CustomButton() {
             type="number"
           />
           <button
-            className="p-2 bg-violet-50 hover:bg-violet-100 text-sm font-medium text-violet-900 rounded transition duration-300"
+            className="rounded bg-violet-50 p-2 text-sm font-medium text-violet-900 transition duration-300 hover:bg-violet-100"
             type="submit"
           >
             이동하기

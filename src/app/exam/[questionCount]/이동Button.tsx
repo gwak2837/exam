@@ -35,24 +35,24 @@ export default function 이동Button({ children, add }: Props) {
     <>
       <button
         disabled={disabled}
-        className="px-4 py-3 text-sm text-gray-700 disabled:text-gray-400 rounded-lg transition-color duration-300 bg-gray-300 hover:bg-gray-400/50 disabled:hover:bg-gray-300"
+        className="transition-color rounded-lg bg-gray-300 px-4 py-3 text-sm text-gray-700 duration-300 hover:bg-gray-400/50 disabled:text-gray-400 disabled:hover:bg-gray-300"
         onClick={handle제출Click}
       >
         {isSubmit ? '제출' : children}
       </button>
       <Modal open={showModal} onClose={() => setShowModal(false)} showCloseButton showDragButton>
-        <div className="bg-white rounded-lg p-4 shadow-xl">
+        <div className="rounded-lg bg-white p-4 shadow-xl">
           <h3 className="my-1 text-lg font-medium">제출하기</h3>
           <div className="my-4">지금까지 푼 답안을 제출할까요?</div>
           <div className="flex justify-end gap-2">
             <button
-              className="w-20 px-4 py-2 text-sm text-violet-700 rounded-lg transition-color duration-300 bg-violet-200 hover:bg-violet-300"
+              className="transition-color w-20 rounded-lg bg-violet-200 px-4 py-2 text-sm text-violet-700 duration-300 hover:bg-violet-300"
               onClick={() => router.push('/exam/result')}
             >
               좋아요
             </button>
             <button
-              className="w-20 px-4 py-2 text-sm text-neutral-700 rounded-lg transition-color duration-300 bg-neutral-200 hover:bg-neutral-300"
+              className="transition-color w-20 rounded-lg bg-neutral-200 px-4 py-2 text-sm text-neutral-700 duration-300 hover:bg-neutral-300"
               onClick={() => setShowModal(false)}
             >
               아니요

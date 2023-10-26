@@ -18,9 +18,9 @@ export default forwardRef(AppleCheckbox)
 
 function AppleCheckbox(props: Props, forwardedRef: Ref<HTMLInputElement>) {
   return (
-    <label className={`w-12 h-6 text-left rounded-full inline-block relative bg-violet-500 ${styles.label1}`}>
-      <input className={`opacity-0 absolute  ${styles.input1}`} type="checkbox" {...props} ref={forwardedRef} />
-      <span className={`block w-full h-full rounded-full  after:w-6 after:h-6 ${styles.span1}`} />
+    <label className={`relative inline-block h-6 w-12 rounded-full bg-violet-500 text-left ${styles.label1}`}>
+      <input className={`absolute opacity-0  ${styles.input1}`} type="checkbox" {...props} ref={forwardedRef} />
+      <span className={`block h-full w-full rounded-full  after:h-6 after:w-6 ${styles.span1}`} />
     </label>
   )
 }

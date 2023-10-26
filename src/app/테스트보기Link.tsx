@@ -20,7 +20,7 @@ export default function 테스트보기Link() {
     <>
       <Link
         href="/exam"
-        className="group rounded-lg border border-gray-300 px-5 py-4 my-8 transition-colors hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+        className="group my-8 rounded-lg border border-gray-300 px-5 py-4 transition-colors hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
         onClick={warnIfNotChecked}
       >
         <h2 className="mb-3 text-2xl font-semibold">
@@ -31,7 +31,7 @@ export default function 테스트보기Link() {
         </h2>
         <p className="m-0 max-w-[25ch] text-sm opacity-50">자신의 BDSM 지식이 어느 정도인지 확인해보세요</p>
       </Link>
-      <div className="flex gap-2 items-center">
+      <div className="flex items-center gap-2">
         <span className="text-violet-900">아래 내용에 동의합니다</span>
         <AppleCheckbox onChange={(e) => setChecked(e.target.checked)} />
       </div>

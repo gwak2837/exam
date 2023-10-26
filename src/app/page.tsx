@@ -4,19 +4,19 @@ import Link from 'next/link'
 
 export default function Home() {
   return (
-    <main className="flex flex-col justify-between items-center gap-12 min-h-[100dvh] p-4 sm:p-8 md:p-12 lg:p-16">
-      <Link href="/" className="flex place-items-center gap-2 p-4 whitespace-nowrap">
+    <main className="flex min-h-[100dvh] flex-col items-center justify-between gap-12 p-4 sm:p-8 md:p-12 lg:p-16">
+      <Link href="/" className="flex place-items-center gap-2 whitespace-nowrap p-4">
         By <Image src="/bdsm-logo.svg" alt="BDSM Logo" width={24} height={24} />
       </Link>
 
-      <div className="relative flex place-items-center text-3xl whitespace-nowrap z-[-1] sm:before:absolute sm:before:h-[300px] sm:before:w-[480px] sm:before:-translate-x-1/2 sm:before:rounded-full sm:before:bg-gradient-radial sm:before:from-white sm:before:to-transparent sm:before:blur-2xl sm:before:content-[''] sm:after:absolute sm:after:-z-20 sm:after:h-[180px] sm:after:w-[240px] sm:after:translate-x-1/3 sm:after:bg-gradient-conic sm:after:from-sky-200 sm:after:via-blue-200 sm:after:blur-2xl sm:after:content-[''] sm:before:dark:bg-gradient-to-br sm:before:dark:from-transparent sm:before:dark:to-blue-700 sm:before:dark:opacity-10 sm:after:dark:from-sky-900 sm:after:dark:via-[#0141ff] sm:after:dark:opacity-40 sm:before:lg:h-[360px]">
+      <div className="relative z-[-1] flex place-items-center whitespace-nowrap text-3xl sm:before:absolute sm:before:h-[300px] sm:before:w-[480px] sm:before:-translate-x-1/2 sm:before:rounded-full sm:before:bg-gradient-radial sm:before:from-white sm:before:to-transparent sm:before:blur-2xl sm:before:content-[''] sm:after:absolute sm:after:-z-20 sm:after:h-[180px] sm:after:w-[240px] sm:after:translate-x-1/3 sm:after:bg-gradient-conic sm:after:from-sky-200 sm:after:via-blue-200 sm:after:blur-2xl sm:after:content-[''] sm:before:dark:bg-gradient-to-br sm:before:dark:from-transparent sm:before:dark:to-blue-700 sm:before:dark:opacity-10 sm:after:dark:from-sky-900 sm:after:dark:via-[#0141ff] sm:after:dark:opacity-40 sm:before:lg:h-[360px]">
         BDSM 고사
       </div>
 
       <div className="flex flex-col items-center gap-2">
         <테스트보기Link />
-        <div className="h-60 sm:h-52 md:h-40 p-2 border rounded-lg bg-white/50">
-          <div className="h-full grid gap-2 max-w-prose text-sm text-slate-700 overflow-y-auto">
+        <div className="h-60 rounded-lg border bg-white/50 p-2 sm:h-52 md:h-40">
+          <div className="grid h-full max-w-prose gap-2 overflow-y-auto text-sm text-slate-700">
             <p>
               본 테스트는 BDSM에 대한 지식과 이해도를 검증하기 위한 목적으로 제작되었습니다. 테스트 문항 중에는 성적
               행위와 관련된 내용이 포함되어 있을 수 있음을 알려 드립니다. 각 문항은 성인 대상의 성적 표현과 테마를
@@ -38,7 +38,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <footer className="flex gap-x-2 flex-wrap justify-center text-slate-400 whitespace-nowrap">
+      <footer className="flex flex-wrap justify-center gap-x-2 whitespace-nowrap text-slate-400">
         <span>COPYRIGHT AT bdsm.vercel.app</span>
         <span>ALL RIGHT RESERVED</span>
       </footer>
