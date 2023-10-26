@@ -1,14 +1,13 @@
+import { Question } from '@/common/exam'
 import { create } from 'zustand'
 import { createJSONStorage, devtools, persist } from 'zustand/middleware'
 
-type QuestionState = {
-  questions: Record<string, unknown>[]
-  setQuestions: (_: Record<string, unknown>[]) => void
-}
+const storage = createJSONStorage(() => sessionStorage)
 
-const options = {
-  name: 'qna',
-  storage: createJSONStorage(() => sessionStorage),
+type QuestionState = {
+  questions: Question[]
+  setQuestions: (_: Question[]) => void
+  resetQuestions: () => void
 }
 
 export const useQuestionStore = create<QuestionState>()(
@@ -17,15 +16,16 @@ export const useQuestionStore = create<QuestionState>()(
       (set) => ({
         questions: [],
         setQuestions: (questions) => set(() => ({ questions })),
+        resetQuestions: () => set(() => ({ questions: [] })),
       }),
-      options,
+      { name: 'question', storage },
     ),
   ),
 )
 
 type AnswerState = {
-  answers: [number, number][]
-  addAnswer: (_: [number, number]) => void
+  answers: [number, number[]][]
+  addAnswer: (_: [number, number[]]) => void
   resetAnswer: () => void
 }
 
@@ -37,7 +37,7 @@ export const useAnswerStore = create<AnswerState>()(
         addAnswer: (newAnswer) => set((state) => ({ answers: [...state.answers, newAnswer] })),
         resetAnswer: () => set(() => ({ answers: [] })),
       }),
-      options,
+      { name: 'answer', storage },
     ),
   ),
 )
