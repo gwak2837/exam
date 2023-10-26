@@ -23,7 +23,7 @@ export default function 새로하기Button() {
     await trigger()
     resetAnswer()
     resetQuestions()
-    router.push(`/exam/${questionCount}?i=1`)
+    router.replace(`/exam/${questionCount}?i=1`)
     router.refresh()
     setShowModal(false)
   }

@@ -1,8 +1,6 @@
 import { CANONICAL_URL } from '@/common/constants'
 import { PageProps } from '@/common/types'
 import dynamic from 'next/dynamic'
-import Image from 'next/image'
-import Link from 'next/link'
 
 const Question = dynamic(() => import('@/app/exam/[questionCount]/Question'), { ssr: false })
 
