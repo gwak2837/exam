@@ -17,9 +17,8 @@ export default async function Page({ params }: PageProps) {
   const { questions } = await getQuestions(params.questionCount)
 
   return (
-    <main>
+    <main className="flex grow flex-col p-4 sm:p-8 md:p-12 lg:p-16">
       <Question questions={questions} />
-      <pre className="overflow-scroll h-full">{JSON.stringify(questions, null, 2)}</pre>
     </main>
   )
 }
