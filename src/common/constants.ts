@@ -32,7 +32,7 @@ export const DESCRIPTION = 'BDSM 고사에서는 BDSM에 대한 깊이 있는 �
 export const KEYWORDS = `${APPLICATION_SHORT_NAME},BDSM,exam,test` // 최대 10개
 export const CATEGORY = 'BDSM'
 export const AUTHOR = ''
-export const THEME_COLOR = '#bae6fd'
+export const THEME_COLOR = '#5f0080'
 export const CANONICAL_URL =
   NEXT_PUBLIC_VERCEL_ENV === 'production'
     ? 'https://bdsm.vercel.app'

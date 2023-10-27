@@ -37,9 +37,8 @@ export default function Question({ questions: newQuestions }: Props) {
   return (
     <>
       <div className="flex grow items-center justify-center">
-        <p className="max-w-prose text-center text-xl md:text-2xl">{question.문제}</p>
+        <p className="max-w-prose text-center text-xl font-medium md:text-2xl">{question.문제}</p>
       </div>
-      <pre>{JSON.stringify(questionAnswer, null, 2)}</pre>
       <form className="flex flex-wrap gap-4" onSubmit={(e) => e.preventDefault()}>
         {선택지.map((선택지) => (
           <label
