@@ -11,6 +11,7 @@
     "prefer-const": "off",
 
     "react/display-name": "off",
+    // "react/jsx-sort-props": "warn",
 
     "react-hooks/exhaustive-deps": "off"
   }

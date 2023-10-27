@@ -1,16 +1,17 @@
 import { Question } from '@/common/exam'
+import { storage } from '@/common/zustand'
+import { xor } from '@/utils/math'
+import { produce } from 'immer'
 import { create } from 'zustand'
-import { createJSONStorage, devtools, persist } from 'zustand/middleware'
+import { devtools, persist } from 'zustand/middleware'
 
-const storage = createJSONStorage(() => sessionStorage)
-
-type QuestionState = {
+type QuestionStore = {
   questions: Question[]
   setQuestions: (_: Question[]) => void
   resetQuestions: () => void
 }
 
-export const useQuestionStore = create<QuestionState>()(
+export const useQuestionStore = create<QuestionStore>()(
   devtools(
     persist(
       (set) => ({
@@ -23,19 +24,25 @@ export const useQuestionStore = create<QuestionState>()(
   ),
 )
 
-type AnswerState = {
-  answers: [number, number[]][]
-  addAnswer: (_: [number, number[]]) => void
+type AnswerStore = {
+  answers: Record<string, string[]>
+  toggleAnswer: (_: [string, string[]]) => void
   resetAnswer: () => void
 }
 
-export const useAnswerStore = create<AnswerState>()(
+export const useAnswerStore = create<AnswerStore>()(
   devtools(
     persist(
       (set) => ({
-        answers: [],
-        addAnswer: (newAnswer) => set((state) => ({ answers: [...state.answers, newAnswer] })),
-        resetAnswer: () => set(() => ({ answers: [] })),
+        answers: {},
+        toggleAnswer: (newAnswer) =>
+          set(
+            produce((state: AnswerStore) => {
+              if (!state.answers[newAnswer[0]]) state.answers[newAnswer[0]] = []
+              state.answers[newAnswer[0]] = xor(state.answers[newAnswer[0]], newAnswer[1])
+            }),
+          ),
+        resetAnswer: () => set(() => ({ answers: {} })),
       }),
       { name: 'answer', storage },
     ),
