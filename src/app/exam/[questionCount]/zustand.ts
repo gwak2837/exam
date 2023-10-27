@@ -1,23 +1,33 @@
-import { Question } from '@/common/exam'
+import { TQuestion } from '@/common/exam'
 import { storage } from '@/common/zustand'
 import { xor } from '@/utils/math'
 import { produce } from 'immer'
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
-type QuestionStore = {
-  questions: Question[]
-  setQuestions: (_: Question[]) => void
-  resetQuestions: () => void
+type ExamStore = {
+  exams: Record<string, TQuestion[]>
+  setExam: (examId: string, questions: TQuestion[]) => void
+  resetExam: (examId: string) => void
 }
 
-export const useQuestionStore = create<QuestionStore>()(
+export const useExamStore = create<ExamStore>()(
   devtools(
     persist(
       (set) => ({
-        questions: [],
-        setQuestions: (questions) => set(() => ({ questions })),
-        resetQuestions: () => set(() => ({ questions: [] })),
+        exams: {},
+        setExam: (examId, questions) =>
+          set(
+            produce((state: ExamStore) => {
+              state.exams[examId] = questions
+            }),
+          ),
+        resetExam: (exmaId) =>
+          set(
+            produce((state: ExamStore) => {
+              state.exams[exmaId] = []
+            }),
+          ),
       }),
       { name: 'question', storage },
     ),
@@ -25,9 +35,9 @@ export const useQuestionStore = create<QuestionStore>()(
 )
 
 type AnswerStore = {
-  answers: Record<string, string[]>
-  toggleAnswer: (_: [string, string[]]) => void
-  resetAnswer: () => void
+  answers: Record<string, Record<string, string[]>>
+  toggleAnswer: ([examId, questionId, answers]: [string, string, string[]]) => void
+  resetAnswer: (examId: string) => void
 }
 
 export const useAnswerStore = create<AnswerStore>()(
@@ -35,14 +45,20 @@ export const useAnswerStore = create<AnswerStore>()(
     persist(
       (set) => ({
         answers: {},
-        toggleAnswer: (newAnswer) =>
+        toggleAnswer: ([examId, questionId, answers]) =>
           set(
             produce((state: AnswerStore) => {
-              if (!state.answers[newAnswer[0]]) state.answers[newAnswer[0]] = []
-              state.answers[newAnswer[0]] = xor(state.answers[newAnswer[0]], newAnswer[1])
+              if (!state.answers[examId]) state.answers[examId] = {}
+              if (!state.answers[examId][questionId]) state.answers[examId][questionId] = []
+              state.answers[examId][questionId] = xor(state.answers[examId][questionId], answers)
             }),
           ),
-        resetAnswer: () => set(() => ({ answers: {} })),
+        resetAnswer: (examId) =>
+          set(
+            produce((state: AnswerStore) => {
+              state.answers[examId] = {}
+            }),
+          ),
       }),
       { name: 'answer', storage },
     ),

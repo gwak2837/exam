@@ -1,6 +1,6 @@
 'use client'
 
-import { useAnswerStore, useQuestionStore } from '@/app/exam/[questionCount]/zustand'
+import { useAnswerStore, useExamStore } from '@/app/exam/[questionCount]/zustand'
 import Modal from '@/components/atoms/Modal'
 import LoadingSpinner from '@/svgs/LoadingSpinner'
 import { fetchPOST } from '@/utils/swr'
@@ -14,15 +14,18 @@ export default function 새로하기Button() {
   const { questionCount } = useParams()
 
   const router = useRouter()
+  const { resetExam } = useExamStore()
   const { resetAnswer } = useAnswerStore()
-  const { resetQuestions } = useQuestionStore()
 
   const { trigger, isMutating } = useSWRMutation(`/api/question/${questionCount}`, fetchPOST)
 
+  const params = useParams()
+  const examId = params.questionCount.toString()
+
   async function handle좋아요ButtonClick() {
     await trigger()
-    resetAnswer()
-    resetQuestions()
+    resetAnswer(examId)
+    resetExam(examId)
     router.replace(`/exam/${questionCount}?i=1`)
     router.refresh()
     setShowModal(false)
