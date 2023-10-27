@@ -567,7 +567,7 @@ export const exam = [
   },
 ]
 
-export type Question = (typeof exam)[number]
+export type TQuestion = (typeof exam)[number]
 
 export const sample = [
   {
