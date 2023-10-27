@@ -5,7 +5,9 @@ import dynamic from 'next/dynamic'
 const Question = dynamic(() => import('@/app/exam/[questionCount]/Question'), { ssr: false })
 
 async function getQuestions(questionCount: number) {
-  const res = await fetch(`${CANONICAL_URL}/api/question/${questionCount}`, { next: { tags: ['question'] } })
+  const res = await fetch(`${CANONICAL_URL}/api/question/${questionCount}`, {
+    next: { tags: [`question-${questionCount}`] },
+  })
   if (!res.ok) throw new Error('Failed to fetch data')
 
   return res.json()
