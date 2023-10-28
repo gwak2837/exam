@@ -23,9 +23,9 @@ export default function 새로하기Button() {
   const examId = params.questionCount.toString()
 
   async function handle좋아요ButtonClick() {
-    await trigger()
-    resetAnswer(examId)
     resetExam(examId)
+    resetAnswer(examId)
+    await trigger()
     router.replace(`/exam/${questionCount}?i=1`)
     router.refresh()
     setShowModal(false)
