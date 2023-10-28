@@ -34,7 +34,7 @@ export default function 새로하기Button() {
   return (
     <>
       <button
-        className="transition-color flex items-center gap-2 rounded-lg bg-gray-300 px-4 py-3 text-sm text-gray-700 duration-300 hover:bg-gray-400/50 aria-disabled:cursor-not-allowed aria-disabled:text-gray-400 aria-disabled:hover:bg-gray-300"
+        className="transition-color flex items-center gap-2 whitespace-nowrap rounded-lg bg-gray-300 px-4 py-3 text-sm text-gray-700 duration-300 hover:bg-gray-400/50 aria-disabled:cursor-not-allowed aria-disabled:text-gray-400 aria-disabled:hover:bg-gray-300"
         disabled={isMutating}
         onClick={() => setShowModal(true)}
       >
