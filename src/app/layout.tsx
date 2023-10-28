@@ -13,7 +13,7 @@ import {
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import ReactHotToast from '@/components/ReactHotToast'
 import { Analytics } from '@vercel/analytics/react'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import localFont from 'next/font/local'
 import { ReactNode } from 'react'
 
@@ -26,8 +26,6 @@ export const metadata: Metadata = {
   generator: null,
   keywords: KEYWORDS,
   referrer: 'strict-origin-when-cross-origin',
-  themeColor: THEME_COLOR,
-  viewport: { width: 'device-width', initialScale: 1, viewportFit: 'cover' },
   robots: { index: true, follow: true },
   alternates: { canonical: CANONICAL_URL },
   icons: {
@@ -57,6 +55,14 @@ export const metadata: Metadata = {
   bookmarks: CANONICAL_URL,
   category: CATEGORY,
   classification: CATEGORY,
+}
+
+export const viewport: Viewport = {
+  themeColor: THEME_COLOR,
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  colorScheme: 'light',
 }
 
 const myFont = localFont({
