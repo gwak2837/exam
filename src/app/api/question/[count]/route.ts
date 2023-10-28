@@ -23,5 +23,7 @@ export async function POST(_: NextRequest, { params }: RouteProps) {
 
   revalidateTag(`question-${questionCount}`)
 
+  console.log('👀 ~ question-{questionCount}:', `question-${questionCount}`)
+
   return Response.json({ revalidated: true, now: Date.now() })
 }
