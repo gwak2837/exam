@@ -1,6 +1,6 @@
 'use client'
 
-import { ChangeEventHandler, FocusEventHandler, Ref, forwardRef } from 'react'
+import { type ChangeEventHandler, type FocusEventHandler, type Ref, forwardRef } from 'react'
 
 import styles from './AppleCheckbox.module.css'
 

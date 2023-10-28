@@ -15,7 +15,7 @@ import ReactHotToast from '@/components/ReactHotToast'
 import { Analytics } from '@vercel/analytics/react'
 import type { Metadata, Viewport } from 'next'
 import localFont from 'next/font/local'
-import { ReactNode } from 'react'
+import { type ReactNode } from 'react'
 
 export const metadata: Metadata = {
   metadataBase: new URL(CANONICAL_URL),

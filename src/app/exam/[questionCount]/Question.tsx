@@ -1,7 +1,7 @@
 'use client'
 
 import { useAnswerStore, useExamStore } from '@/app/exam/[questionCount]/zustand'
-import { TQuestion } from '@/common/exam'
+import { type TQuestion } from '@/common/exam'
 import { useParams, useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 
@@ -61,7 +61,7 @@ export default function Question({ questions: newQuestions }: Props) {
   )
 }
 
-const checked = {
+const checked: Record<string, string> = {
   true: '!bg-violet-100 !text-violet-900',
   false: '',
-} as Record<string, string>
+}

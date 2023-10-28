@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { type ReactNode } from 'react'
 
 export type LayoutProps = {
   children: ReactNode
@@ -7,7 +7,7 @@ export type LayoutProps = {
 
 export type PageProps = {
   params: Record<string, any>
-  searchParams?: { [key: string]: string | string[] | undefined }
+  searchParams?: Record<string, string | string[] | undefined>
 }
 
 export type ErrorProps = {

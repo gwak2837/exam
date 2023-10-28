@@ -1,9 +1,9 @@
-import { PageProps } from '@/common/types'
+import { type PageProps } from '@/common/types'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const Answers = dynamic(() => import('@/app/exam/result/Answers'), { ssr: false })
+const Answers = dynamic(async () => await import('@/app/exam/result/Answers'), { ssr: false })
 
 export default async function Page({ params, searchParams }: PageProps) {
   return (

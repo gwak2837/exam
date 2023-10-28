@@ -1,4 +1,4 @@
-import { LayoutProps } from '@/common/types'
+import { type LayoutProps } from '@/common/types'
 import Image from 'next/image'
 import Link from 'next/link'
 

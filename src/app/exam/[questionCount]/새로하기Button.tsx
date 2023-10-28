@@ -11,7 +11,8 @@ import useSWRMutation from 'swr/mutation'
 export default function 새로하기Button() {
   const [showModal, setShowModal] = useState(false)
 
-  const { questionCount } = useParams()
+  const params = useParams()
+  const questionCount = params.questionCount as string
 
   const router = useRouter()
   const { resetExam } = useExamStore()
@@ -19,12 +20,9 @@ export default function 새로하기Button() {
 
   const { trigger, isMutating } = useSWRMutation(`/api/question/${questionCount}`, fetchPOST)
 
-  const params = useParams()
-  const examId = params.questionCount.toString()
-
   async function handle좋아요ButtonClick() {
-    resetExam(examId)
-    resetAnswer(examId)
+    resetExam(questionCount)
+    resetAnswer(questionCount)
     await trigger()
     router.replace(`/exam/${questionCount}?i=1`)
     router.refresh()

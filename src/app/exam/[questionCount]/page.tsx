@@ -1,8 +1,8 @@
 import { CANONICAL_URL } from '@/common/constants'
-import { PageProps } from '@/common/types'
+import { type PageProps } from '@/common/types'
 import dynamic from 'next/dynamic'
 
-const Question = dynamic(() => import('@/app/exam/[questionCount]/Question'), { ssr: false })
+const Question = dynamic(async () => await import('@/app/exam/[questionCount]/Question'), { ssr: false })
 
 async function getQuestions(questionCount: number) {
   const res = await fetch(`${CANONICAL_URL}/api/question/${questionCount}`, {
@@ -10,7 +10,7 @@ async function getQuestions(questionCount: number) {
   })
   if (!res.ok) throw new Error('Failed to fetch data')
 
-  return res.json()
+  return await res.json()
 }
 
 export default async function Page({ params }: PageProps) {

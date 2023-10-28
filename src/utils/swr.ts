@@ -1,8 +1,10 @@
+import type { SWRMutationHook } from 'swr/mutation'
+
 export async function fetchJSON(url: string) {
   const res = await fetch(url)
   return await res.json()
 }
 
-export function fetchPOST(url: string) {
-  fetch(url, { method: 'POST' })
+export async function fetchPOST(url: string) {
+  return await fetch(url, { method: 'POST' })
 }

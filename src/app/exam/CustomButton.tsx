@@ -3,7 +3,7 @@
 import Modal from '@/components/atoms/Modal'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { FormEvent, useState } from 'react'
+import { type FormEvent, useState } from 'react'
 
 export default function CustomButton() {
   const [open, setOpen] = useState(false)

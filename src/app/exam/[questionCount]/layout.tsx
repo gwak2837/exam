@@ -1,6 +1,6 @@
 import 새로하기Button from '@/app/exam/[questionCount]/새로하기Button'
 import 이동Button from '@/app/exam/[questionCount]/이동Button'
-import { LayoutProps } from '@/common/types'
+import { type LayoutProps } from '@/common/types'
 import Image from 'next/image'
 import Link from 'next/link'
 

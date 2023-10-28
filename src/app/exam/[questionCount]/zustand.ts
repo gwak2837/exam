@@ -1,4 +1,4 @@
-import { TQuestion } from '@/common/exam'
+import { type TQuestion } from '@/common/exam'
 import { storage } from '@/common/zustand'
 import { xor } from '@/utils/math'
 import { produce } from 'immer'

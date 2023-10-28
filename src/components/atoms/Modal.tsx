@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { MouseEvent, ReactNode, TouchEvent, useEffect, useRef, useState } from 'react'
+import { type MouseEvent, type ReactNode, type TouchEvent, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 type Props = {
@@ -130,7 +130,7 @@ export default function Modal({ children, open, onClose, showCloseButton, showDr
   )
 }
 
-const c = {
+const c: Record<string, any> = {
   scale: {
     true: 'scale-100',
     false: 'scale-90',
@@ -139,4 +139,4 @@ const c = {
     true: 'opacity-100 pointer-events-auto',
     false: 'opacity-0 pointer-events-none',
   },
-} as Record<string, any>
+}
