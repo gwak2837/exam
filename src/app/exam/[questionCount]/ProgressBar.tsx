@@ -40,7 +40,7 @@ export default function ProgressBar() {
 
 export function ProgressBarFallback() {
   return (
-    <div className="relative grid h-full w-full grid-cols-[repeat(auto-fit,minmax(1px,1fr))] rounded-full bg-white" />
+    <div className="relative grid h-full w-full animate-pulse grid-cols-[repeat(auto-fit,minmax(1px,1fr))] rounded-full bg-white" />
   )
 }
 

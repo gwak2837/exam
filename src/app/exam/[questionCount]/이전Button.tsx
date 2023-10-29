@@ -23,14 +23,3 @@ export default function 이전Button({ add }: Props) {
     </button>
   )
 }
-
-export function 이전ButtonFallback() {
-  return (
-    <button
-      disabled
-      className="transition-color peer whitespace-nowrap rounded-lg bg-gray-300 px-4 py-3 text-sm text-gray-700 duration-300 hover:bg-gray-400/50 disabled:text-gray-400 disabled:hover:bg-gray-300"
-    >
-      이전
-    </button>
-  )
-}

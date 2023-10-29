@@ -1,8 +1,17 @@
 import dynamic from 'next/dynamic'
 import { CANONICAL_URL } from '@/common/constants'
 import { type PageProps } from '@/common/types'
+import { QuestionFallback } from '@/app/exam/[questionCount]/Question'
+import { SelectionsFallback } from '@/app/exam/[questionCount]/Selections'
 
-const Question = dynamic(async () => await import('@/app/exam/[questionCount]/Question'), { ssr: false })
+const Question = dynamic(async () => await import('@/app/exam/[questionCount]/Question'), {
+  ssr: false,
+  loading: QuestionFallback,
+})
+const Selections = dynamic(async () => await import('@/app/exam/[questionCount]/Selections'), {
+  ssr: false,
+  loading: SelectionsFallback,
+})
 
 async function getQuestions(questionCount: number) {
   const res = await fetch(`${CANONICAL_URL}/api/question/${questionCount}`, {
@@ -13,12 +22,18 @@ async function getQuestions(questionCount: number) {
   return await res.json()
 }
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params, searchParams }: PageProps) {
   const { questions } = await getQuestions(params.questionCount)
 
   return (
     <main className="flex grow flex-col gap-4 p-4 sm:p-8 md:p-12 lg:p-16">
-      <Question questions={questions} />
+      <div className="flex grow flex-col items-center justify-center gap-4">
+        <div className="text-sm">
+          <b className="text-violet-900">{searchParams.i}</b> / {params.questionCount}
+        </div>
+        <Question questions={questions} />
+      </div>
+      <Selections />
     </main>
   )
 }
