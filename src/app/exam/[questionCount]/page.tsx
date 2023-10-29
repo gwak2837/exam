@@ -17,7 +17,7 @@ export default async function Page({ params }: PageProps) {
   const { questions } = await getQuestions(params.questionCount)
 
   return (
-    <main className="flex grow flex-col p-4 sm:p-8 md:p-12 lg:p-16">
+    <main className="flex grow flex-col gap-4 p-4 sm:p-8 md:p-12 lg:p-16">
       <Question questions={questions} />
     </main>
   )

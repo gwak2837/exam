@@ -39,11 +39,11 @@ export default function Question({ questions: newQuestions }: Props) {
       <div className="flex grow items-center justify-center">
         <p className="max-w-prose text-center text-xl font-medium md:text-2xl">{question.문제}</p>
       </div>
-      <form className="scrollbar-hide flex flex-wrap gap-4 overflow-x-auto" onSubmit={(e) => e.preventDefault()}>
+      <form className=" scrollbar-hide flex flex-wrap gap-4 overflow-x-auto" onSubmit={(e) => e.preventDefault()}>
         {선택지.map((선택지) => (
           <label
             key={question.id + 선택지.id}
-            className={` grow basis-0 cursor-pointer whitespace-nowrap rounded-lg border-2 border-violet-200 p-4 text-center text-gray-600 transition-colors hover:bg-violet-50 md:text-lg ${
+            className={`grow basis-0 cursor-pointer whitespace-nowrap rounded-lg border-2 border-violet-200  p-4 text-center text-gray-600 transition-colors hover:bg-violet-50 md:text-lg ${
               checked[String(questionAnswer.includes(선택지.id))]
             }`}
           >
@@ -63,5 +63,5 @@ export default function Question({ questions: newQuestions }: Props) {
 
 const checked: Record<string, string> = {
   true: '!bg-violet-100 !text-violet-900',
-  false: '',
+  false: 'bg-white',
 }
