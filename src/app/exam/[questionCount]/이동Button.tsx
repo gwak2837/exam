@@ -20,7 +20,9 @@ export default function 이동Button({ children, add }: Props) {
   const questionCount = +params.questionCount
   const questionIndex = +(searchParams.get('i') ?? 1)
   const isSubmit = children === '다음' && questionCount === questionIndex
-  const 답안 = Object.values(answers[questionCount] ?? {})
+  const answer = answers[questionCount]
+  const 답안 = Object.values(answer ?? {})
+
   const isFirstQuestion = questionIndex + add < 1
   const hasUnsolvedQuestion = isSubmit && (답안.length !== questionCount || 답안.some((답안) => 답안.length === 0))
   const disabled = isFirstQuestion || hasUnsolvedQuestion
@@ -38,7 +40,13 @@ export default function 이동Button({ children, add }: Props) {
   }
 
   function handle좋아요ButtonClick() {
-    router.push(`/exam/result?`)
+    const querystring = new URLSearchParams()
+
+    Object.entries(answer).forEach(([questionId, selections]) =>
+      selections.forEach((답안) => querystring.append(questionId, 답안)),
+    )
+
+    router.push(`/exam/result?${querystring}`)
   }
 
   return (
