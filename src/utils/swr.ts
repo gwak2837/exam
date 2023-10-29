@@ -1,5 +1,3 @@
-import type { SWRMutationHook } from 'swr/mutation'
-
 export async function fetchJSON(url: string) {
   const res = await fetch(url)
   return await res.json()
