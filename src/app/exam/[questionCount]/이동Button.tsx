@@ -11,9 +11,9 @@ type Props = {
 }
 
 export default function 이동Button({ children, add }: Props) {
+  const router = useRouter()
   const params = useParams()
   const searchParams = useSearchParams()
-  const router = useRouter()
 
   const { answers } = useAnswerStore()
 
@@ -38,7 +38,7 @@ export default function 이동Button({ children, add }: Props) {
   }
 
   function handle좋아요ButtonClick() {
-    router.push(`/exam/result?examId=${questionCount}`)
+    router.push(`/exam/result?`)
   }
 
   return (
@@ -53,7 +53,7 @@ export default function 이동Button({ children, add }: Props) {
         </button>
         {isSubmit && (
           <div
-            className="max-w-64 pointer-events-none absolute left-full top-full z-10 translate-x-[-100%] p-2 text-sm text-gray-500 opacity-0 transition-opacity duration-300 hover:pointer-events-auto hover:opacity-100 peer-hover:peer-disabled:pointer-events-auto peer-hover:peer-disabled:opacity-100"
+            className="max-w-64 pointer-events-none absolute left-full top-full z-50 translate-x-[-100%] p-2 text-sm text-gray-500 opacity-0 transition-opacity duration-300 hover:pointer-events-auto hover:opacity-100 peer-hover:peer-disabled:pointer-events-auto peer-hover:peer-disabled:opacity-100"
             role="tooltip"
           >
             <div className="h-full w-full rounded-lg border border-gray-200 bg-white p-4 shadow">
