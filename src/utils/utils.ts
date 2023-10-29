@@ -14,3 +14,16 @@ export function shuffle<T>(array: T[]) {
 
   return array
 }
+
+export function toQuerystring(obj?: Record<string, string | string[] | undefined> | undefined) {
+  if (!obj) return ''
+  return Object.entries(obj)
+    .flatMap(([key, value]) => {
+      if (Array.isArray(value)) {
+        return value.map((item) => `${encodeURIComponent(key)}=${encodeURIComponent(item)}`)
+      } else {
+        return `${encodeURIComponent(key)}=${encodeURIComponent(value ?? '')}`
+      }
+    })
+    .join('&')
+}

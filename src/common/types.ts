@@ -7,7 +7,7 @@ export type LayoutProps = {
 
 export type PageProps = {
   params: Record<string, any>
-  searchParams?: Record<string, string | string[] | undefined>
+  searchParams: Record<string, string | string[] | undefined>
 }
 
 export type ErrorProps = {
