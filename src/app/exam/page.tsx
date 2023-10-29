@@ -1,6 +1,6 @@
-import CustomButton from '@/app/exam/CustomButton'
 import Image from 'next/image'
 import Link from 'next/link'
+import CustomButton from '@/app/exam/CustomButton'
 
 export default async function Page() {
   return (

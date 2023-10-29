@@ -1,8 +1,8 @@
+import { revalidateTag } from 'next/cache'
+import { type NextRequest } from 'next/server'
 import { exam } from '@/common/exam'
 import { type RouteProps } from '@/common/types'
 import { shuffle } from '@/utils/utils'
-import { revalidateTag } from 'next/cache'
-import { type NextRequest } from 'next/server'
 
 export const runtime = 'edge'
 

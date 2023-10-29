@@ -1,7 +1,7 @@
-import { type PageProps } from '@/common/types'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
+import { type PageProps } from '@/common/types'
 
 const Answers = dynamic(async () => await import('@/app/exam/result/Answers'), { ssr: false })
 

@@ -1,5 +1,5 @@
-import { CANONICAL_URL } from '@/common/constants'
 import { type MetadataRoute } from 'next'
+import { CANONICAL_URL } from '@/common/constants'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

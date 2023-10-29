@@ -1,9 +1,9 @@
 'use client'
 
-import { useAnswerStore, useExamStore } from '@/app/exam/[questionCount]/zustand'
-import { type TQuestion } from '@/common/exam'
 import { useParams, useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
+import { useAnswerStore, useExamStore } from '@/app/exam/[questionCount]/zustand'
+import { type TQuestion } from '@/common/exam'
 
 type Props = {
   questions: TQuestion[]

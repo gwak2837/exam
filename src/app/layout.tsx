@@ -1,5 +1,11 @@
 import './globals.css'
 
+import { Analytics } from '@vercel/analytics/react'
+import type { Metadata, Viewport } from 'next'
+import localFont from 'next/font/local'
+import { type ReactNode } from 'react'
+import ReactHotToast from '@/components/ReactHotToast'
+import GoogleAnalytics from '@/components/GoogleAnalytics'
 import {
   APPLICATION_NAME,
   APPLICATION_SHORT_NAME,
@@ -10,12 +16,6 @@ import {
   KEYWORDS,
   THEME_COLOR,
 } from '@/common/constants'
-import GoogleAnalytics from '@/components/GoogleAnalytics'
-import ReactHotToast from '@/components/ReactHotToast'
-import { Analytics } from '@vercel/analytics/react'
-import type { Metadata, Viewport } from 'next'
-import localFont from 'next/font/local'
-import { type ReactNode } from 'react'
 
 export const metadata: Metadata = {
   metadataBase: new URL(CANONICAL_URL),

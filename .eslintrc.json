@@ -10,6 +10,8 @@
     "no-console": "warn",
     "prefer-const": "off",
 
+    "import/order": "warn",
+
     "react/display-name": "off",
     // "react/jsx-sort-props": "warn",
 

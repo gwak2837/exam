@@ -1,10 +1,10 @@
 'use client'
 
-import AppleCheckbox from '@/components/atoms/AppleCheckbox'
 import Image from 'next/image'
 import Link from 'next/link'
 import { type MouseEvent, useState } from 'react'
 import toast from 'react-hot-toast'
+import AppleCheckbox from '@/components/atoms/AppleCheckbox'
 
 export default function 테스트보기Link() {
   const [checked, setChecked] = useState(false)
