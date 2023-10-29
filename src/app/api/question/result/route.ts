@@ -6,6 +6,7 @@ type Answers = Record<string, string[]>
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
+  if (!validate(searchParams)) return new Response('Invalid querystring', { status: 400 })
 
   const answers = Array.from(searchParams.keys()).reduce<Answers>((answers, questionId) => {
     answers[questionId] = searchParams.getAll(questionId)
@@ -31,4 +32,8 @@ export async function GET(request: Request) {
     정답개수,
     상세,
   })
+}
+
+function validate(searchParams: URLSearchParams) {
+  return true
 }
