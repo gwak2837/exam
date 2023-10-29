@@ -32,7 +32,7 @@ export default function 테스트보기Link() {
         <p className="m-0 max-w-[25ch] text-sm opacity-50">자신의 BDSM 지식이 어느 정도인지 확인해보세요</p>
       </Link>
       <div className="flex items-center gap-2">
-        <span className="text-violet-900">아래 내용에 동의합니다</span>
+        <h3 className="text-violet-900">아래 내용에 동의합니다</h3>
         <AppleCheckbox onChange={(e) => setChecked(e.target.checked)} />
       </div>
     </>

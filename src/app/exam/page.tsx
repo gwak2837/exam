@@ -6,7 +6,7 @@ export default async function Page() {
   return (
     <main className="flex min-h-[100dvh] flex-col items-center justify-center gap-12 p-4 sm:p-8 md:p-16 lg:p-24">
       <Link href="/" className="flex place-items-center gap-2 whitespace-nowrap">
-        By <Image src="/bdsm-logo.svg" alt="BDSM Logo" width={24} height={24} />
+        <h1>By</h1> <Image src="/bdsm-logo.svg" alt="BDSM Logo" width={24} height={24} priority />
       </Link>
       <nav className="grid text-center sm:mb-0 sm:grid-cols-2 sm:text-left lg:mb-0 lg:grid-cols-4">
         <Link
