@@ -36,7 +36,10 @@ export default function Question({ questions: newQuestions }: Props) {
 
   return (
     <>
-      <div className="flex grow items-center justify-center">
+      <div className="flex grow flex-col items-center justify-center gap-4">
+        <div className="text-sm">
+          <b className="text-violet-900">{i}</b> / {examId}
+        </div>
         <p className="max-w-prose text-center text-xl font-medium md:text-2xl">{question.문제}</p>
       </div>
       <form className=" scrollbar-hide flex flex-wrap gap-4 overflow-x-auto" onSubmit={(e) => e.preventDefault()}>
