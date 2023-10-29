@@ -1,31 +1,27 @@
 'use client'
 
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
-import { type ReactNode, useState } from 'react'
+import { useState } from 'react'
 import { useAnswerStore } from '@/app/exam/[questionCount]/zustand'
 import Modal from '@/components/atoms/Modal'
 
 type Props = {
-  children: ReactNode
   add: number
 }
 
-export default function 이동Button({ children, add }: Props) {
+export default function 다음Button({ add }: Props) {
   const router = useRouter()
   const params = useParams()
   const searchParams = useSearchParams()
 
   const questionCount = +params.questionCount
   const questionIndex = +(searchParams.get('i') ?? 1)
-  const isSubmit = children === '다음' && questionCount === questionIndex
-  const isFirstQuestion = questionIndex + add < 1
+  const isSubmit = questionCount === questionIndex
 
-  const { answers, resetAnswer } = useAnswerStore()
+  const { answers } = useAnswerStore()
   const answer = answers[questionCount]
   const 답안 = Object.values(answer ?? {})
-
   const hasUnsolvedQuestion = isSubmit && (답안.length !== questionCount || 답안.some((답안) => 답안.length === 0))
-  const disabled = isFirstQuestion || hasUnsolvedQuestion
 
   const [showModal, setShowModal] = useState(false)
 
@@ -37,19 +33,17 @@ export default function 이동Button({ children, add }: Props) {
     )
 
     router.push(`/exam/result?${querystring}`)
-
-    resetAnswer(params.questionCount as string)
   }
 
   return (
     <>
       <div className="relative">
         <button
-          disabled={disabled}
+          disabled={hasUnsolvedQuestion}
           className="transition-color peer whitespace-nowrap rounded-lg bg-gray-300 px-4 py-3 text-sm text-gray-700 duration-300 hover:bg-gray-400/50 disabled:text-gray-400 disabled:hover:bg-gray-300"
           onClick={() => (isSubmit ? setShowModal(true) : router.replace(`?i=${questionIndex + add}`))}
         >
-          {isSubmit ? '제출' : children}
+          {isSubmit ? '제출' : '다음'}
         </button>
         {isSubmit && (
           <div
@@ -83,5 +77,16 @@ export default function 이동Button({ children, add }: Props) {
         </div>
       </Modal>
     </>
+  )
+}
+
+export function 다음ButtonFallback() {
+  return (
+    <button
+      disabled
+      className="transition-color peer whitespace-nowrap rounded-lg bg-gray-300 px-4 py-3 text-sm text-gray-700 duration-300 hover:bg-gray-400/50 disabled:text-gray-400 disabled:hover:bg-gray-300"
+    >
+      다음
+    </button>
   )
 }

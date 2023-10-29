@@ -38,6 +38,12 @@ export default function ProgressBar() {
   )
 }
 
+export function ProgressBarFallback() {
+  return (
+    <div className="relative grid h-full w-full grid-cols-[repeat(auto-fit,minmax(1px,1fr))] rounded-full bg-white" />
+  )
+}
+
 const checked: Record<string, string> = {
   true: '!bg-violet-400',
   false: '',
