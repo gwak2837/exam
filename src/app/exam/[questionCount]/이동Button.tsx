@@ -1,7 +1,7 @@
 'use client'
 
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
-import { type MouseEvent, type ReactNode, useState } from 'react'
+import { type ReactNode, useState } from 'react'
 import { useAnswerStore } from '@/app/exam/[questionCount]/zustand'
 import Modal from '@/components/atoms/Modal'
 
@@ -15,29 +15,19 @@ export default function 이동Button({ children, add }: Props) {
   const params = useParams()
   const searchParams = useSearchParams()
 
-  const { answers } = useAnswerStore()
-
   const questionCount = +params.questionCount
   const questionIndex = +(searchParams.get('i') ?? 1)
   const isSubmit = children === '다음' && questionCount === questionIndex
+  const isFirstQuestion = questionIndex + add < 1
+
+  const { answers, resetAnswer } = useAnswerStore()
   const answer = answers[questionCount]
   const 답안 = Object.values(answer ?? {})
 
-  const isFirstQuestion = questionIndex + add < 1
   const hasUnsolvedQuestion = isSubmit && (답안.length !== questionCount || 답안.some((답안) => 답안.length === 0))
   const disabled = isFirstQuestion || hasUnsolvedQuestion
 
   const [showModal, setShowModal] = useState(false)
-
-  function handleButtonClick(e: MouseEvent) {
-    if (disabled) return e.preventDefault()
-
-    if (isSubmit) {
-      setShowModal(true)
-    } else {
-      router.replace(`?i=${+questionIndex + add}`)
-    }
-  }
 
   function handle좋아요ButtonClick() {
     const querystring = new URLSearchParams()
@@ -47,6 +37,8 @@ export default function 이동Button({ children, add }: Props) {
     )
 
     router.push(`/exam/result?${querystring}`)
+
+    resetAnswer(params.questionCount as string)
   }
 
   return (
@@ -55,7 +47,7 @@ export default function 이동Button({ children, add }: Props) {
         <button
           disabled={disabled}
           className="transition-color peer whitespace-nowrap rounded-lg bg-gray-300 px-4 py-3 text-sm text-gray-700 duration-300 hover:bg-gray-400/50 disabled:text-gray-400 disabled:hover:bg-gray-300"
-          onClick={handleButtonClick}
+          onClick={() => (isSubmit ? setShowModal(true) : router.replace(`?i=${questionIndex + add}`))}
         >
           {isSubmit ? '제출' : children}
         </button>

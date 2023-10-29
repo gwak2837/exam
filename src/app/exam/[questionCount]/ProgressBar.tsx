@@ -15,8 +15,9 @@ export default function ProgressBar() {
   const { answers } = useAnswerStore()
 
   const { exams } = useExamStore()
-  const 문제Ids = exams[questionCount].map((q) => q.id)
-  const 답안Ids = answers[questionCount]
+  const exam = exams[questionCount] ?? []
+  const 문제Ids = exam.map((q) => q.id)
+  const 답안Ids = answers[questionCount] ?? []
 
   return (
     <div className="relative grid h-full w-full grid-cols-[repeat(auto-fit,minmax(1px,1fr))] rounded-full bg-white">
