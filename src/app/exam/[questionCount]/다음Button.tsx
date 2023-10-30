@@ -19,8 +19,8 @@ export default function 다음Button({ add }: Props) {
   const isSubmit = questionCount === questionIndex
 
   const { answers } = useAnswerStore()
-  const answer = answers[questionCount]
-  const 답안 = Object.values(answer ?? {})
+  const answer = answers[questionCount] ?? {}
+  const 답안 = Object.values(answer)
   const hasUnsolvedQuestion = isSubmit && (답안.length !== questionCount || 답안.some((답안) => 답안.length === 0))
 
   const [showModal, setShowModal] = useState(false)

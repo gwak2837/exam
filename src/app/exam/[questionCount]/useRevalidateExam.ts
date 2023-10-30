@@ -1,5 +1,5 @@
-import { fetchPOST } from '@/util/swr'
 import useSWRMutation from 'swr/mutation'
+import { fetchPOST } from '@/util/swr'
 
 type Props = {
   examId: string

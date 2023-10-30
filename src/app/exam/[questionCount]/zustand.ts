@@ -15,7 +15,7 @@ export const useExamStore = create<ExamStore>()(
   devtools(
     persist(
       (set) => ({
-        exams: { 10: [], 20: [], 30: [] },
+        exams: {},
         setExam: (examId, questions) =>
           set(
             produce((state: ExamStore) => {
@@ -44,7 +44,7 @@ export const useAnswerStore = create<AnswerStore>()(
   devtools(
     persist(
       (set) => ({
-        answers: { 10: {}, 20: {}, 30: {} },
+        answers: {},
         toggleAnswer: ([examId, questionId, answers]) =>
           set(
             produce((state: AnswerStore) => {
