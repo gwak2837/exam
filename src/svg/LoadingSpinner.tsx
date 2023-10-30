@@ -6,7 +6,6 @@ export default function LoadingSpinner({ className = '' }: Props) {
   return (
     <div role="status">
       <svg
-        aria-hidden="true"
         className={'animate-spin fill-violet-600 text-white ' + className}
         viewBox="0 0 100 101"
         xmlns="http://www.w3.org/2000/svg"
