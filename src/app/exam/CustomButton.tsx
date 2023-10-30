@@ -2,11 +2,19 @@
 
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { type FormEvent, useState } from 'react'
+import { type FormEvent, useState, useRef } from 'react'
 import Modal from '@/components/atoms/Modal'
 
 export default function CustomButton() {
   const [open, setOpen] = useState(false)
+
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  function openModal() {
+    setOpen(true)
+    inputRef.current?.focus()
+  }
+
   const router = useRouter()
 
   function handleSubmit(e: FormEvent) {
@@ -19,7 +27,7 @@ export default function CustomButton() {
     <>
       <button
         className="group flex flex-col items-center rounded-lg border border-transparent px-5 py-4 transition hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 sm:items-start sm:text-left"
-        onClick={() => setOpen(true)}
+        onClick={openModal}
       >
         <h2 className="mb-3 text-2xl font-semibold">
           Custom &nbsp;
@@ -41,6 +49,7 @@ export default function CustomButton() {
             max={50}
             name="문제개수"
             pattern="[0-9]*"
+            ref={inputRef}
             placeholder="풀고 싶은 문제 개수"
             type="number"
           />
