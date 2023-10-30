@@ -20,6 +20,7 @@ export default function 새로풀기Button({ examId }: Props) {
     resetAnswer(examId)
     await revalidateExam()
     router.push(`/exam/${examId}?i=1`)
+    router.refresh()
   }
 
   return (
