@@ -5,8 +5,9 @@ import { toQuerystring } from '@/util/utils'
 import 다시풀기Button from '@/app/exam/result/다시풀기Button'
 import 새로풀기Button from '@/app/exam/result/새로풀기Button'
 import 난이도선택하기Button from '@/app/exam/result/난이도선택하기Button'
+import { ResultFallback } from '@/app/exam/result/Result'
 
-const Result = dynamic(async () => await import('@/app/exam/result/Result'), { ssr: false })
+const Result = dynamic(async () => await import('@/app/exam/result/Result'), { ssr: false, loading: ResultFallback })
 
 async function getResult(querystring: string) {
   const res = await fetch(`${CANONICAL_URL}/api/question/result?${querystring}`, { cache: 'no-store' })

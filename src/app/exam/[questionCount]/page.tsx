@@ -8,6 +8,7 @@ const Question = dynamic(async () => await import('@/app/exam/[questionCount]/Qu
   ssr: false,
   loading: QuestionFallback,
 })
+
 const Selections = dynamic(async () => await import('@/app/exam/[questionCount]/Selections'), {
   ssr: false,
   loading: SelectionsFallback,
@@ -15,7 +16,8 @@ const Selections = dynamic(async () => await import('@/app/exam/[questionCount]/
 
 async function getQuestions(questionCount: number) {
   const res = await fetch(`${CANONICAL_URL}/api/question/${questionCount}`, {
-    next: { tags: [`question:${questionCount}`] },
+    // next: { tags: [`question:${questionCount}`] },
+    cache: 'no-store',
   })
   if (!res.ok) throw new Error('Failed to fetch data')
 

@@ -39,3 +39,9 @@ export default function Result({ result }: Props) {
     </div>
   )
 }
+
+export function ResultFallback() {
+  return (
+    <div className="m-auto flex h-36 w-full max-w-md animate-pulse flex-wrap justify-center gap-4 rounded-2xl bg-white"></div>
+  )
+}
