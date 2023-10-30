@@ -2,11 +2,9 @@
 
 import { useParams, useRouter } from 'next/navigation'
 import { useState } from 'react'
-import useSWRMutation from 'swr/mutation'
 import { useAnswerStore, useExamStore } from '@/app/exam/[questionCount]/zustand'
 import Modal from '@/components/atoms/Modal'
 import LoadingSpinner from '@/svg/LoadingSpinner'
-import { fetchPOST } from '@/util/swr'
 import useRevalidateExam from '@/app/exam/[questionCount]/useRevalidateExam'
 
 export default function 새로하기Button() {
