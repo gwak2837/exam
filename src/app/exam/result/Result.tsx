@@ -33,7 +33,7 @@ export default function Result({ result }: Props) {
       {exam.map((question, i) => (
         <Link key={question.id} href={`/exam/${examId}?i=${i + 1}`} className="flex items-center gap-2">
           <span>{i + 1}</span>
-          {상세[question.id].isCorrect ? <GreenChecked className="w-12" /> : <RedX className="w-12" />}
+          {상세[question.id]?.isCorrect ? <GreenChecked className="w-12" /> : <RedX className="w-12" />}
         </Link>
       ))}
     </div>
