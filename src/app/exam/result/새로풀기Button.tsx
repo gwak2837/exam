@@ -1,9 +1,9 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import useRevalidateExam from '@/app/exam/[questionCount]/useRevalidateExam'
 import { useAnswerStore, useExamStore } from '@/app/exam/[questionCount]/zustand'
 import LoadingSpinner from '@/svg/LoadingSpinner'
-import { useRouter } from 'next/navigation'
 
 type Props = {
   examId: string

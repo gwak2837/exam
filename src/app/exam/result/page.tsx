@@ -9,7 +9,7 @@ import 난이도선택하기Button from '@/app/exam/result/난이도선택하기
 const Result = dynamic(async () => await import('@/app/exam/result/Result'), { ssr: false })
 
 async function getResult(querystring: string) {
-  const res = await fetch(`${CANONICAL_URL}/api/question/result?${querystring}`, { next: { tags: ['result'] } })
+  const res = await fetch(`${CANONICAL_URL}/api/question/result?${querystring}`, { cache: 'no-store' })
   if (!res.ok) throw new Error('Failed to fetch data')
 
   return await res.json()
