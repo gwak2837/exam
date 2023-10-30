@@ -5,8 +5,9 @@ import { useState } from 'react'
 import useSWRMutation from 'swr/mutation'
 import { useAnswerStore, useExamStore } from '@/app/exam/[questionCount]/zustand'
 import Modal from '@/components/atoms/Modal'
-import LoadingSpinner from '@/svgs/LoadingSpinner'
-import { fetchPOST } from '@/utils/swr'
+import LoadingSpinner from '@/svg/LoadingSpinner'
+import { fetchPOST } from '@/util/swr'
+import useRevalidateExam from '@/app/exam/[questionCount]/useRevalidateExam'
 
 export default function 새로하기Button() {
   const [showModal, setShowModal] = useState(false)
@@ -18,12 +19,12 @@ export default function 새로하기Button() {
   const { resetExam } = useExamStore()
   const { resetAnswer } = useAnswerStore()
 
-  const { trigger, isMutating } = useSWRMutation(`/api/question/${questionCount}`, fetchPOST)
+  const { trigger: revalidateExam, isMutating } = useRevalidateExam({ examId: questionCount })
 
   async function handle좋아요ButtonClick() {
     resetExam(questionCount)
     resetAnswer(questionCount)
-    await trigger()
+    await revalidateExam()
     router.replace(`/exam/${questionCount}?i=1`)
     router.refresh()
     setShowModal(false)
