@@ -42,13 +42,13 @@ export default async function Page({ searchParams }: PageProps) {
   )
 }
 
-function get시험난이도(questionCount: string) {
+function get시험난이도(questionCount: number) {
   switch (questionCount) {
-    case '10':
+    case 10:
       return 'Child'
-    case '20':
+    case 20:
       return 'Teen'
-    case '30':
+    case 30:
       return 'Adult'
     default:
       return 'Custom'
