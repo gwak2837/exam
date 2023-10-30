@@ -26,7 +26,7 @@ export default function Result({ result }: Props) {
   const 상세 = result.상세
 
   const { exams } = useExamStore()
-  const exam = exams[examId]
+  const exam = exams[examId] ?? []
 
   return (
     <div className="m-auto flex max-w-md flex-wrap justify-center gap-4">
