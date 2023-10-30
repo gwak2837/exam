@@ -16,9 +16,9 @@ export default function 새로풀기Button({ examId }: Props) {
   const { trigger: revalidateExam, isMutating } = useRevalidateExam({ examId })
 
   async function handle새로풀기Button() {
-    await revalidateExam()
     resetExam(examId)
     resetAnswer(examId)
+    await revalidateExam()
     router.push(`/exam/${examId}?i=1`)
   }
 
