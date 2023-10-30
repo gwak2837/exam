@@ -38,6 +38,7 @@ export default async function Page({ searchParams }: PageProps) {
         <새로풀기Button examId={result.문제개수} />
         <난이도선택하기Button />
       </div>
+      <pre>{JSON.stringify(result, null, 2)}</pre>
     </main>
   )
 }
