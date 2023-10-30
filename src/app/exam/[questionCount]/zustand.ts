@@ -3,7 +3,7 @@ import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { type TQuestion } from '@/common/exam'
 import { storage } from '@/common/zustand'
-import { xor } from '@/utils/math'
+import { xor } from '@/util/math'
 
 type ExamStore = {
   exams: Record<string, TQuestion[]>
