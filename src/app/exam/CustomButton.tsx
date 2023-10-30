@@ -40,7 +40,7 @@ export default function CustomButton() {
         </p>
       </button>
       <Modal open={open} onClose={() => setOpen(false)} showCloseButton showDragButton>
-        <form className=" grid gap-3 rounded-lg bg-white px-4 pb-4 pt-5 shadow-xl" onSubmit={handleSubmit}>
+        <form className="grid gap-3 rounded-lg bg-white px-4 pb-4 pt-5 shadow-xl" onSubmit={handleSubmit}>
           <h3 className="pr-4 text-lg font-medium">문제 개수를 입력해주세요</h3>
           <input
             className="w-full border px-2"

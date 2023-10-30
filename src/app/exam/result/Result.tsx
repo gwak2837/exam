@@ -1,8 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Fragment } from 'react'
-import { useAnswerStore, useExamStore } from '@/app/exam/[questionCount]/zustand'
+import { useExamStore } from '@/app/exam/[questionCount]/zustand'
 import GreenChecked from '@/svg/GreenChecked'
 import RedX from '@/svg/RedX'
 
@@ -28,8 +27,6 @@ export default function Result({ result }: Props) {
 
   const { exams } = useExamStore()
   const exam = exams[examId]
-
-  const { answers } = useAnswerStore()
 
   return (
     <div className="m-auto flex max-w-md flex-wrap justify-center gap-4">
