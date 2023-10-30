@@ -1,26 +1,44 @@
 'use client'
 
-import { useSearchParams } from 'next/navigation'
+import Link from 'next/link'
+import { Fragment } from 'react'
 import { useAnswerStore, useExamStore } from '@/app/exam/[questionCount]/zustand'
 import GreenChecked from '@/svg/GreenChecked'
 import RedX from '@/svg/RedX'
-import LoadingSpinner from '@/svg/LoadingSpinner'
 
 type Props = {
-  result: any
+  result: {
+    문제개수: number
+    정답개수: number
+    상세: Record<
+      string,
+      {
+        답안: string[]
+        정답: string[]
+        해설: string
+        isCorrect: boolean
+      }
+    >
+  }
 }
 
 export default function Result({ result }: Props) {
-  const { exams, setExam } = useExamStore()
+  const examId = result.문제개수
+  const 상세 = result.상세
+
+  const { exams } = useExamStore()
+  const exam = exams[examId]
+
   const { answers } = useAnswerStore()
 
-  const searchParams = useSearchParams()
-
   return (
-    <>
-      <pre className="overflow-x-scroll">{JSON.stringify({ result, answers }, null, 2)}</pre>
-      {/* <GreenChecked /> */}
-      {/* <RedX /> */}
-    </>
+    <div className="m-auto flex max-w-md flex-wrap justify-center gap-4">
+      {exam.map((question, i) => (
+        <Link key={question.id} href={`/exam/${examId}?i=${i + 1}`} className="flex items-center gap-2">
+          <span>{i + 1}</span>
+          {상세[question.id].isCorrect ? <GreenChecked className="w-12" /> : <RedX className="w-12" />}
+        </Link>
+      ))}
+    </div>
   )
 }

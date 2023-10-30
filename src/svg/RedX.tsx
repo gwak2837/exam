@@ -1,6 +1,12 @@
-export default function RedX() {
+type Props = {
+  className: string
+  width?: string
+  height?: string
+}
+
+export default function RedX(props: Props) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 122.879">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 122.879" {...props}>
       <g>
         <path
           fill="#FF4141"
