@@ -16,7 +16,7 @@ const Selections = dynamic(async () => await import('@/app/exam/[questionCount]/
 
 async function getQuestions(questionCount: number) {
   const res = await fetch(`${CANONICAL_URL}/api/question/${questionCount}`, {
-    // next: { tags: [`question:${questionCount}`] },
+    // next: { tags: [`question:${questionCount}`] }, // revalidateTag 함수에 await을 사용할 수 있을 때 활성화하기
     cache: 'no-store',
   })
   if (!res.ok) throw new Error('Failed to fetch data')
