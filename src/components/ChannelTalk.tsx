@@ -9,6 +9,8 @@ export default function ChannelTalk() {
     ChannelService.boot({
       pluginKey: '882e72cc-247f-4307-b3d9-ada158054a4c',
     })
+
+    return () => ChannelService.shutdown()
   }, [])
 
   return null
