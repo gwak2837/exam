@@ -4,6 +4,7 @@ import { Analytics } from '@vercel/analytics/react'
 import type { Metadata, Viewport } from 'next'
 import localFont from 'next/font/local'
 import { type ReactNode } from 'react'
+import dynamic from 'next/dynamic'
 import ReactHotToast from '@/components/ReactHotToast'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import {
@@ -16,7 +17,10 @@ import {
   KEYWORDS,
   THEME_COLOR,
 } from '@/common/constants'
-import ChannelTalk from '@/components/ChannelTalk'
+
+const ChannelTalk = dynamic(async () => await import('@/components/ChannelTalk'), {
+  ssr: false,
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL(CANONICAL_URL),
