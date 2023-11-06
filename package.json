@@ -21,6 +21,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@channel.io/channel-web-sdk-loader": "^1.1.2",
     "@sinclair/typebox": "^0.31.20",
     "@vercel/analytics": "^1.1.1",
     "@vercel/kv": "^0.2.3",

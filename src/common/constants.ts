@@ -1,5 +1,5 @@
 // 자동
-export const NODE_ENV = process.env.NODE_ENV as string
+export const NODE_ENV = process.env.NODE_ENV
 export const NEXT_PUBLIC_VERCEL_URL = process.env.NEXT_PUBLIC_VERCEL_URL as string
 const NEXT_PUBLIC_VERCEL_ENV = process.env.NEXT_PUBLIC_VERCEL_ENV as string
 
@@ -24,6 +24,7 @@ export const BLOB_READ_WRITE_TOKEN = process.env.BLOB_READ_WRITE_TOKEN as string
 
 // 환경 개별
 export const NEXT_PUBLIC_GA_ID = process.env.NEXT_PUBLIC_GA_ID as string
+export const NEXT_PUBLIC_CHANNELTALK_PLUGIN_KEY = process.env.NEXT_PUBLIC_CHANNELTALK_PLUGIN_KEY as string
 
 // 상수
 export const APPLICATION_NAME = 'BDSM 고사 - BDSM 지식 테스트'

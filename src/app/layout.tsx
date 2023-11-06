@@ -16,6 +16,7 @@ import {
   KEYWORDS,
   THEME_COLOR,
 } from '@/common/constants'
+import ChannelTalk from '@/components/ChannelTalk'
 
 export const metadata: Metadata = {
   metadataBase: new URL(CANONICAL_URL),
@@ -108,6 +109,7 @@ export default function RootLayout({ children }: Props) {
       </body>
       <Analytics />
       <GoogleAnalytics />
+      <ChannelTalk />
     </html>
   )
 }
