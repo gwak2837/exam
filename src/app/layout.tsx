@@ -108,12 +108,12 @@ export default function RootLayout({ children }: Props) {
 
       <body className={myFont.className}>
         {children}
-        <ReactHotToast />
         <div id="modal-root" />
+        <ReactHotToast />
+        <ChannelTalk />
       </body>
       <Analytics />
       <GoogleAnalytics />
-      <ChannelTalk />
     </html>
   )
 }
