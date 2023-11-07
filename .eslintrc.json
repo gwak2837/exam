@@ -10,7 +10,13 @@
     "no-console": "warn",
     "prefer-const": "off",
 
-    "import/order": "warn",
+    "import/order": [
+      "warn",
+      {
+        "newlines-between": "always",
+        "alphabetize": { "order": "asc", "caseInsensitive": true }
+      }
+    ],
 
     "react/display-name": "off",
     // "react/jsx-sort-props": "warn",

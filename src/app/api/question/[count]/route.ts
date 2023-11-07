@@ -1,5 +1,6 @@
 import { revalidateTag } from 'next/cache'
 import { type NextRequest } from 'next/server'
+
 import { exam } from '@/common/exam'
 import { type RouteProps } from '@/common/types'
 import { shuffle } from '@/util/utils'

@@ -1,4 +1,5 @@
 import useSWRMutation from 'swr/mutation'
+
 import { fetchPOST } from '@/util/swr'
 
 type Props = {

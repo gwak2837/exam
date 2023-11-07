@@ -2,10 +2,11 @@
 
 import { useParams, useRouter } from 'next/navigation'
 import { useState } from 'react'
+
+import useRevalidateExam from '@/app/exam/[questionCount]/useRevalidateExam'
 import { useAnswerStore, useExamStore } from '@/app/exam/[questionCount]/zustand'
 import Modal from '@/components/atoms/Modal'
 import LoadingSpinner from '@/svg/LoadingSpinner'
-import useRevalidateExam from '@/app/exam/[questionCount]/useRevalidateExam'
 
 export default function 새로하기Button() {
   const [showModal, setShowModal] = useState(false)

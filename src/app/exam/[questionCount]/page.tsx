@@ -1,8 +1,9 @@
 import dynamic from 'next/dynamic'
-import { CANONICAL_URL } from '@/common/constants'
-import { type PageProps } from '@/common/types'
+
 import { QuestionFallback } from '@/app/exam/[questionCount]/Question'
 import { SelectionsFallback } from '@/app/exam/[questionCount]/Selections'
+import { CANONICAL_URL } from '@/common/constants'
+import { type PageProps } from '@/common/types'
 
 const Question = dynamic(async () => await import('@/app/exam/[questionCount]/Question'), {
   ssr: false,

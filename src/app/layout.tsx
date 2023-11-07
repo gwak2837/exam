@@ -2,11 +2,10 @@ import './globals.css'
 
 import { Analytics } from '@vercel/analytics/react'
 import type { Metadata, Viewport } from 'next'
+import dynamic from 'next/dynamic'
 import localFont from 'next/font/local'
 import { type ReactNode } from 'react'
-import dynamic from 'next/dynamic'
-import ReactHotToast from '@/components/ReactHotToast'
-import GoogleAnalytics from '@/components/GoogleAnalytics'
+
 import {
   APPLICATION_NAME,
   APPLICATION_SHORT_NAME,
@@ -17,6 +16,8 @@ import {
   KEYWORDS,
   THEME_COLOR,
 } from '@/common/constants'
+import GoogleAnalytics from '@/components/GoogleAnalytics'
+import ReactHotToast from '@/components/ReactHotToast'
 
 const ChannelTalk = dynamic(async () => await import('@/components/ChannelTalk'), {
   ssr: false,

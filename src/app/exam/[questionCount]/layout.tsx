@@ -1,13 +1,12 @@
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import dynamic from 'next/dynamic'
-import 새로하기Button from '@/app/exam/[questionCount]/새로하기Button'
-
-import { type LayoutProps } from '@/common/types'
-import 이전Button from '@/app/exam/[questionCount]/이전Button'
 import { ProgressBarFallback } from '@/app/exam/[questionCount]/ProgressBar'
 import { 다음ButtonFallback } from '@/app/exam/[questionCount]/다음Button'
+import 새로하기Button from '@/app/exam/[questionCount]/새로하기Button'
+import 이전Button from '@/app/exam/[questionCount]/이전Button'
+import { type LayoutProps } from '@/common/types'
 
 const 다음Button = dynamic(async () => await import('@/app/exam/[questionCount]/다음Button'), {
   ssr: false,

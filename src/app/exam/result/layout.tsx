@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+
 import { type LayoutProps } from '@/common/types'
 
 export default async function Layout({ children }: LayoutProps) {
