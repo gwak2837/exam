@@ -1,43 +1,41 @@
-import dynamic from 'next/dynamic'
+'use client'
 
+import dynamic from 'next/dynamic'
+import { useSearchParams } from 'next/navigation'
+import useSWR from 'swr'
+
+import Loading from '@/app/exam/[questionCount]/loading'
 import { ResultFallback } from '@/app/exam/result/Result'
 import 난이도선택하기Button from '@/app/exam/result/난이도선택하기Button'
 import 다시풀기Button from '@/app/exam/result/다시풀기Button'
 import 새로풀기Button from '@/app/exam/result/새로풀기Button'
-import { CANONICAL_URL } from '@/common/constants'
-import { type PageProps } from '@/common/types'
-import { toQuerystring } from '@/util/utils'
+import { fetchJSON } from '@/util/swr'
 
 const Result = dynamic(async () => await import('@/app/exam/result/Result'), { ssr: false, loading: ResultFallback })
 
-async function getResult(querystring: string) {
-  const res = await fetch(`${CANONICAL_URL}/api/question/result?${querystring}`, { cache: 'no-store' })
-  if (!res.ok) throw new Error('Failed to fetch data')
+export default function Page() {
+  const searchParams = useSearchParams()
 
-  return await res.json()
-}
+  const { data, isLoading } = useSWR(`/api/question/result?${searchParams}`, fetchJSON)
 
-export default async function Page({ searchParams }: PageProps) {
-  const result = await getResult(toQuerystring(searchParams))
-
-  const score = (100 * result.정답개수) / result.문제개수
+  if (isLoading) return <Loading />
 
   return (
     <main className="flex grow flex-col p-4 sm:p-8 md:p-12 lg:p-16">
       <h1 className="text-center text-3xl">BDSM 고사</h1>
-      <h2 className="my-8 text-center">난이도: {get시험난이도(result.문제개수)}</h2>
+      <h2 className="my-8 text-center">난이도: {get시험난이도(data.문제개수)}</h2>
       <h3 className="my-2 text-center text-2xl">
-        <b className="text-violet-900">{result.정답개수}</b> / {result.문제개수}
+        <b className="text-violet-900">{data.정답개수}</b> / {data.문제개수}
       </h3>
       <h4 className="my-2 flex items-center justify-center gap-2 text-lg">
-        등급: <b className="text-4xl text-violet-950">{get등급(score)}</b>
+        등급: <b className="text-4xl text-violet-950">{get등급((100 * data.정답개수) / data.문제개수)}</b>
       </h4>
       <div className="h-16" />
-      <Result result={result} />
+      <Result result={data} />
       <div className="h-16" />
       <div className="grid gap-4">
-        <다시풀기Button examId={result.문제개수} />
-        <새로풀기Button examId={result.문제개수} />
+        <다시풀기Button examId={data.문제개수} />
+        <새로풀기Button examId={data.문제개수} />
         <난이도선택하기Button />
       </div>
     </main>
