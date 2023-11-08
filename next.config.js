@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   compiler: {
-    ...(process.env.NODE_ENV === 'production' && { removeConsole: { exclude: ['error'] } }),
+    ...(process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' && { removeConsole: { exclude: ['error'] } }),
   },
   eslint: {
     ignoreDuringBuilds: true,
