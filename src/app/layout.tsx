@@ -4,6 +4,7 @@ import { Analytics } from '@vercel/analytics/react'
 import type { Metadata, Viewport } from 'next'
 import dynamic from 'next/dynamic'
 import localFont from 'next/font/local'
+import Script from 'next/script'
 import { type ReactNode } from 'react'
 
 import {
@@ -106,6 +107,7 @@ export default function RootLayout({ children }: Props) {
       <meta name="rating" content="general" />
       <meta name="revisit-after" content="3 days" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="google-adsense-account" content="ca-pub-9227501485692453" />
 
       <body className={myFont.className}>
         {children}
@@ -113,8 +115,14 @@ export default function RootLayout({ children }: Props) {
         <ReactHotToast />
         <ChannelTalk />
       </body>
+
       <Analytics />
       <GoogleAnalytics />
+      <Script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9227501485692453"
+        crossOrigin="anonymous"
+      />
     </html>
   )
 }
