@@ -5,7 +5,6 @@ import type { Metadata, Viewport } from 'next'
 import dynamic from 'next/dynamic'
 import localFont from 'next/font/local'
 import Script from 'next/script'
-import { type ReactNode } from 'react'
 
 import {
   APPLICATION_NAME,
@@ -17,6 +16,7 @@ import {
   KEYWORDS,
   THEME_COLOR,
 } from '@/common/constants'
+import { type LayoutProps } from '@/common/types'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import ReactHotToast from '@/components/ReactHotToast'
 
@@ -92,11 +92,7 @@ const myFont = localFont({
   ],
 })
 
-type Props = {
-  children: ReactNode
-}
-
-export default function RootLayout({ children }: Props) {
+export default function RootLayout({ children }: LayoutProps) {
   return (
     <html lang="ko" className="text-base md:text-lg">
       <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
