@@ -119,9 +119,11 @@ export default function RootLayout({ children }: Props) {
       <Analytics />
       <GoogleAnalytics />
       <Script
+        id="google-adsense"
         async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9227501485692453"
         crossOrigin="anonymous"
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9227501485692453"
+        strategy="lazyOnload"
       />
     </html>
   )
