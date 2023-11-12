@@ -47,15 +47,14 @@ export default function Result({ result }: Props) {
           <div className="grid justify-center gap-2 text-sm">
             {exam.map(
               (question, i) =>
-                !상세[question.id]?.isCorrect &&
-                상세[question.id]?.해설 && (
+                !상세[question.id]?.isCorrect && (
                   <Link
                     key={question.id}
                     href={`/exam/${examId}?i=${i + 1}`}
                     className="flex gap-2 text-red-800 transition-colors hover:text-red-600"
                   >
                     <span>{i + 1}.</span>
-                    <div>{상세[question.id]?.해설}</div>
+                    <div>{상세[question.id]?.해설 || '(작성 중)'}</div>
                   </Link>
                 ),
             )}

@@ -17,7 +17,7 @@ export default function Home() {
       <div className="flex flex-col items-center gap-2">
         <테스트보기Link />
         <div className="h-60 rounded-lg border bg-white/50 p-2 sm:h-52 md:h-40">
-          <div className="grid h-full max-w-prose gap-2 overflow-y-auto text-sm text-slate-700">
+          <div className="grid h-full max-w-prose gap-2 overflow-y-auto text-sm text-gray-700">
             <p>
               본 테스트는 BDSM에 대한 지식과 이해도를 검증하기 위한 목적으로 제작되었습니다. 테스트 문항 중에는 성적
               행위와 관련된 내용이 포함되어 있을 수 있음을 알려 드립니다. 각 문항은 성인 대상의 성적 표현과 테마를
@@ -39,7 +39,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <footer className="flex flex-wrap justify-center gap-x-2 whitespace-nowrap text-slate-400">
+      <footer className="flex flex-wrap justify-center gap-x-2 whitespace-nowrap text-gray-400">
         <span>COPYRIGHT AT bdsm.vercel.app</span>
         <span>ALL RIGHT RESERVED</span>
       </footer>
