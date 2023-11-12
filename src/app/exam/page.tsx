@@ -16,7 +16,7 @@ export default async function Page() {
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
         >
           <h3 className="mb-3 text-2xl font-semibold">
-            Child &nbsp;
+            Junior &nbsp;
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
               <Image src="/images/arrow-right.svg" alt="right-arrow" width={20} height={20} />
             </span>
@@ -30,7 +30,7 @@ export default async function Page() {
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
         >
           <h3 className="mb-3 text-2xl font-semibold">
-            Teen &nbsp;
+            Senior &nbsp;
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
               <Image src="/images/arrow-right.svg" alt="right-arrow" width={20} height={20} />
             </span>
@@ -44,7 +44,7 @@ export default async function Page() {
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
         >
           <h3 className="mb-3 text-2xl font-semibold">
-            Adult &nbsp;
+            Staff &nbsp;
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
               <Image src="/images/arrow-right.svg" alt="right-arrow" width={20} height={20} />
             </span>
