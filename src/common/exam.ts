@@ -10,6 +10,7 @@ export const exam = [
       { id: '4', label: 'Basic, Dynamic, Stable, Mingle' },
     ],
     정답: ['1'],
+    해설: 'BDSM은 성인 사이의 동의 하에 이루어지는 특정 성적 행위를 가리키는 용어로 Bondage(구속), Discipline(규율), Dominance(지배), Submission(복종)을 의미합니다',
   },
   {
     id: '2',
@@ -23,6 +24,7 @@ export const exam = [
       { id: '6', label: '굴복' },
     ],
     정답: ['1'],
+    해설: 'Bondage는 한국어로 구속을 의미합니다',
   },
   {
     id: '3',
@@ -37,12 +39,13 @@ export const exam = [
   },
   {
     id: '4',
-    문제: 'BDSM 활동에 참여하는 이들이 주로 신경 써야 하는 원칙은 무엇인가요?',
+    문제: 'BDSM 활동에 참여하는 이들이 가장 신경 써야 하는 원칙은 무엇인가요?',
     선택지: [
       { id: '1', label: '동의' },
       { id: '2', label: '비밀유지' },
       { id: '3', label: '힘의 발휘' },
       { id: '4', label: '통제 불능' },
+      { id: '5', label: '자신의 행복' },
     ],
     정답: ['1'],
   },

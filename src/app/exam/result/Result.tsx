@@ -30,19 +30,37 @@ export default function Result({ result }: Props) {
   const exam = exams[examId] ?? []
 
   return (
-    <div className="m-auto flex max-w-md flex-wrap justify-center gap-4">
-      {exam.map((question, i) => (
-        <Link key={question.id} href={`/exam/${examId}?i=${i + 1}`} className="flex items-center gap-2">
-          <span>{i + 1}</span>
-          {상세[question.id]?.isCorrect ? <GreenChecked className="w-12" /> : <RedX className="w-12" />}
-        </Link>
-      ))}
-    </div>
+    <>
+      <div className="m-auto flex max-w-md flex-wrap justify-center gap-4">
+        {exam.map((question, i) => (
+          <Link key={question.id} href={`/exam/${examId}?i=${i + 1}`} className="flex items-center gap-2">
+            <span>{i + 1}</span>
+            {상세[question.id]?.isCorrect ? <GreenChecked className="w-12" /> : <RedX className="w-12" />}
+          </Link>
+        ))}
+      </div>
+      <div className="grid justify-center gap-2 pt-4 text-sm">
+        {exam.map(
+          (question, i) =>
+            !상세[question.id]?.isCorrect &&
+            상세[question.id]?.해설 && (
+              <Link
+                key={question.id}
+                href={`/exam/${examId}?i=${i + 1}`}
+                className="flex gap-2 text-red-800 transition-colors hover:text-red-600"
+              >
+                <span>{i + 1}.</span>
+                <div>{상세[question.id]?.해설}</div>
+              </Link>
+            ),
+        )}
+      </div>
+    </>
   )
 }
 
 export function ResultFallback() {
   return (
-    <div className="m-auto flex h-36 w-full max-w-md animate-pulse flex-wrap justify-center gap-4 rounded-2xl bg-white"></div>
+    <div className="m-auto flex h-36 w-full max-w-md animate-pulse flex-wrap justify-center gap-4 rounded-2xl bg-white" />
   )
 }
