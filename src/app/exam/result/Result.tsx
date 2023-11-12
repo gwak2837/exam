@@ -29,6 +29,8 @@ export default function Result({ result }: Props) {
   const { exams } = useExamStore()
   const exam = exams[examId] ?? []
 
+  const wrongAnswers = exam.filter((question) => !상세[question.id]?.isCorrect && 상세[question.id]?.해설)
+
   return (
     <>
       <div className="m-auto flex max-w-md flex-wrap justify-center gap-4">
@@ -39,22 +41,27 @@ export default function Result({ result }: Props) {
           </Link>
         ))}
       </div>
-      <div className="grid justify-center gap-2 pt-4 text-sm">
-        {exam.map(
-          (question, i) =>
-            !상세[question.id]?.isCorrect &&
-            상세[question.id]?.해설 && (
-              <Link
-                key={question.id}
-                href={`/exam/${examId}?i=${i + 1}`}
-                className="flex gap-2 text-red-800 transition-colors hover:text-red-600"
-              >
-                <span>{i + 1}.</span>
-                <div>{상세[question.id]?.해설}</div>
-              </Link>
-            ),
-        )}
-      </div>
+      {wrongAnswers.length > 0 && (
+        <>
+          <h4 className="mb-4 mt-8 text-center text-xl">해설</h4>
+          <div className="grid justify-center gap-2 text-sm">
+            {exam.map(
+              (question, i) =>
+                !상세[question.id]?.isCorrect &&
+                상세[question.id]?.해설 && (
+                  <Link
+                    key={question.id}
+                    href={`/exam/${examId}?i=${i + 1}`}
+                    className="flex gap-2 text-red-800 transition-colors hover:text-red-600"
+                  >
+                    <span>{i + 1}.</span>
+                    <div>{상세[question.id]?.해설}</div>
+                  </Link>
+                ),
+            )}
+          </div>
+        </>
+      )}
     </>
   )
 }

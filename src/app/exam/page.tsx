@@ -9,7 +9,9 @@ export default async function Page() {
       <Link href="/" className="flex place-items-center gap-2 whitespace-nowrap">
         <h1>By</h1> <Image src="/bdsm-logo.svg" alt="BDSM Logo" width={24} height={24} priority />
       </Link>
-      <h2 className="text-xl font-semibold">문제 개수를 선택해주세요</h2>
+      <h2 className="text-xl font-semibold">
+        난이도<span className="text-xs">(문제 개수)</span>를 선택해주세요
+      </h2>
       <nav className="grid text-center sm:mb-0 sm:grid-cols-2 sm:text-left lg:mb-0 lg:grid-cols-4">
         <Link
           href="/exam/10?i=1"

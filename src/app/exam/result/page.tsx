@@ -23,14 +23,16 @@ export default function Page() {
   return (
     <main className="flex grow flex-col p-4 sm:p-8 md:p-12 lg:p-16">
       <h1 className="text-center text-3xl">BDSM 고사</h1>
-      <h2 className="my-8 text-center">난이도: {get시험난이도(data.문제개수)}</h2>
-      <h3 className="my-2 text-center text-2xl">
-        <b className="text-violet-900">{data.정답개수}</b> / {data.문제개수}
-      </h3>
-      <h4 className="my-2 flex items-center justify-center gap-2 text-lg">
-        등급: <b className="text-4xl text-violet-950">{get등급((100 * data.정답개수) / data.문제개수)}</b>
+      <h4 className="my-8 text-center">
+        난이도: {get시험난이도(data.문제개수)} <span className="text-xs">({data.문제개수}개)</span>
       </h4>
-      <div className="h-16" />
+      <h2 className="my-2 text-center text-2xl">
+        <b className="text-violet-900">{data.정답개수}</b> / {data.문제개수}
+      </h2>
+      <h3 className="my-2 flex items-center justify-center gap-2 text-lg">
+        등급: <b className="text-4xl text-violet-950">{get등급((100 * data.정답개수) / data.문제개수)}</b>
+      </h3>
+      <div className="h-8" />
       <Result result={data} />
       <div className="h-16" />
       <div className="grid gap-4">
