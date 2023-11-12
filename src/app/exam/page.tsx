@@ -9,7 +9,7 @@ export default async function Page() {
       <Link href="/" className="flex place-items-center gap-2 whitespace-nowrap">
         <h1>By</h1> <Image src="/bdsm-logo.svg" alt="BDSM Logo" width={24} height={24} priority />
       </Link>
-      <h2 className="text-xl font-semibold">난이도를 선택해주세요</h2>
+      <h2 className="text-xl font-semibold">문제 개수를 선택해주세요</h2>
       <nav className="grid text-center sm:mb-0 sm:grid-cols-2 sm:text-left lg:mb-0 lg:grid-cols-4">
         <Link
           href="/exam/10?i=1"
@@ -22,7 +22,7 @@ export default async function Page() {
             </span>
           </h3>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            BDSM에 대한 초보자 또는 호기심 많은 사용자를 대상으로 한 기본적인 테스트
+            BDSM에 대한 초보자 또는 호기심 많은 사용자를 대상으로 한 기본적인 테스트 (10개)
           </p>
         </Link>
         <Link
@@ -36,7 +36,7 @@ export default async function Page() {
             </span>
           </h3>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            더 깊이 있는 지식을 시험해 보고 싶은 사용자를 위한 테스트
+            더 깊이 있는 지식을 시험해 보고 싶은 사용자를 위한 테스트 (20개)
           </p>
         </Link>
         <Link
@@ -50,7 +50,7 @@ export default async function Page() {
             </span>
           </h3>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            BDSM에 대한 깊은 경험을 가진 사람들을 위한 도전적인 테스트
+            BDSM에 대한 깊은 경험을 가진 사람들을 위한 도전적인 테스트 (30개)
           </p>
         </Link>
         <CustomButton />
