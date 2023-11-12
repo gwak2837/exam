@@ -37,7 +37,7 @@ export default function CustomButton() {
           </span>
         </h3>
         <p className="m-0 max-w-[30ch] text-sm opacity-50">
-          광범위한 지식을 가지고 BDSM 세계를 탐구하는 고수를 위한 테스트
+          광범위한 지식을 가지고 BDSM 세계를 탐구하는 고수를 위한 테스트 <span className="text-xs">(1~50개)</span>
         </p>
       </button>
       <Modal open={open} onClose={() => setOpen(false)} showCloseButton showDragButton>

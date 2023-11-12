@@ -24,7 +24,8 @@ export default async function Page() {
             </span>
           </h3>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            BDSM에 대한 초보자 또는 호기심 많은 사용자를 대상으로 한 기본적인 테스트 (10개)
+            BDSM에 대한 초보자 또는 호기심 많은 사용자를 대상으로 한 기본적인 테스트{' '}
+            <span className="text-xs">(10개)</span>
           </p>
         </Link>
         <Link
@@ -38,7 +39,7 @@ export default async function Page() {
             </span>
           </h3>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            더 깊이 있는 지식을 시험해 보고 싶은 사용자를 위한 테스트 (20개)
+            더 깊이 있는 지식을 시험해 보고 싶은 사용자를 위한 테스트 <span className="text-xs">(20개)</span>
           </p>
         </Link>
         <Link
@@ -52,7 +53,7 @@ export default async function Page() {
             </span>
           </h3>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            BDSM에 대한 깊은 경험을 가진 사람들을 위한 도전적인 테스트 (30개)
+            BDSM에 대한 깊은 경험을 가진 사람들을 위한 도전적인 테스트 <span className="text-xs">(30개)</span>
           </p>
         </Link>
         <CustomButton />
