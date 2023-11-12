@@ -45,11 +45,11 @@ export default function Page() {
 function get시험난이도(questionCount: number) {
   switch (questionCount) {
     case 10:
-      return 'Child'
+      return 'Junior'
     case 20:
-      return 'Teen'
+      return 'Senior'
     case 30:
-      return 'Adult'
+      return 'Staff'
     default:
       return 'Custom'
   }
