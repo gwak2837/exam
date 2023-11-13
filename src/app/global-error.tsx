@@ -12,6 +12,7 @@ export default function GlobalError({ error, reset }: Props) {
         <h2>문제가 발생했어요</h2>
         <span className="text-sm">{error.digest}</span>
         <p>{error.message}</p>
+        <p>문제가 계속되면 채널톡을 통해 문의주세요</p>
         <button onClick={() => reset()}>다시 시도하기</button>
       </body>
     </html>

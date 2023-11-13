@@ -6,7 +6,7 @@ type Answers = Record<string, string[]>
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
-  if (!validate(searchParams)) return new Response('Invalid querystring', { status: 400 })
+  if (!validate(searchParams)) return new Response(`제출한 답안 형식이 잘못됐어요: ${searchParams}`, { status: 400 })
 
   const answers = Array.from(searchParams.keys()).reduce<Answers>((answers, questionId) => {
     answers[questionId] = searchParams.getAll(questionId)
@@ -35,5 +35,13 @@ export async function GET(request: Request) {
 }
 
 function validate(searchParams: URLSearchParams) {
-  return true
+  const numericRegex = /^\d+$/
+
+  return searchParams
+    .toString()
+    .split('&')
+    .every((pair) => {
+      const [key, value] = pair.split('=')
+      return numericRegex.test(key) && numericRegex.test(value)
+    })
 }

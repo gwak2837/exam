@@ -4,7 +4,6 @@ import dynamic from 'next/dynamic'
 import { useSearchParams } from 'next/navigation'
 import useSWR from 'swr'
 
-import Loading from '@/app/exam/result/loading'
 import { ResultFallback } from '@/app/exam/result/Result'
 import 난이도선택하기Button from '@/app/exam/result/난이도선택하기Button'
 import 다시풀기Button from '@/app/exam/result/다시풀기Button'
@@ -16,9 +15,10 @@ const Result = dynamic(async () => await import('@/app/exam/result/Result'), { s
 export default function ResultStatistics() {
   const searchParams = useSearchParams()
 
-  const { data, isLoading } = useSWR(`/api/question/result?${searchParams}`, fetchJSON)
-
-  if (isLoading) return <Loading />
+  const { data } = useSWR(`/api/question/result?${searchParams}`, fetchJSON, {
+    suspense: true,
+    // fallbackData: { 정답개수: '', 문제개수: '' }, // fallbackData 있으면 throw Error일 때 useSWR 내부에서 catch 하는 듯?
+  })
 
   return (
     <>
@@ -41,6 +41,7 @@ export default function ResultStatistics() {
 }
 
 function get등급(score: number) {
+  if (isNaN(score)) return '-'
   if (score === 100) return 'S'
   else if (score >= 95) return 'A+'
   else if (score >= 90) return 'A'
