@@ -10,9 +10,7 @@
   "files.autoSave": "onFocusChange",
   "files.eol": "\n",
   "search.exclude": {
-    "**/.git": true,
-    "**/.yarn": true,
-    "**/.pnp.*": true
+    "**/.git": true
   },
   "typescript.preferences.importModuleSpecifier": "non-relative",
 
