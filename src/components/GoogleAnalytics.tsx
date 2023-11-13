@@ -6,11 +6,9 @@ import { useEffect } from 'react'
 
 import { NEXT_PUBLIC_GA_ID } from '../common/constants'
 
-// https://developers.google.com/analytics/devguides/collection/gtagjs/pages
-export function pageview(url: string) {
-  window.gtag('config', NEXT_PUBLIC_GA_ID, {
-    page_path: url,
-  })
+// https://developers.google.com/analytics/devguides/collection/ga4/views?hl=ko&client_type=gtag
+export function pageview() {
+  window.gtag('config', NEXT_PUBLIC_GA_ID)
 }
 
 type GTagEvent = {
@@ -35,8 +33,7 @@ export default function GoogleAnalytics() {
   const pathname = usePathname()
 
   useEffect(() => {
-    if (!window.gtag || !pathname) return
-    pageview(pathname)
+    window.gtag?.('config', NEXT_PUBLIC_GA_ID)
   }, [pathname])
 
   // Next.js 13 에서 아직 미지원

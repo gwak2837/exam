@@ -12,8 +12,8 @@ export default function WarningIcon(props: Props) {
           x2="0"
           y1="45.47"
         >
-          <stop stop-color="#ffc515" />
-          <stop offset="1" stop-color="#ffd55b" />
+          <stop stopColor="#ffc515" />
+          <stop offset="1" stopColor="#ffd55b" />
         </linearGradient>
       </defs>
       <g transform="matrix(.85714 0 0 .85714-627.02-130.8)">
@@ -26,7 +26,7 @@ export default function WarningIcon(props: Props) {
           transform="matrix(1.05196 0 0 1.05196 796.53 161.87)"
           fill="#000"
           stroke="#40330d"
-          fill-opacity=".75"
+          fillOpacity=".75"
         />
       </g>
     </svg>
