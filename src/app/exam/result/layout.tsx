@@ -11,7 +11,13 @@ export default async function Layout({ children }: LayoutProps) {
           By <Image src="/bdsm-logo.svg" alt="bdsm-logo" width={24} height={24} priority />
         </Link>
       </div>
-      {children}
+      <main className="flex grow flex-col p-4 sm:p-8 md:p-12 lg:p-16">
+        <h1 className="text-center text-3xl">BDSM 고사</h1>
+        <h5 className="text-center text-xs text-gray-400">
+          <Link href="/">https://bdsm.vercel.app</Link>
+        </h5>
+        {children}
+      </main>
     </div>
   )
 }
