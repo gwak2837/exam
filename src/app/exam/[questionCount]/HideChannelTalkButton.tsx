@@ -7,7 +7,7 @@ import { waitForElement } from '@/util/dom'
 export default function HideChannelTalkButton() {
   useEffect(() => {
     void (async () => {
-      const element = await waitForElement(document, '#ch-plugin-entry > div')
+      const element = await waitForElement('#ch-plugin-entry > div')
       const channelTalkElement = element.shadowRoot?.querySelector('#ch-shadow-root-wrapper')
       channelTalkElement?.setAttribute('style', 'display: none')
     })()
