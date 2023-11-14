@@ -1,11 +1,11 @@
 import { type Metadata } from 'next'
 import dynamic from 'next/dynamic'
 
-import HideChannelTalkButton from '@/app/exam/[questionCount]/HideChannelTalkButton'
 import { QuestionFallback } from '@/app/exam/[questionCount]/Question'
 import { SelectionsFallback } from '@/app/exam/[questionCount]/Selections'
 import { CANONICAL_URL } from '@/common/constants'
 import { type PageProps } from '@/common/types'
+import HideChannelTalkButton from '@/components/HideChannelTalkButton'
 
 const Question = dynamic(async () => await import('@/app/exam/[questionCount]/Question'), {
   ssr: false,
