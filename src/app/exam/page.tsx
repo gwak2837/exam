@@ -1,7 +1,12 @@
+import { type Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
 import CustomButton from '@/app/exam/CustomButton'
+
+export const metadata: Metadata = {
+  title: '난이도 선택 - BDSM 고사',
+}
 
 export default async function Page() {
   return (

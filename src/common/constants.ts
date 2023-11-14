@@ -27,10 +27,10 @@ export const NEXT_PUBLIC_GA_ID = process.env.NEXT_PUBLIC_GA_ID as string
 export const NEXT_PUBLIC_CHANNELTALK_PLUGIN_KEY = process.env.NEXT_PUBLIC_CHANNELTALK_PLUGIN_KEY as string
 
 // 상수
-export const APPLICATION_NAME = 'BDSM 고사 - BDSM 지식 테스트'
+export const APPLICATION_NAME = 'BDSM 고사'
 export const APPLICATION_SHORT_NAME = 'BDSM 고사'
 export const DESCRIPTION = 'BDSM 고사에서는 BDSM에 대한 깊이 있는 지식을 테스트해 볼 수 있어요'
-export const KEYWORDS = `${APPLICATION_SHORT_NAME},BDSM,exam,test` // 최대 10개
+export const KEYWORDS = `${APPLICATION_SHORT_NAME},BDSM,exam,test,지식,테스트,퀴즈` // 최대 10개
 export const CATEGORY = 'BDSM'
 export const AUTHOR = ''
 export const THEME_COLOR = '#5f0080'

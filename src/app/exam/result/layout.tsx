@@ -1,7 +1,12 @@
+import { type Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
 import { type LayoutProps } from '@/common/types'
+
+export const metadata: Metadata = {
+  title: '결과 - BDSM 고사',
+}
 
 export default async function Layout({ children }: LayoutProps) {
   return (
