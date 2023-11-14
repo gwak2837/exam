@@ -1,5 +1,7 @@
+import { type Metadata } from 'next'
 import dynamic from 'next/dynamic'
 
+import HideChannelTalkButton from '@/app/exam/[questionCount]/HideChannelTalkButton'
 import { QuestionFallback } from '@/app/exam/[questionCount]/Question'
 import { SelectionsFallback } from '@/app/exam/[questionCount]/Selections'
 import { CANONICAL_URL } from '@/common/constants'
@@ -14,6 +16,10 @@ const Selections = dynamic(async () => await import('@/app/exam/[questionCount]/
   ssr: false,
   loading: SelectionsFallback,
 })
+
+export const metadata: Metadata = {
+  title: '문제 - BDSM 고사',
+}
 
 async function getQuestions(questionCount: number) {
   const res = await fetch(`${CANONICAL_URL}/api/question/${questionCount}`, {
@@ -37,6 +43,7 @@ export default async function Page({ params, searchParams }: PageProps) {
         <Question questions={questions} />
       </div>
       <Selections />
+      <HideChannelTalkButton />
     </main>
   )
 }
