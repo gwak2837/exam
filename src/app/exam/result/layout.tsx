@@ -11,16 +11,17 @@ export const metadata: Metadata = {
 export default async function Layout({ children }: LayoutProps) {
   return (
     <div className="mx-auto flex min-h-[100dvh] max-w-screen-lg flex-col">
-      <div className="sticky top-0 flex items-end justify-center gap-4 border-b border-gray-200 p-4 backdrop-blur sm:px-8 md:px-12 lg:border-b-0 lg:px-16">
+      <div className="sticky top-0 grid place-items-center border-b border-gray-200 p-4 backdrop-blur sm:px-8 md:px-12 lg:border-b-0 lg:px-16">
         <Link href="/" className="flex place-items-center gap-2 whitespace-nowrap">
           By <Image src="/bdsm-logo.svg" alt="bdsm-logo" width={24} height={24} priority />
         </Link>
-      </div>
-      <main className="flex grow flex-col p-4 sm:p-8 md:p-12 lg:p-16">
-        <h1 className="text-center text-3xl">BDSM 고사</h1>
         <h5 className="text-center text-xs text-gray-400">
           <Link href="/">https://bdsm.vercel.app</Link>
         </h5>
+      </div>
+      <main className="flex grow flex-col p-4 sm:p-8 md:p-12 lg:p-16">
+        <h1 className="text-center text-3xl">BDSM 고사 결과</h1>
+
         {children}
       </main>
     </div>
