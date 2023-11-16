@@ -82,7 +82,9 @@ export default function Modal({ children, open, onClose, showCloseButton, showDr
     document.addEventListener('touchcancel', () => document.removeEventListener('touchmove', moveModal), { once: true })
   }
 
-  const o = String(open)
+  const modalBackground = `fixed inset-0 z-20 flex items-center justify-center bg-black/20 transition duration-300 ${
+    open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
+  }`
 
   // --
   const [isMounted, setIsMounted] = useState(false)
@@ -94,10 +96,7 @@ export default function Modal({ children, open, onClose, showCloseButton, showDr
   if (!isMounted) return null
 
   return createPortal(
-    <div
-      className={`fixed inset-0 z-20 flex items-center justify-center bg-black/20 transition duration-300 ${c.show[o]}`}
-      onClick={closeModal}
-    >
+    <div className={modalBackground} onClick={closeModal}>
       {showCloseButton && (
         <Image
           src="/images/x.svg"
@@ -109,7 +108,7 @@ export default function Modal({ children, open, onClose, showCloseButton, showDr
         />
       )}
       <div
-        className={`absolute transition duration-300 ${c.scale[o]}`}
+        className={`absolute transition duration-300 ${open ? 'scale-100' : 'scale-90'}`}
         onClick={(e) => e.stopPropagation()}
         ref={modalRef}
       >
@@ -128,15 +127,4 @@ export default function Modal({ children, open, onClose, showCloseButton, showDr
     </div>,
     document.getElementById('modal-root') ?? document.body,
   )
-}
-
-const c: Record<string, any> = {
-  scale: {
-    true: 'scale-100',
-    false: 'scale-90',
-  },
-  show: {
-    true: 'opacity-100 pointer-events-auto',
-    false: 'opacity-0 pointer-events-none',
-  },
 }
