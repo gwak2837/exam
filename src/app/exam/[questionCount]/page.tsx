@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   title: '문제 - BDSM 고사',
 }
 
-async function getQuestions(questionCount: number) {
+async function getQuestions(questionCount: string) {
   const res = await fetch(`${CANONICAL_URL}/api/question/${questionCount}`, {
     // next: { tags: [`question:${questionCount}`] }, // revalidateTag 함수에 await을 사용할 수 있을 때 활성화하기
     cache: 'no-store',

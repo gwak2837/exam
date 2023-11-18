@@ -23,8 +23,10 @@
   "dependencies": {
     "@channel.io/channel-web-sdk-loader": "^1.1.2",
     "@sinclair/typebox": "^0.31.20",
+    "@tinymce/tinymce-react": "^4.3.0",
     "@vercel/analytics": "^1.1.1",
     "@vercel/kv": "^0.2.3",
+    "fs-extra": "^11.1.1",
     "immer": "^10.0.3",
     "next": "14.0.2",
     "pg": "^8.11.3",
@@ -34,6 +36,7 @@
     "react-hot-toast": "^2.4.1",
     "sanitize.css": "^13.0.0",
     "swr": "^2.2.4",
+    "tinymce": "^6.7.3",
     "zustand": "^4.4.4"
   },
   "devDependencies": {

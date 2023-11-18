@@ -1,13 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { type ReactNode } from 'react'
 
-export type LayoutProps = {
+export type LayoutProps<T extends Record<string, unknown> = Record<string, string>> = {
   children: ReactNode
-  params: Record<string, any>
+  params: T
 }
 
-export type PageProps = {
-  params: Record<string, any>
+export type PageProps<T extends Record<string, unknown> = Record<string, string>> = {
+  params: T
   searchParams: Record<string, string | string[] | undefined>
 }
 

@@ -19,7 +19,7 @@ const ProgressBar = dynamic(async () => await import('@/app/exam/[questionCount]
 
 export default async function Layout({ children }: LayoutProps) {
   return (
-    <div className="mx-auto flex min-h-[100dvh] max-w-screen-lg flex-col">
+    <div className="mx-auto flex min-h-[100svh] max-w-screen-lg flex-col">
       <div className="sticky top-0 border-b border-gray-100 p-4 backdrop-blur sm:px-8 md:px-12 lg:border-b-0 lg:px-16">
         <div className="flex items-end justify-between gap-4">
           <이전Button add={-1} />
