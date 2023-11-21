@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation'
 import Script from 'next/script'
 import { useEffect } from 'react'
 
-import { NEXT_PUBLIC_GA_ID } from '../common/constants'
+import { NEXT_PUBLIC_GA_ID } from '@/common/constants'
 
 // https://developers.google.com/analytics/devguides/collection/ga4/views?hl=ko&client_type=gtag
 export function pageview() {
@@ -18,7 +18,7 @@ type GTagEvent = {
   value: number
 }
 
-// https://developers.google.com/analytics/devguides/collection/gtagjs/events
+// https://developers.google.com/analytics/devguides/collection/ga4/event-parameters?hl=ko&client_type=gtag
 export function event({ action, category, label, value }: GTagEvent) {
   window.gtag('event', action, {
     event_category: category,
@@ -33,26 +33,12 @@ export default function GoogleAnalytics() {
   const pathname = usePathname()
 
   useEffect(() => {
-    window.gtag?.('config', NEXT_PUBLIC_GA_ID)
+    window.gtag('config', NEXT_PUBLIC_GA_ID)
   }, [pathname])
-
-  // Next.js 13 에서 아직 미지원
-  // const router = useRouter()
-  // useEffect(() => {
-  //   const handleRouteChange = (url) => {
-  //     gtag.pageview(url)
-  //   }
-  //   router.events.on('routeChangeComplete', handleRouteChange)
-  //   router.events.on('hashChangeComplete', handleRouteChange)
-  //   return () => {
-  //     router.events.off('routeChangeComplete', handleRouteChange)
-  //     router.events.off('hashChangeComplete', handleRouteChange)
-  //   }
-  // }, [router.events])
 
   return (
     // https://nextjs.org/docs/messages/next-script-for-ga
-    NEXT_PUBLIC_GA_ID ? (
+    NEXT_PUBLIC_GA_ID && (
       <>
         <Script
           id="google-analytics-gtag"
@@ -64,6 +50,6 @@ export default function GoogleAnalytics() {
           {gaScript}
         </Script>
       </>
-    ) : null
+    )
   )
 }
