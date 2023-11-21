@@ -33,7 +33,7 @@ export default function GoogleAnalytics() {
   const pathname = usePathname()
 
   useEffect(() => {
-    window.gtag('config', NEXT_PUBLIC_GA_ID)
+    window.gtag?.('config', NEXT_PUBLIC_GA_ID)
   }, [pathname])
 
   return (
