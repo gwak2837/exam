@@ -1,12 +1,13 @@
 'use client'
 
-import { useParams, useSearchParams } from 'next/navigation'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
 
 import { useAnswerStore, useExamStore } from '@/app/exam/[questionCount]/zustand'
+import { type Params } from '@/common/types'
 
 export default function Selections() {
-  const params = useParams()
-  const examId = params.questionCount as string
+  const params = useParams<Params>()
+  const examId = params.questionCount
 
   const { exams } = useExamStore()
   const exam = exams[examId] ?? []
@@ -15,36 +16,37 @@ export default function Selections() {
   const i = +(searchParams.get('i') ?? 1)
   const question = exam[i - 1] ?? {}
   const 선택지 = question.선택지 ?? []
+  const isLastQuestion = i === +examId
 
   const { answers, toggleAnswer } = useAnswerStore()
   const examAnswers = answers[examId] ?? []
   const questionAnswers = examAnswers[question.id] ?? []
+  const isSelectionCompleted = !question.is복수정답 && questionAnswers.length === 0
+
+  const router = useRouter()
 
   return (
     <form className="scrollbar-hide flex flex-wrap gap-4 overflow-x-auto" onSubmit={(e) => e.preventDefault()}>
       {선택지.map((선택지) => (
         <label
           key={question.id + 선택지.id}
-          className={`grow basis-0 cursor-pointer whitespace-nowrap rounded-lg border-2 border-violet-200  p-4 text-center text-gray-600 transition-colors hover:bg-violet-50 md:text-lg ${
-            checked[String(questionAnswers.includes(선택지.id))]
-          }`}
+          aria-checked={questionAnswers.includes(선택지.id)}
+          className="grow basis-0 cursor-pointer whitespace-nowrap rounded-lg border-2 border-violet-200  p-4 text-center text-gray-600 transition-colors hover:bg-violet-50 aria-checked:bg-violet-100 aria-checked:text-violet-900 md:text-lg"
         >
           {선택지.label}
           <input
             className="peer hidden"
             checked={questionAnswers.includes(선택지.id)}
-            onChange={() => toggleAnswer([examId, question.id, [선택지.id]])}
+            onChange={() => {
+              toggleAnswer([examId, question.id, [선택지.id]])
+              if (!question.is복수정답 && !isLastQuestion && isSelectionCompleted) router.replace(`?i=${i + 1}`)
+            }}
             type="checkbox"
           />
         </label>
       ))}
     </form>
   )
-}
-
-const checked: Record<string, string> = {
-  true: '!bg-violet-100 !text-violet-900',
-  false: 'bg-white',
 }
 
 export function SelectionsFallback() {

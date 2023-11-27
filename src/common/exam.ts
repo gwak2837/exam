@@ -595,7 +595,7 @@ export const exam = [
   },
   {
     id: '49',
-    문제: '플레이 파트너(플파) 관계에서 주로 어떤 활동이 진행되나요?',
+    문제: '플레이 파트너(플파) 관계에서 주로 어떤 활동이 진행되는지 모두 골라주세요',
     선택지: [
       { id: '1', label: '성적 플레이만 포함' },
       { id: '2', label: '로맨틱한 데이트' },
@@ -629,7 +629,7 @@ export const exam = [
     정답: ['1'],
     해설: '',
   },
-]
+].map((question) => ({ ...question, is복수정답: question.정답.length > 1 }))
 
 export type TQuestion = (typeof exam)[number]
 

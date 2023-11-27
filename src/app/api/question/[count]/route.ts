@@ -14,7 +14,7 @@ export async function GET(_: NextRequest, { params }: RouteProps) {
   return Response.json({
     questions: shuffle(exam)
       .slice(0, questionCount)
-      .map(({ id, 문제, 선택지 }) => ({ id, 문제, 선택지: shuffle(선택지) })),
+      .map(({ id, 문제, 선택지, is복수정답 }) => ({ id, 문제, 선택지: shuffle(선택지), is복수정답 })),
   })
 }
 
