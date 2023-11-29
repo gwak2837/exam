@@ -44,7 +44,7 @@ export default function Result({ result }: Props) {
       {wrongAnswers.length > 0 && (
         <>
           <h4 className="mb-4 mt-8 text-center text-xl">해설</h4>
-          <div className="grid justify-center gap-2 text-sm">
+          <div className="grid max-h-[50vh] justify-center gap-2 overflow-y-auto text-sm">
             {exam.map(
               (question, i) =>
                 !상세[question.id]?.isCorrect && (

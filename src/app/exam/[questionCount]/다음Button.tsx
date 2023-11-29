@@ -1,7 +1,7 @@
 'use client'
 
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { useAnswerStore } from '@/app/exam/[questionCount]/zustand'
 import Modal from '@/components/atoms/Modal'
@@ -26,6 +26,17 @@ export default function 다음Button({ add }: Props) {
 
   const [showModal, setShowModal] = useState(false)
 
+  const 좋아요ButtonRef = useRef<HTMLButtonElement>(null)
+
+  function handle다음ButtonClick() {
+    if (isSubmit) {
+      setShowModal(true)
+      좋아요ButtonRef.current?.focus()
+    } else {
+      router.replace(`?i=${questionIndex + add}`)
+    }
+  }
+
   function handle좋아요ButtonClick() {
     const querystring = new URLSearchParams()
 
@@ -36,13 +47,21 @@ export default function 다음Button({ add }: Props) {
     router.push(`/exam/result?${querystring}`)
   }
 
+  const 다음ButtonRef = useRef<HTMLButtonElement>(null)
+
+  function closeModal() {
+    setShowModal(false)
+    다음ButtonRef.current?.focus()
+  }
+
   return (
     <>
       <div className="relative">
         <button
           disabled={hasUnsolvedQuestion}
           className="transition-color peer whitespace-nowrap rounded-lg bg-gray-300 px-4 py-3 text-sm text-gray-700 duration-300 hover:bg-gray-400/50 disabled:text-gray-400 disabled:hover:bg-gray-300"
-          onClick={() => (isSubmit ? setShowModal(true) : router.replace(`?i=${questionIndex + add}`))}
+          onClick={handle다음ButtonClick}
+          ref={다음ButtonRef}
         >
           {isSubmit ? '제출' : '다음'}
         </button>
@@ -57,7 +76,7 @@ export default function 다음Button({ add }: Props) {
           </div>
         )}
       </div>
-      <Modal open={showModal} onClose={() => setShowModal(false)} showCloseButton showDragButton>
+      <Modal open={showModal} onClose={closeModal} showCloseButton showDragButton>
         <div className="rounded-lg bg-white p-4 shadow-xl">
           <h3 className="my-1 text-lg font-medium">제출하기</h3>
           <div className="my-4">지금까지 푼 답안을 제출할까요?</div>
@@ -65,12 +84,13 @@ export default function 다음Button({ add }: Props) {
             <button
               className="transition-color w-20 rounded-lg bg-violet-200 px-4 py-2 text-sm text-violet-700 duration-300 hover:bg-violet-300"
               onClick={handle좋아요ButtonClick}
+              ref={좋아요ButtonRef}
             >
               좋아요
             </button>
             <button
               className="transition-color w-20 rounded-lg bg-neutral-200 px-4 py-2 text-sm text-neutral-700 duration-300 hover:bg-neutral-300"
-              onClick={() => setShowModal(false)}
+              onClick={closeModal}
             >
               아니요
             </button>
