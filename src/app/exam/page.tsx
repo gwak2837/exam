@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import CustomButton from '@/app/exam/CustomButton'
+import 난이도Tooltip from '@/app/exam/난이도Tooltip'
 import InfoIcon from '@/svg/InfoIcon'
 
 export const metadata: Metadata = {
@@ -16,20 +17,7 @@ export default async function Page() {
         <h1>By</h1> <Image src="/bdsm-logo.svg" alt="BDSM Logo" width={24} height={24} priority />
       </Link>
       <h2 className="flex items-stretch gap-1 text-xl font-semibold">
-        난이도
-        <button className="group relative text-xs">
-          <InfoIcon width="16" />
-          <div
-            className="max-w-64 pointer-events-none absolute top-full z-50 translate-x-[-50%] p-2 text-sm text-gray-500 opacity-0 transition-opacity duration-300 hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100"
-            role="tooltip"
-          >
-            <div className="grid h-full w-full gap-1 rounded-lg border border-gray-200 bg-white p-4 shadow">
-              <h3 className="whitespace-nowrap">난이도 = 문제 개수</h3>
-              <p className="whitespace-nowrap font-normal">문제와 선택지 순서는 매번 랜덤</p>
-            </div>
-          </div>
-        </button>
-        를 선택해주세요
+        난이도 <난이도Tooltip /> 를 선택해주세요
       </h2>
       <nav className="grid text-center sm:mb-0 sm:grid-cols-2 sm:text-left lg:mb-0 lg:grid-cols-4">
         <Link
