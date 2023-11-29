@@ -1,7 +1,7 @@
 'use client'
 
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
-import { useRef, useState } from 'react'
+import { useRef, useState, type MouseEvent } from 'react'
 
 import { useAnswerStore } from '@/app/exam/[questionCount]/zustand'
 import Modal from '@/components/atoms/Modal'
@@ -28,7 +28,9 @@ export default function 다음Button({ add }: Props) {
 
   const 좋아요ButtonRef = useRef<HTMLButtonElement>(null)
 
-  function handle다음ButtonClick() {
+  function handle다음ButtonClick(e: MouseEvent<HTMLButtonElement>) {
+    e.currentTarget.focus()
+
     if (isSubmit) {
       setShowModal(true)
       좋아요ButtonRef.current?.focus()
@@ -67,7 +69,8 @@ export default function 다음Button({ add }: Props) {
         </button>
         {isSubmit && (
           <div
-            className="max-w-64 pointer-events-none absolute left-full top-full z-50 translate-x-[-100%] p-2 text-sm text-gray-500 opacity-0 transition-opacity duration-300 hover:pointer-events-auto hover:opacity-100 peer-hover:peer-disabled:pointer-events-auto peer-hover:peer-disabled:opacity-100"
+            className="max-w-64 pointer-events-none absolute left-full top-full z-50 translate-x-[-100%] p-2 text-sm text-gray-500 opacity-0 transition-opacity duration-300 hover:pointer-events-auto hover:opacity-100 peer-hover:peer-disabled:pointer-events-auto peer-hover:peer-disabled:opacity-100 peer-active:peer-disabled:opacity-100"
+            onTouchStart={() => {}} // https://stackoverflow.com/questions/3885018/active-pseudo-class-doesnt-work-in-mobile-safari
             role="tooltip"
           >
             <div className="h-full w-full rounded-lg border border-gray-200 bg-white p-4 shadow">
