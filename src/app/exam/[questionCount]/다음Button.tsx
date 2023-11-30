@@ -1,7 +1,7 @@
 'use client'
 
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
-import { useRef, useState, type MouseEvent } from 'react'
+import { useRef, useState } from 'react'
 
 import { useAnswerStore } from '@/app/exam/[questionCount]/zustand'
 import Modal from '@/components/atoms/Modal'
@@ -28,9 +28,7 @@ export default function 다음Button({ add }: Props) {
 
   const 좋아요ButtonRef = useRef<HTMLButtonElement>(null)
 
-  function handle다음ButtonClick(e: MouseEvent<HTMLButtonElement>) {
-    e.currentTarget.focus()
-
+  function handle다음ButtonClick() {
     if (isSubmit) {
       setShowModal(true)
       좋아요ButtonRef.current?.focus()
