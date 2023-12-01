@@ -35,7 +35,7 @@
 
 <!-- 구현한 기능에 대한 스크린샷 또는 GIF를 첨부해주세요 -->
 
-## [Pn 룰](https://blog.banksalad.com/tech/banksalad-code-review-culture/)
+## [Pn 규칙](https://blog.banksalad.com/tech/banksalad-code-review-culture/)
 
 - P1: 꼭 반영해주세요 (Request changes)
 - P2: 적극적으로 고려해주세요 (Request changes)
