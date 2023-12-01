@@ -6,19 +6,19 @@
 
 <!-- 저 문맥(Low Context) 커뮤니케이션을 위해 관련 논의를 적어주세요 -->
 
-### Problem
+#### Problem
 
 <!-- fix 관련 PR일 때 현재 상황과 문제 원인에 대한 분석을 적어주세요 -->
 
-### Product Spec
+#### Product Spec
 
 <!-- 기획 관련 내용이나 기대 효과 등을 적어주세요 -->
 
-### Design Spec
+#### Design Spec
 
 <!-- 디자인 관련 내용을 적어주세요 -->
 
-### Tech Spec
+#### Tech Spec
 
 <!-- 구현 방법 관련 내용을 적어주세요 -->
 
