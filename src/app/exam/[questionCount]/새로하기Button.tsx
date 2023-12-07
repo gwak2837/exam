@@ -38,7 +38,7 @@ export default function 새로하기Button() {
       >
         {isMutating && <LoadingSpinner className="w-5 fill-gray-700" />} 새로하기
       </button>
-      <Modal open={showModal} onClose={() => setShowModal(false)} showCloseButton showDragButton>
+      <Modal open={showModal} showCloseButton showDragButton onClose={() => setShowModal(false)}>
         <div className="rounded-lg bg-white p-4 shadow-xl">
           <h3 className="my-2 text-lg font-medium">새로하기</h3>
           <div className="my-4">새로운 문제를 풀까요? 지금까지 작성한 답안은 모두 초기화돼요</div>

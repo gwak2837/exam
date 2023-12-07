@@ -58,18 +58,18 @@ export default function 다음Button({ add }: Props) {
     <>
       <div className="relative">
         <button
-          disabled={hasUnsolvedQuestion}
-          className="transition-color peer whitespace-nowrap rounded-lg bg-gray-300 px-4 py-3 text-sm text-gray-700 duration-300 hover:bg-gray-400/50 disabled:text-gray-400 disabled:hover:bg-gray-300"
-          onClick={handle다음ButtonClick}
           ref={다음ButtonRef}
+          className="transition-color peer whitespace-nowrap rounded-lg bg-gray-300 px-4 py-3 text-sm text-gray-700 duration-300 hover:bg-gray-400/50 disabled:text-gray-400 disabled:hover:bg-gray-300"
+          disabled={hasUnsolvedQuestion}
+          onClick={handle다음ButtonClick}
         >
           {isSubmit ? '제출' : '다음'}
         </button>
         {isSubmit && (
           <div
             className="max-w-64 pointer-events-none absolute left-full top-full z-50 translate-x-[-100%] p-2 text-sm text-gray-500 opacity-0 transition-opacity duration-300 hover:pointer-events-auto hover:opacity-100 peer-hover:peer-disabled:pointer-events-auto peer-hover:peer-disabled:opacity-100 peer-active:peer-disabled:opacity-100"
-            onTouchStart={() => {}} // https://stackoverflow.com/questions/3885018/active-pseudo-class-doesnt-work-in-mobile-safari
             role="tooltip"
+            onTouchStart={() => {}} // https://stackoverflow.com/questions/3885018/active-pseudo-class-doesnt-work-in-mobile-safari
           >
             <div className="h-full w-full rounded-lg border border-gray-200 bg-white p-4 shadow">
               <h3 className="whitespace-nowrap">모든 문제를 풀어주세요</h3>
@@ -77,15 +77,15 @@ export default function 다음Button({ add }: Props) {
           </div>
         )}
       </div>
-      <Modal open={showModal} onClose={closeModal} showCloseButton showDragButton>
+      <Modal open={showModal} showCloseButton showDragButton onClose={closeModal}>
         <div className="rounded-lg bg-white p-4 shadow-xl">
           <h3 className="my-1 text-lg font-medium">제출하기</h3>
           <div className="my-4">지금까지 푼 답안을 제출할까요?</div>
           <div className="flex justify-end gap-2">
             <button
+              ref={좋아요ButtonRef}
               className="transition-color w-20 rounded-lg bg-violet-200 px-4 py-2 text-sm text-violet-700 duration-300 hover:bg-violet-300"
               onClick={handle좋아요ButtonClick}
-              ref={좋아요ButtonRef}
             >
               좋아요
             </button>
@@ -105,8 +105,8 @@ export default function 다음Button({ add }: Props) {
 export function 다음ButtonFallback() {
   return (
     <button
-      disabled
       className="transition-color peer whitespace-nowrap rounded-lg bg-gray-300 px-4 py-3 text-sm text-gray-700 duration-300 hover:bg-gray-400/50 disabled:text-gray-400 disabled:hover:bg-gray-300"
+      disabled
     >
       다음
     </button>

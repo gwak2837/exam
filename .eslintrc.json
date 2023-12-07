@@ -19,7 +19,7 @@
     ],
 
     "react/display-name": "off",
-    // "react/jsx-sort-props": "warn",
+    "react/jsx-sort-props": ["warn", { "callbacksLast": true, "reservedFirst": true }],
 
     "@typescript-eslint/array-type": "off",
     "@typescript-eslint/consistent-type-definitions": ["warn", "type"],

@@ -35,13 +35,13 @@ export default function Selections() {
         >
           {선택지.label}
           <input
-            className="peer hidden"
             checked={questionAnswers.includes(선택지.id)}
+            className="peer hidden"
+            type="checkbox"
             onChange={() => {
               toggleAnswer([examId, question.id, [선택지.id]])
               if (!question.is복수정답 && !isLastQuestion && isSelectionCompleted) router.replace(`?i=${i + 1}`)
             }}
-            type="checkbox"
           />
         </label>
       ))}

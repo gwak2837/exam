@@ -3,8 +3,8 @@
 import { useEffect, type ReactNode } from 'react'
 
 type Props = {
-  children: ReactNode
   keyCode: string
+  children: ReactNode
   onKeyDown?: () => void
 }
 

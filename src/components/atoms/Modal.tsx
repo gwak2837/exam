@@ -99,18 +99,18 @@ export default function Modal({ children, open, onClose, showCloseButton, showDr
     <div className={modalBackground} onClick={closeModal}>
       {showCloseButton && (
         <Image
-          src="/images/x.svg"
           alt="x"
-          width="48"
-          height="48"
           className="absolute right-0 top-0 z-10 cursor-pointer p-3"
+          height="48"
+          src="/images/x.svg"
+          width="48"
           onClick={closeModal}
         />
       )}
       <div
+        ref={modalRef}
         className={`absolute transition duration-300 ${open ? 'scale-100' : 'scale-90'}`}
         onClick={(e) => e.stopPropagation()}
-        ref={modalRef}
       >
         {showDragButton && (
           <div

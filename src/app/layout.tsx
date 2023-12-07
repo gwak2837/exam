@@ -94,16 +94,16 @@ const myFont = localFont({
 
 export default function RootLayout({ children }: LayoutProps) {
   return (
-    <html lang="ko" className="text-base md:text-lg">
-      <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-      <link rel="mask-icon" href="/safari-pinned-tab.svg" color={THEME_COLOR} />
-      <meta name="msapplication-TileColor" content="#2b5797" />
-      <meta name="mobile-web-app-capable" content="yes" />
-      <meta name="subject" content={DESCRIPTION} />
-      <meta name="rating" content="general" />
-      <meta name="revisit-after" content="3 days" />
-      <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-      <meta name="google-adsense-account" content="ca-pub-9227501485692453" />
+    <html className="text-base md:text-lg" lang="ko">
+      <link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png" />
+      <link color={THEME_COLOR} href="/safari-pinned-tab.svg" rel="mask-icon" />
+      <meta content="#2b5797" name="msapplication-TileColor" />
+      <meta content="yes" name="mobile-web-app-capable" />
+      <meta content={DESCRIPTION} name="subject" />
+      <meta content="general" name="rating" />
+      <meta content="3 days" name="revisit-after" />
+      <meta content="IE=edge" httpEquiv="X-UA-Compatible" />
+      <meta content="ca-pub-9227501485692453" name="google-adsense-account" />
 
       <body className={myFont.className}>
         {children}
@@ -115,9 +115,9 @@ export default function RootLayout({ children }: LayoutProps) {
       <Analytics />
       <GoogleAnalytics />
       <Script
-        id="google-adsense"
         async
         crossOrigin="anonymous"
+        id="google-adsense"
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9227501485692453"
         strategy="lazyOnload"
       />

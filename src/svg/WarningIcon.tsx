@@ -2,15 +2,15 @@ type Props = React.SVGProps<SVGSVGElement>
 
 export default function WarningIcon(props: Props) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" {...props}>
+    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" {...props}>
       <defs>
         <linearGradient
           gradientTransform="matrix(1.31117 0 0 1.30239 737.39 159.91)"
           gradientUnits="userSpaceOnUse"
           id="0"
-          y2="-.599"
           x2="0"
           y1="45.47"
+          y2="-.599"
         >
           <stop stopColor="#ffc515" />
           <stop offset="1" stopColor="#ffd55b" />
@@ -23,10 +23,10 @@ export default function WarningIcon(props: Props) {
         />
         <path
           d="m-26.309 18.07c-1.18 0-2.135.968-2.135 2.129v12.82c0 1.176.948 2.129 2.135 2.129 1.183 0 2.135-.968 2.135-2.129v-12.82c0-1.176-.946-2.129-2.135-2.129zm0 21.348c-1.18 0-2.135.954-2.135 2.135 0 1.18.954 2.135 2.135 2.135 1.181 0 2.135-.954 2.135-2.135 0-1.18-.952-2.135-2.135-2.135z"
-          transform="matrix(1.05196 0 0 1.05196 796.53 161.87)"
           fill="#000"
-          stroke="#40330d"
           fillOpacity=".75"
+          stroke="#40330d"
+          transform="matrix(1.05196 0 0 1.05196 796.53 161.87)"
         />
       </g>
     </svg>

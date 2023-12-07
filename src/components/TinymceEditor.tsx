@@ -14,8 +14,6 @@ export default function TinymceEditor({ placeholder }: Props) {
   return (
     <form onSubmit={(e) => e.preventDefault()}>
       <Editor
-        onInit={(_, editor) => (editorRef.current = editor)}
-        tinymceScriptSrc="/script/tinymce/tinymce.min.js"
         init={{
           promotion: false,
           placeholder,
@@ -25,6 +23,8 @@ export default function TinymceEditor({ placeholder }: Props) {
             'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
           content_style: 'body::before { white-space: pre-line }',
         }}
+        tinymceScriptSrc="/script/tinymce/tinymce.min.js"
+        onInit={(_, editor) => (editorRef.current = editor)}
       />
     </form>
   )

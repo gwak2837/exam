@@ -24,8 +24,8 @@ export default async function Layout({ children }: LayoutProps) {
         <div className="flex items-end justify-between gap-4">
           <이전Button add={-1} />
           <div className="grid">
-            <Link href="/" className="flex place-items-center gap-2 whitespace-nowrap p-4">
-              By <Image src="/bdsm-logo.svg" alt="bdsm-logo" width={24} height={24} priority />
+            <Link className="flex place-items-center gap-2 whitespace-nowrap p-4" href="/">
+              By <Image alt="bdsm-logo" height={24} priority src="/bdsm-logo.svg" width={24} />
             </Link>
             <새로하기Button />
           </div>

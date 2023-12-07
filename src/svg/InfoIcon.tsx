@@ -6,8 +6,8 @@ type Props = {
 
 export default function InfoIcon(props: Props) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 417 417" {...props}>
-      <circle fill="#888" cx="208" cy="208" r="200" />
+    <svg viewBox="0 0 417 417" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <circle cx="208" cy="208" fill="#888" r="200" />
       <g>
         <path
           d="M356.004,61.156c-81.37-81.47-213.377-81.551-294.848-0.182c-81.47,81.371-81.552,213.379-0.181,294.85

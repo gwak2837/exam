@@ -33,25 +33,25 @@ export default function CustomButton() {
         <h3 className="mb-3 text-2xl font-semibold">
           Custom &nbsp;
           <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-            <Image src="/images/arrow-right.svg" alt="right-arrow" width={20} height={20} />
+            <Image alt="right-arrow" height={20} src="/images/arrow-right.svg" width={20} />
           </span>
         </h3>
         <p className="m-0 max-w-[30ch] text-sm opacity-50">
           광범위한 지식을 가지고 BDSM 세계를 탐구하는 고수를 위한 테스트 <span className="text-xs">(1~50개)</span>
         </p>
       </button>
-      <Modal open={open} onClose={() => setOpen(false)} showCloseButton showDragButton>
+      <Modal open={open} showCloseButton showDragButton onClose={() => setOpen(false)}>
         <form className="grid gap-3 rounded-lg bg-white px-4 pb-4 pt-5 shadow-xl" onSubmit={handleSubmit}>
           <h3 className="pr-4 text-lg font-medium">문제 개수를 입력해주세요</h3>
           <input
+            ref={inputRef}
             className="w-full border px-2"
-            required
-            min={1}
             max={50}
+            min={1}
             name="문제개수"
             pattern="[0-9]*"
-            ref={inputRef}
             placeholder="풀고 싶은 문제 개수"
+            required
             type="number"
           />
           <button

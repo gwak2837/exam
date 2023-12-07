@@ -6,8 +6,8 @@ import 테스트보기Link from '@/app/테스트보기Link'
 export default function Home() {
   return (
     <main className="flex min-h-[100dvh] flex-col items-center justify-between gap-12 p-4 sm:p-8 md:p-12 lg:p-16">
-      <Link href="/" className="flex place-items-center gap-2 whitespace-nowrap p-4">
-        By <Image src="/bdsm-logo.svg" alt="BDSM Logo" width={24} height={24} priority />
+      <Link className="flex place-items-center gap-2 whitespace-nowrap p-4" href="/">
+        By <Image alt="BDSM Logo" height={24} priority src="/bdsm-logo.svg" width={24} />
       </Link>
 
       <h1 className="relative z-[-1] flex place-items-center whitespace-nowrap text-3xl sm:before:absolute sm:before:h-[300px] sm:before:w-[480px] sm:before:-translate-x-1/2 sm:before:rounded-full sm:before:bg-gradient-radial sm:before:from-white sm:before:to-transparent sm:before:blur-2xl sm:before:content-[''] sm:after:absolute sm:after:-z-20 sm:after:h-[180px] sm:after:w-[240px] sm:after:translate-x-1/3 sm:after:bg-gradient-conic sm:after:from-sky-200 sm:after:via-blue-200 sm:after:blur-2xl sm:after:content-[''] sm:before:dark:bg-gradient-to-br sm:before:dark:from-transparent sm:before:dark:to-blue-700 sm:before:dark:opacity-10 sm:after:dark:from-sky-900 sm:after:dark:via-[#0141ff] sm:after:dark:opacity-40 sm:before:lg:h-[360px]">

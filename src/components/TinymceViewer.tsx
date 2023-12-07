@@ -10,9 +10,9 @@ export default function TinymceViewer({ initialValue }: Props) {
   return (
     <Editor
       disabled
-      tinymceScriptSrc="/script/tinymce/tinymce.min.js"
       init={{ menubar: false, statusbar: false, toolbar: false }}
       initialValue={initialValue}
+      tinymceScriptSrc="/script/tinymce/tinymce.min.js"
     />
   )
 }

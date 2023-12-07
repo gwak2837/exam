@@ -41,8 +41,8 @@ export default function GoogleAnalytics() {
     NEXT_PUBLIC_GA_ID && (
       <>
         <Script
-          id="google-analytics-gtag"
           async
+          id="google-analytics-gtag"
           src={`https://www.googletagmanager.com/gtag/js?id=${NEXT_PUBLIC_GA_ID}`}
           strategy="lazyOnload"
         />

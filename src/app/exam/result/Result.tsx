@@ -35,7 +35,7 @@ export default function Result({ result }: Props) {
     <>
       <div className="m-auto flex max-w-md flex-wrap justify-center gap-4">
         {exam.map((question, i) => (
-          <Link key={question.id} href={`/exam/${examId}?i=${i + 1}`} className="flex items-center gap-2">
+          <Link key={question.id} className="flex items-center gap-2" href={`/exam/${examId}?i=${i + 1}`}>
             <span>{i + 1}</span>
             {상세[question.id]?.isCorrect ? <GreenChecked className="w-12" /> : <RedX className="w-12" />}
           </Link>
@@ -50,8 +50,8 @@ export default function Result({ result }: Props) {
                 !상세[question.id]?.isCorrect && (
                   <Link
                     key={question.id}
-                    href={`/exam/${examId}?i=${i + 1}`}
                     className="flex gap-2 text-red-800 transition-colors hover:text-red-600"
+                    href={`/exam/${examId}?i=${i + 1}`}
                   >
                     <span>{i + 1}.</span>
                     <div className="max-w-prose">{상세[question.id]?.해설 || '(준비 중)'}</div>
