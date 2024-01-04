@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  name      String?   @unique @db.VarChar(255)
+  nickname  String?   @db.VarChar(255)
+
+  oAuth OAuth[]
+  posts Post[]
+}
+
+model OAuth {
+  id              String
+  provider        Int      @default(0) @db.SmallInt
+  createdAt       DateTime @default(now())
+  email           String?  @db.VarChar(255)
+  profileImageURL String?
+
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@id([id, provider])
+}
+
+model Post {
+  id        BigInt    @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  deletedAt DateTime?
+  content   String?
+  published Boolean   @default(false)
+
+  authorId        String  @db.Uuid
+  author          User    @relation(fields: [authorId], references: [id])
+  parentPostId    BigInt?
+  parentPost      Post?   @relation("ParentPost", fields: [parentPostId], references: [id])
+  childrenPosts   Post[]  @relation("ParentPost")
+  referencePostId BigInt?
+  referencePost   Post?   @relation("ReferencePost", fields: [referencePostId], references: [id])
+  referencePosts  Post[]  @relation("ReferencePost")
+}
