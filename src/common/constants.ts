@@ -6,6 +6,8 @@ const NEXT_PUBLIC_VERCEL_ENV = process.env.NEXT_PUBLIC_VERCEL_ENV as string
 // 환경 공통
 export const PROJECT_ENV = process.env.PROJECT_ENV as string
 export const REVALIDATION_KEY = process.env.REVALIDATION_KEY as string
+export const ACCESS_TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET_KEY as string
+export const REFRESH_TOKEN_SECRET_KEY = process.env.REFRESH_TOKEN_SECRET_KEY as string
 
 export const KV_URL = process.env.KV_URL as string
 export const KV_REST_API_URL = process.env.KV_REST_API_URL as string

@@ -1,4 +1,7 @@
+import prisma from '@/app/api/prisma'
 import { BBATON_CLIENT_SECRET, NEXT_PUBLIC_BBATON_CLIENT_ID, NEXT_PUBLIC_BBATON_REDIRECT_URI } from '@/common/constants'
+import { OAuthProvider } from '@/database/OAuth'
+import { TokenType, signJWT } from '@/util/jwt'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
@@ -20,18 +23,108 @@ export async function GET(request: Request) {
     }),
   })
 
-  const token = await tokenResponse.json()
+  const token = (await tokenResponse.json()) as BBatonTokenResponse
   if (!token.access_token) return new Response('502 Bad Gateway', { status: 502, statusText: 'Bad Gateway' })
 
-  const bbatonUsername = JSON.parse(atob(token.access_token.split('.')[1])).user_name
+  const bbatonUsername = JSON.parse(atob(token.access_token.split('.')[1])).user_name as string
   if (!bbatonUsername) return new Response('502 Bad Gateway', { status: 502, statusText: 'Bad Gateway' })
 
-  const bbatonUserResponse = await fetch('https://bauth.bbaton.com/v2/user/me', {
-    headers: { Authorization: `Bearer ${token.access_token}` },
+  const oauth = await prisma.oAuth.findUnique({
+    select: {
+      id: true,
+      user: {
+        select: {
+          id: true,
+          suspendedAt: true,
+          unsuspendAt: true,
+          suspendedType: true,
+          suspendedReason: true,
+        },
+      },
+    },
+    where: { id_provider: { id: bbatonUsername, provider: OAuthProvider.BBATON } },
   })
 
-  const bbatonUser = await bbatonUserResponse.json()
-  if (!bbatonUser.user_id) return new Response('502 Bad Gateway', { status: 502, statusText: 'Bad Gateway' })
+  if (!oauth) {
+    const bbatonUserResponse = await fetch('https://bauth.bbaton.com/v2/user/me', {
+      headers: { Authorization: `Bearer ${token.access_token}` },
+    })
 
-  return Response.json({ bbatonUser })
+    const bbatonUser = (await bbatonUserResponse.json()) as BBatonUserResponse
+    if (!bbatonUser.user_id) return new Response('502 Bad Gateway', { status: 502, statusText: 'Bad Gateway' })
+
+    const user = await prisma.user.create({
+      data: {
+        ageRange: +bbatonUser.birth_year,
+        sex: encodeBBatonGender(bbatonUser.gender),
+        oAuth: {
+          create: {
+            id: bbatonUser.user_id,
+            provider: OAuthProvider.BBATON,
+          },
+        },
+      },
+      select: { id: true },
+    })
+
+    return Response.json({
+      accessToken: await signJWT({ sub: user.id }, TokenType.ACCESS_TOKEN),
+      refreshToken: await signJWT({ sub: user.id }, TokenType.REFRESH_TOKEN),
+    })
+  } else if (!oauth.user) {
+    const infoMessage = 'You have already signed up with this BBaton account before.'
+    return new Response(infoMessage, { status: 403, statusText: 'Forbidden' })
+  } else if (oauth.user?.suspendedType) {
+    const infoMessage = `You cannot login with this account bacause:\n${oauth.user.suspendedReason}`
+    return new Response(infoMessage, { status: 403, statusText: 'Forbidden' })
+  }
+
+  fetch('https://bauth.bbaton.com/v2/user/me', { headers: { Authorization: `Bearer ${token.access_token}` } })
+    .then(async (bbatonUserResponse) => await bbatonUserResponse.json())
+    .then(async (bbatonUser: BBatonUserResponse) => {
+      if (!bbatonUser.user_id || !oauth.user) return
+      await prisma.user.update({
+        data: {
+          ageRange: +bbatonUser.birth_year,
+          sex: encodeBBatonGender(bbatonUser.gender),
+        },
+        where: { id: oauth.user.id },
+        select: { id: true },
+      })
+    })
+    .catch((error) => console.warn('Warn: Fail to update age range of user from BBaton.\n' + error))
+
+  return Response.json({
+    accessToken: await signJWT({ sub: oauth.user.id }, TokenType.ACCESS_TOKEN),
+    refreshToken: await signJWT({ sub: oauth.user.id }, TokenType.REFRESH_TOKEN),
+  })
+}
+
+type BBatonTokenResponse = {
+  access_token: string
+  token_type: 'bearer'
+  expires_in: number
+  scope: string
+}
+
+type BBatonUserResponse = {
+  user_id: string
+  adult_flag: string
+  birth_year: string
+  gender: string
+  income?: string
+  student?: string
+}
+
+function encodeBBatonGender(gender: string) {
+  switch (gender) {
+    case 'M':
+    case 'male':
+      return 1
+    case 'F':
+    case 'female':
+      return 2
+    default:
+      return 0
+  }
 }

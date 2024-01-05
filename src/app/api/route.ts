@@ -1,6 +1,6 @@
-import { pool } from '@/app/api/postgres'
+import prisma from '@/app/api/prisma'
 
 export async function GET() {
-  const { rows } = await pool.query("SELECT 'Hello world!'")
-  return Response.json({ data: rows })
+  const result = await prisma.$queryRaw`SELECT CURRENT_TIMESTAMP`
+  return Response.json({ result })
 }
