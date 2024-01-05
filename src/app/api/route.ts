@@ -1,5 +1,8 @@
+import { pool } from '@/app/api/postgres'
+
 export const runtime = 'edge'
 
 export async function GET() {
-  return Response.json({ data: 'Hello world!' })
+  const { rows } = await pool.query("SELECT 'Hello world!'")
+  return Response.json({ data: rows })
 }

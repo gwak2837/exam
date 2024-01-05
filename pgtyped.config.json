@@ -1,0 +1,10 @@
+{
+  "transforms": [
+    {
+      "mode": "sql",
+      "include": "src/app/api/**/*.sql",
+      "emitTemplate": "{{dir}}/{{name}}.ts"
+    }
+  ],
+  "srcDir": "src/app/api/"
+}
