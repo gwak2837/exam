@@ -11,7 +11,7 @@ export default async function Page({ params, searchParams }: PageProps) {
         href={`https://bauth.bbaton.com/oauth/authorize?client_id=${NEXT_PUBLIC_BBATON_CLIENT_ID}&redirect_uri=${NEXT_PUBLIC_BBATON_REDIRECT_URI}&response_type=code&scope=read_profile`}
         target="_blank"
       >
-        <Image src="/images/BBaton_Logo_Login_KR_v2.png" alt="BBaton_Logo_Login_KR_v2.png" width="350" height="100" />
+        <Image alt="BBaton_Logo_Login_KR_v2.png" height="100" src="/images/BBaton_Logo_Login_KR_v2.png" width="350" />
       </a>
       <pre className="overflow-x-scroll">{JSON.stringify({ params, searchParams }, null, 2)}</pre>
     </main>

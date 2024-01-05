@@ -1,6 +1,7 @@
 import './globals.css'
 
 import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import type { Metadata, Viewport } from 'next'
 import dynamic from 'next/dynamic'
 import localFont from 'next/font/local'
@@ -110,6 +111,7 @@ export default function RootLayout({ children }: LayoutProps) {
         <div id="modal-root" />
         <ReactHotToast />
         <ChannelTalk />
+        <SpeedInsights />
       </body>
 
       <Analytics />
