@@ -8,14 +8,25 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
-  name      String?   @unique @db.VarChar(255)
-  nickname  String?   @db.VarChar(255)
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime? @updatedAt
+  suspendedAt     DateTime?
+  unsuspendAt     DateTime?
+  suspendedType   Int?      @db.SmallInt
+  suspendedReason String?
+  bio             String?   @db.VarChar(255)
+  birthDate       DateTime? @db.Date
+  name            String?   @unique @db.VarChar(255)
+  nickname        String?   @db.VarChar(255)
+  profileImageURL String[]
+  sex             Int       @default(0) @db.SmallInt
+  config          Json
 
-  oAuth OAuth[]
-  posts Post[]
+  oAuth     OAuth[]
+  posts     Post[]
+  followers User[]  @relation("UserFollow")
+  following User[]  @relation("UserFollow")
 }
 
 model OAuth {
@@ -25,8 +36,8 @@ model OAuth {
   email           String?  @db.VarChar(255)
   profileImageURL String?
 
-  userId String @db.Uuid
-  user   User   @relation(fields: [userId], references: [id])
+  userId String? @db.Uuid
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   @@id([id, provider])
 }
@@ -36,15 +47,15 @@ model Post {
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
   deletedAt DateTime?
-  content   String?
   published Boolean   @default(false)
+  content   String?
 
-  authorId        String  @db.Uuid
-  author          User    @relation(fields: [authorId], references: [id])
-  parentPostId    BigInt?
-  parentPost      Post?   @relation("ParentPost", fields: [parentPostId], references: [id])
-  childrenPosts   Post[]  @relation("ParentPost")
-  referencePostId BigInt?
-  referencePost   Post?   @relation("ReferencePost", fields: [referencePostId], references: [id])
-  referencePosts  Post[]  @relation("ReferencePost")
+  authorId       String? @db.Uuid
+  author         User?   @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  parentPostId   BigInt?
+  parentPost     Post?   @relation("PostThread", fields: [parentPostId], references: [id])
+  childrenPosts  Post[]  @relation("PostThread")
+  referredPostId BigInt?
+  referredPost   Post?   @relation("PostReference", fields: [referredPostId], references: [id])
+  referringPosts Post[]  @relation("PostReference")
 }
