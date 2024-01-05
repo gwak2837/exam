@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@channel.io/channel-web-sdk-loader": "^1.1.2",
+    "@prisma/client": "^5.7.1",
     "@sinclair/typebox": "^0.31.20",
     "@tinymce/tinymce-react": "^4.3.0",
     "@vercel/analytics": "^1.1.1",
@@ -59,8 +60,9 @@
     "postcss": "^8",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.6",
+    "prisma": "^5.7.1",
     "tailwindcss": "^3",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.2"
   },
   "engines": {
     "node": ">=18.17"

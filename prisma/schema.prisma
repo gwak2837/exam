@@ -16,7 +16,7 @@ model User {
   suspendedType   Int?      @db.SmallInt
   suspendedReason String?
   bio             String?   @db.VarChar(255)
-  birthDate       DateTime? @db.Date
+  birthDate       DateTime  @db.Date
   name            String?   @unique @db.VarChar(255)
   nickname        String?   @db.VarChar(255)
   profileImageURL String[]
@@ -28,6 +28,10 @@ model User {
   followers User[]  @relation("UserFollow")
   following User[]  @relation("UserFollow")
 }
+
+// grade int DEFAULT 0,
+// invitation_code char(8) UNIQUE DEFAULT unique_random(8, 'user', 'invitation_code'),
+// last_attendance timestamptz,
 
 model OAuth {
   id              String

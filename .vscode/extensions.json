@@ -7,6 +7,8 @@
     "csstools.postcss",
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
-    "jock.svg"
+    "jock.svg",
+    "bradymholt.pgformatter",
+    "Prisma.prisma"
   ]
 }

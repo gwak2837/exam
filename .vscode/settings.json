@@ -28,5 +28,22 @@
   },
   "[svg]": {
     "editor.defaultFormatter": "jock.svg"
-  }
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
+
+  "[sql]": {
+    // "editor.defaultFormatter": "arniu.sql-formatter-vscode" $$ 인식 불가
+    // "editor.defaultFormatter": "ReneSaarsoo.sql-formatter-vsc" [] 인식 불가
+    // "editor.defaultFormatter": "lea21st.vscode-sql-formatter" // function if-else indent 없음
+    // "editor.defaultFormatter": "adpyke.vscode-sql-formatter" $$ 인식 불가
+    // "editor.defaultFormatter": "inferrinizzard.prettier-sql-vscode" [] 인식 불가
+    // "editor.defaultFormatter": "mtxr.sqltools" // function if-else indent 없음
+    // "editor.defaultFormatter": "bradymholt.pgformatter"
+  },
+  "pgFormatter.commaBreak": true,
+  "pgFormatter.functionCase": "lowercase",
+  "pgFormatter.noGrouping": true,
+  "pgFormatter.wrapLimit": 100
 }
