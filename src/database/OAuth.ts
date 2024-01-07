@@ -1,7 +1,7 @@
 export enum OAuthProvider {
-  BBATON,
-  NAVER,
-  KAKAO,
-  GOOGLE,
-  FACEBOOK,
+  BBATON = 0,
+  NAVER = 1,
+  KAKAO = 2,
+  GOOGLE = 3,
+  FACEBOOK = 4,
 }

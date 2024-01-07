@@ -53,7 +53,7 @@ model Post {
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
   deletedAt DateTime?
-  published Boolean   @default(false)
+  status    Int       @db.SmallInt
   content   String?
 
   authorId       String? @db.Uuid

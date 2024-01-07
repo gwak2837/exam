@@ -1,9 +1,3 @@
-type Context = {
-  params: {
-    id: string
-  }
-}
-
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const id = searchParams.get('id')
@@ -17,4 +11,4 @@ export async function GET(request: Request) {
   return Response.json({ product })
 }
 
-export async function POST(request: Request, { params }: Context) {}
+export async function POST(request: Request) {}
