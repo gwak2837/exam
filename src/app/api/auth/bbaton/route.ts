@@ -1,7 +1,7 @@
 import prisma from '@/app/api/prisma'
 import { BBATON_CLIENT_SECRET, NEXT_PUBLIC_BBATON_CLIENT_ID, NEXT_PUBLIC_BBATON_REDIRECT_URI } from '@/common/constants'
 import { OAuthProvider } from '@/database/OAuth'
-import { TokenType, signJWT } from '@/util/jwt'
+import { AuthToken, signJWT } from '@/util/jwt'
 
 export async function POST(request: Request) {
   const { searchParams } = new URL(request.url)
@@ -66,8 +66,8 @@ export async function POST(request: Request) {
     })
 
     return Response.json({
-      accessToken: await signJWT({ sub: user.id }, TokenType.ACCESS_TOKEN),
-      refreshToken: await signJWT({ sub: user.id }, TokenType.REFRESH_TOKEN),
+      accessToken: await signJWT({ sub: user.id }, AuthToken.ACCESS_TOKEN),
+      refreshToken: await signJWT({ sub: user.id }, AuthToken.REFRESH_TOKEN),
     })
   } else if (!oauth.user) {
     const infoMessage = 'You have already signed up with this BBaton account before.'
@@ -93,8 +93,8 @@ export async function POST(request: Request) {
     .catch((error) => console.warn('Warn: Fail to update age range of user from BBaton.\n' + error))
 
   return Response.json({
-    accessToken: await signJWT({ sub: oauth.user.id }, TokenType.ACCESS_TOKEN),
-    refreshToken: await signJWT({ sub: oauth.user.id }, TokenType.REFRESH_TOKEN),
+    accessToken: await signJWT({ sub: oauth.user.id }, AuthToken.ACCESS_TOKEN),
+    refreshToken: await signJWT({ sub: oauth.user.id }, AuthToken.REFRESH_TOKEN),
   })
 }
 
