@@ -7,6 +7,7 @@ import dynamic from 'next/dynamic'
 import localFont from 'next/font/local'
 import Script from 'next/script'
 
+import Authentication from '@/app/Authentication'
 import {
   APPLICATION_NAME,
   APPLICATION_SHORT_NAME,
@@ -114,6 +115,7 @@ export default function RootLayout({ children }: LayoutProps) {
         <SpeedInsights />
       </body>
 
+      <Authentication />
       <Analytics />
       <GoogleAnalytics />
       <Script

@@ -20,7 +20,6 @@ export default function CustomButton() {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
-
     router.push(`/exam/${+(e.target as any).문제개수.value}?i=1`)
   }
 

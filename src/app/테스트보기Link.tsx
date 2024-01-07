@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { type MouseEvent, useState } from 'react'
 import toast from 'react-hot-toast'
 
+import { useAuthStore } from '@/app/Authentication'
 import AppleCheckbox from '@/components/atoms/AppleCheckbox'
 
 export default function 테스트보기Link() {
@@ -16,6 +17,9 @@ export default function 테스트보기Link() {
       toast.error('아래 내용에 동의해주세요')
     }
   }
+
+  const accessToken = useAuthStore((state) => state.accessToken)
+  console.log('👀 ~ accessToken:', accessToken)
 
   return (
     <>

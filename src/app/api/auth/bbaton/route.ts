@@ -3,13 +3,12 @@ import { BBATON_CLIENT_SECRET, NEXT_PUBLIC_BBATON_CLIENT_ID, NEXT_PUBLIC_BBATON_
 import { OAuthProvider } from '@/database/OAuth'
 import { TokenType, signJWT } from '@/util/jwt'
 
-export async function GET(request: Request) {
+export async function POST(request: Request) {
   const { searchParams } = new URL(request.url)
   const code = searchParams.get('code')
   if (!code) return new Response('400 Bad Request', { status: 400, statusText: 'Bad Request' })
 
   const base64Token = btoa(`${NEXT_PUBLIC_BBATON_CLIENT_ID}:${BBATON_CLIENT_SECRET}`)
-
   const tokenResponse = await fetch('https://bauth.bbaton.com/oauth/token', {
     method: 'POST',
     headers: {
@@ -23,10 +22,10 @@ export async function GET(request: Request) {
     }),
   })
 
-  const token = (await tokenResponse.json()) as BBatonTokenResponse
+  const token: BBatonTokenResponse = await tokenResponse.json()
   if (!token.access_token) return new Response('502 Bad Gateway', { status: 502, statusText: 'Bad Gateway' })
 
-  const bbatonUsername = JSON.parse(atob(token.access_token.split('.')[1])).user_name as string
+  const bbatonUsername: string = JSON.parse(atob(token.access_token.split('.')[1])).user_name
   if (!bbatonUsername) return new Response('502 Bad Gateway', { status: 502, statusText: 'Bad Gateway' })
 
   const oauth = await prisma.oAuth.findUnique({
@@ -46,11 +45,10 @@ export async function GET(request: Request) {
   })
 
   if (!oauth) {
-    const bbatonUserResponse = await fetch('https://bauth.bbaton.com/v2/user/me', {
-      headers: { Authorization: `Bearer ${token.access_token}` },
-    })
+    const init = { headers: { Authorization: `Bearer ${token.access_token}` } }
+    const bbatonUserResponse = await fetch('https://bauth.bbaton.com/v2/user/me', init)
 
-    const bbatonUser = (await bbatonUserResponse.json()) as BBatonUserResponse
+    const bbatonUser: BBatonUserResponse = await bbatonUserResponse.json()
     if (!bbatonUser.user_id) return new Response('502 Bad Gateway', { status: 502, statusText: 'Bad Gateway' })
 
     const user = await prisma.user.create({
