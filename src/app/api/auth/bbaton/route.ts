@@ -28,23 +28,20 @@ export async function POST(request: Request) {
   const bbatonUsername: string = JSON.parse(atob(token.access_token.split('.')[1])).user_name
   if (!bbatonUsername) return new Response('502 Bad Gateway', { status: 502, statusText: 'Bad Gateway' })
 
-  const oauth = await prisma.oAuth.findUnique({
-    select: {
-      id: true,
-      user: {
-        select: {
-          id: true,
-          suspendedAt: true,
-          unsuspendAt: true,
-          suspendedType: true,
-          suspendedReason: true,
-        },
-      },
-    },
-    where: { id_provider: { id: bbatonUsername, provider: OAuthProvider.BBATON } },
-  })
+  const oauth = await prisma.$queryRaw<OAuthUserRow>`
+    SELECT "OAuth".id,
+      "User".id AS "user_id",
+      "User"."suspendedAt" AS "user_suspendedAt",
+      "User"."unsuspendAt" AS "user_unsuspendAt",
+      "User"."suspendedType" AS "user_suspendedType",
+      "User"."suspendedReason" AS "user_suspendedReason"
+    FROM "OAuth"
+    JOIN "User" ON "User".id = "OAuth"."userId"
+    WHERE "OAuth".id = ${bbatonUsername}
+      AND "OAuth".provider = ${OAuthProvider.BBATON}
+  `
 
-  if (!oauth) {
+  if (!oauth.id) {
     const init = { headers: { Authorization: `Bearer ${token.access_token}` } }
     const bbatonUserResponse = await fetch('https://bauth.bbaton.com/v2/user/me', init)
 
@@ -69,32 +66,32 @@ export async function POST(request: Request) {
       accessToken: await signJWT({ sub: user.id }, AuthToken.ACCESS_TOKEN),
       refreshToken: await signJWT({ sub: user.id }, AuthToken.REFRESH_TOKEN),
     })
-  } else if (!oauth.user) {
+  } else if (!oauth.user_id) {
     const infoMessage = 'You have already signed up with this BBaton account before.'
     return new Response(infoMessage, { status: 403, statusText: 'Forbidden' })
-  } else if (oauth.user?.suspendedType) {
-    const infoMessage = `You cannot login with this account bacause:\n${oauth.user.suspendedReason}`
+  } else if (oauth.user_suspendedType) {
+    const infoMessage = `You cannot login with this account bacause:\n${oauth.user_suspendedReason}`
     return new Response(infoMessage, { status: 403, statusText: 'Forbidden' })
   }
 
   fetch('https://bauth.bbaton.com/v2/user/me', { headers: { Authorization: `Bearer ${token.access_token}` } })
     .then(async (bbatonUserResponse) => await bbatonUserResponse.json())
     .then(async (bbatonUser: BBatonUserResponse) => {
-      if (!bbatonUser.user_id || !oauth.user) return
+      if (!bbatonUser.user_id || !oauth.user_id) return
       await prisma.user.update({
         data: {
           ageRange: +bbatonUser.birth_year,
           sex: encodeBBatonGender(bbatonUser.gender),
         },
-        where: { id: oauth.user.id },
+        where: { id: oauth.user_id },
         select: { id: true },
       })
     })
     .catch((error) => console.warn('Warn: Fail to update age range of user from BBaton.\n' + error))
 
   return Response.json({
-    accessToken: await signJWT({ sub: oauth.user.id }, AuthToken.ACCESS_TOKEN),
-    refreshToken: await signJWT({ sub: oauth.user.id }, AuthToken.REFRESH_TOKEN),
+    accessToken: await signJWT({ sub: oauth.user_id }, AuthToken.ACCESS_TOKEN),
+    refreshToken: await signJWT({ sub: oauth.user_id }, AuthToken.REFRESH_TOKEN),
   })
 }
 
@@ -112,6 +109,15 @@ type BBatonUserResponse = {
   gender: string
   income?: string
   student?: string
+}
+
+type OAuthUserRow = {
+  id: string
+  user_id: string
+  user_suspendedAt: string
+  user_unsuspendAt: string
+  user_suspendedType: string
+  user_suspendedReason: string
 }
 
 function encodeBBatonGender(gender: string) {
