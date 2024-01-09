@@ -1,4 +1,4 @@
-import prisma from '@/app/api/prisma'
+import prisma, { PrismaError } from '@/app/api/prisma'
 import { BBATON_CLIENT_SECRET, NEXT_PUBLIC_BBATON_CLIENT_ID, NEXT_PUBLIC_BBATON_REDIRECT_URI } from '@/common/constants'
 import { OAuthProvider } from '@/database/OAuth'
 import { AuthToken, signJWT } from '@/util/jwt'
@@ -28,7 +28,7 @@ export async function POST(request: Request) {
   const bbatonUsername: string = JSON.parse(atob(token.access_token.split('.')[1])).user_name
   if (!bbatonUsername) return new Response('502 Bad Gateway', { status: 502, statusText: 'Bad Gateway' })
 
-  const oauth = await prisma.$queryRaw<OAuthUserRow>`
+  const [oauth] = await prisma.$queryRaw<[OAuthUserRow?]>`
     SELECT "OAuth".id,
       "User".id AS "user_id",
       "User"."suspendedAt" AS "user_suspendedAt",
@@ -36,31 +36,38 @@ export async function POST(request: Request) {
       "User"."suspendedType" AS "user_suspendedType",
       "User"."suspendedReason" AS "user_suspendedReason"
     FROM "OAuth"
-    JOIN "User" ON "User".id = "OAuth"."userId"
+      JOIN "User" ON "User".id = "OAuth"."userId"
     WHERE "OAuth".id = ${bbatonUsername}
-      AND "OAuth".provider = ${OAuthProvider.BBATON}
+      AND "OAuth".provider = ${OAuthProvider.BBATON};
   `
 
-  if (!oauth.id) {
+  if (!oauth) {
     const init = { headers: { Authorization: `Bearer ${token.access_token}` } }
     const bbatonUserResponse = await fetch('https://bauth.bbaton.com/v2/user/me', init)
 
     const bbatonUser: BBatonUserResponse = await bbatonUserResponse.json()
     if (!bbatonUser.user_id) return new Response('502 Bad Gateway', { status: 502, statusText: 'Bad Gateway' })
 
-    const user = await prisma.user.create({
-      data: {
-        ageRange: +bbatonUser.birth_year,
-        sex: encodeBBatonGender(bbatonUser.gender),
-        oAuth: {
-          create: {
-            id: bbatonUser.user_id,
-            provider: OAuthProvider.BBATON,
+    const user = await prisma.user
+      .create({
+        data: {
+          ageRange: +bbatonUser.birth_year,
+          sex: encodeBBatonGender(bbatonUser.gender),
+          oAuth: {
+            create: {
+              id: bbatonUser.user_id,
+              provider: OAuthProvider.BBATON,
+            },
           },
         },
-      },
-      select: { id: true },
-    })
+        select: { id: true },
+      })
+      .catch((error) => {
+        // NOTE(logan): OAuthUserRow 쿼리하고 같은 transaction 단위가 아니라서 발생하는데, 성능을 위해 transation 사용 안 함
+        if (error.code === PrismaError.UNIQUE_CONSTRAINT_FAILED) return null
+        throw error
+      })
+    if (!user) return new Response('400 Bad Request', { status: 400, statusText: 'Bad Request' })
 
     return Response.json({
       accessToken: await signJWT({ sub: user.id }, AuthToken.ACCESS_TOKEN),
