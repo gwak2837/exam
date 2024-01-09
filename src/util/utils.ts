@@ -27,3 +27,17 @@ export function toQuerystring(obj?: Record<string, string | string[] | undefined
     })
     .join('&')
 }
+
+/* eslint-disable @typescript-eslint/no-dynamic-delete */
+export function removeDeepNullKey<T extends Record<string, unknown>>(obj: T) {
+  for (const key in obj) {
+    const value = obj[key]
+    if (value == null) delete obj[key]
+    else if (typeof value === 'object') {
+      const subObj = removeDeepNullKey(value as Record<string, unknown>)
+      if (Object.keys(subObj).length === 0) delete obj[key]
+    }
+  }
+
+  return obj
+}
