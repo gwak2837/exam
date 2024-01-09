@@ -9,21 +9,21 @@ datasource db {
 }
 
 model User {
-  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime? @updatedAt
-  suspendedAt     DateTime?
-  unsuspendAt     DateTime?
-  suspendedType   Int?      @db.SmallInt
-  suspendedReason String?
-  ageRange        Int       @db.SmallInt
-  bio             String?   @db.VarChar(255)
-  birthDate       DateTime? @db.Date
-  name            String?   @unique @db.VarChar(255)
-  nickname        String?   @db.VarChar(255)
-  profileImageURL String[]
-  sex             Int       @default(0) @db.SmallInt
-  config          Json?
+  id               String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime? @updatedAt
+  suspendedAt      DateTime?
+  unsuspendAt      DateTime?
+  suspendedType    Int?      @db.SmallInt
+  suspendedReason  String?
+  ageRange         Int       @db.SmallInt
+  bio              String?   @db.VarChar(255)
+  birthDate        DateTime? @db.Date
+  name             String?   @unique @db.VarChar(255)
+  nickname         String?   @db.VarChar(255)
+  profileImageURLs String[]
+  sex              Int       @default(0) @db.SmallInt
+  config           Json?
 
   oAuth     OAuth[]
   posts     Post[]
@@ -53,8 +53,10 @@ model Post {
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
   deletedAt DateTime?
+  publishAt DateTime? @default(now())
   status    Int       @db.SmallInt
   content   String?
+  imageURLs String[]
 
   authorId       String? @db.Uuid
   author         User?   @relation(fields: [authorId], references: [id], onDelete: SetNull)
