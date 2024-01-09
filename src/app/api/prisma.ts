@@ -15,3 +15,7 @@ declare global {
 BigInt.prototype.toJSON = function (): string {
   return this.toString()
 }
+
+export enum PrismaError {
+  UNIQUE_CONSTRAINT_FAILED = 'P2002',
+}
