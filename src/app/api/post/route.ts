@@ -23,7 +23,12 @@ export async function POST(request: AuthenticatedRequest) {
 
   const post = await prisma.post.create({
     data: {
+      publishAt: body.publishAt,
+      status: body.status,
+      content: body.content,
       authorId: userId,
+      parentPostId: body.parentPostId,
+      referredPostId: body.referredPostId,
     },
     select: { id: true },
   })
@@ -32,10 +37,9 @@ export async function POST(request: AuthenticatedRequest) {
 export type PostCreationRequestBody = Static<typeof postCreationSchema>
 
 const postCreationSchema = Type.Object({
-  id: Type.BigInt(),
   publishAt: Type.Optional(Type.Date()),
   status: Type.Optional(Type.Number()),
-  content: Type.Optional(Type.String()),
+  content: Type.String(),
   parentPostId: Type.Optional(Type.BigInt()),
   referredPostId: Type.Optional(Type.BigInt()),
 })
