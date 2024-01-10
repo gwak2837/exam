@@ -27,8 +27,17 @@ model User {
 
   oAuth     OAuth[]
   posts     Post[]
-  followers User[]  @relation("UserFollow")
-  following User[]  @relation("UserFollow")
+  following UserFollow[] @relation("following")
+  followers UserFollow[] @relation("followers")
+}
+
+model UserFollow {
+  leader     User   @relation("following", fields: [leaderId], references: [id])
+  leaderId   String @db.Uuid
+  follower   User   @relation("followers", fields: [followerId], references: [id])
+  followerId String @db.Uuid
+
+  @@id([leaderId, followerId])
 }
 
 // grade int DEFAULT 0,

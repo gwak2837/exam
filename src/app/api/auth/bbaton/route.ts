@@ -38,8 +38,7 @@ export async function POST(request: Request) {
     FROM "OAuth"
       JOIN "User" ON "User".id = "OAuth"."userId"
     WHERE "OAuth".id = ${bbatonUsername}
-      AND "OAuth".provider = ${OAuthProvider.BBATON};
-  `
+      AND "OAuth".provider = ${OAuthProvider.BBATON};`
 
   if (!oauth) {
     const init = { headers: { Authorization: `Bearer ${token.access_token}` } }
