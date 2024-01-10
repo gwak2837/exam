@@ -1,7 +1,10 @@
+import { Type, type Static } from '@sinclair/typebox'
+import { Value } from '@sinclair/typebox/value'
+
 import prisma from '@/app/api/prisma'
 import { PostStatus } from '@/database/Post'
 import { type AuthenticatedRequest } from '@/middleware'
-import { removeDeepNullKey } from '@/util/utils'
+import { deleteDeepNullableKey } from '@/util/utils'
 
 type Context = {
   params: {
@@ -15,7 +18,7 @@ export async function GET(request: AuthenticatedRequest, { params }: Context) {
 
   const userId = request.user?.id
 
-  const [post] = await prisma.$queryRaw<[PostFromDB]>`
+  const [post] = await prisma.$queryRaw<[PostQuery]>`
     SELECT "Post".id,
       "Post"."createdAt",
       "Post"."updatedAt",
@@ -50,7 +53,7 @@ export async function GET(request: AuthenticatedRequest, { params }: Context) {
   if (!post) return new Response('404 Not Found', { status: 404, statusText: 'Not Found' })
 
   const isAuthor = post.author_id !== userId
-  const postResponse = removeDeepNullKey({
+  const postORM = deleteDeepNullableKey({
     id: post.id,
     createdAt: isAuthor ? post.createdAt : null,
     updatedAt: post.updatedAt,
@@ -74,11 +77,13 @@ export async function GET(request: AuthenticatedRequest, { params }: Context) {
       content: post.referredPost_content,
     },
   })
+  if (!Value.Check(postResponseSchema, postORM))
+    return new Response('500 Internal Server Error', { status: 500, statusText: 'Internal Server Error' })
 
-  return Response.json(postResponse)
+  return Response.json(postORM)
 }
 
-type PostFromDB = {
+type PostQuery = {
   id: bigint
   createdAt: Date
   updatedAt: Date | null
@@ -99,28 +104,33 @@ type PostFromDB = {
   referredPost_content: string | null
 }
 
-export type PostResponse = {
-  id: bigint
-  createdAt?: Date
-  updatedAt?: Date
-  deletedAt?: Date
-  publishAt?: Date
-  status?: number
-  content?: string
-  author?: {
-    id: string
-    name?: string
-    nickname?: string
-    profileImageURLs?: string[]
-  }
-  referredPost?: {
-    id: bigint
-    createdAt?: Date
-    updatedAt?: Date
-    deletedAt?: Date
-    publishAt?: Date
-    status?: number
-    content?: string
-  }
-}
-const a = `ㄴㅇㄹ`
+export type PostResponse = Static<typeof postResponseSchema>
+
+const postResponseSchema = Type.Object({
+  id: Type.BigInt(),
+  createdAt: Type.Optional(Type.Date()),
+  updatedAt: Type.Optional(Type.Date()),
+  deletedAt: Type.Optional(Type.Date()),
+  publishAt: Type.Optional(Type.Date()),
+  status: Type.Optional(Type.Number()),
+  content: Type.Optional(Type.String()),
+  author: Type.Optional(
+    Type.Object({
+      id: Type.String(),
+      name: Type.Optional(Type.String()),
+      nickname: Type.Optional(Type.String()),
+      profileImageURLs: Type.Optional(Type.Array(Type.String())),
+    }),
+  ),
+  referredPost: Type.Optional(
+    Type.Object({
+      id: Type.BigInt(),
+      createdAt: Type.Optional(Type.Date()),
+      updatedAt: Type.Optional(Type.Date()),
+      deletedAt: Type.Optional(Type.Date()),
+      publishAt: Type.Optional(Type.Date()),
+      status: Type.Optional(Type.Number()),
+      content: Type.Optional(Type.String()),
+    }),
+  ),
+})

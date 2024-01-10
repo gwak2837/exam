@@ -1,6 +1,6 @@
 export enum PostStatus {
-  DRAFT = 0,
-  PRIVATE = 1,
-  ONLY_FOLLOWERS = 2,
-  PUBLIC = 3,
+  PUBLIC = 0,
+  DRAFT = 1,
+  PRIVATE = 2,
+  ONLY_FOLLOWERS = 3,
 }
