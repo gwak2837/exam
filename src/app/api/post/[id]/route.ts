@@ -60,6 +60,7 @@ export async function GET(request: AuthenticatedRequest, { params }: Context) {
   if (!post) return new Response('404 Not Found', { status: 404, statusText: 'Not Found' })
 
   const isAuthor = post.author_id !== userId
+
   const postORM = deleteDeepNullableKey({
     id: post.id,
     createdAt: isAuthor ? post.createdAt : null,
@@ -93,7 +94,7 @@ export async function GET(request: AuthenticatedRequest, { params }: Context) {
     },
   })
   if (!Value.Check(postResponseSchema, postORM))
-    return new Response('500 Internal Server Error', { status: 500, statusText: 'Internal Server Error' })
+    return new Response('422 Unprocessable Content', { status: 422, statusText: 'Unprocessable Content' })
 
   return Response.json(postORM)
 }
