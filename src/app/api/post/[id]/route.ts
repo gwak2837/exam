@@ -49,10 +49,8 @@ export async function GET(request: AuthenticatedRequest, { params }: Context) {
       LEFT JOIN "Post" AS "ReferredPost" ON "ReferredPost".id = "Post"."referredPostId"
       LEFT JOIN "User" AS "ReferredPostAuthor" ON "ReferredPostAuthor".id = "ReferredPost"."authorId"
       LEFT JOIN "UserFollow" ON "UserFollow"."leaderId" = "Author".id AND "UserFollow"."followerId" = ${userId}
-    WHERE "Post".id = ${postId} 
-      AND (
-        "Post"."authorId" = ${userId} OR "Post"."publishAt" < CURRENT_TIMESTAMP 
-        AND (
+    WHERE "Post".id = ${postId} AND (
+        "Post"."authorId" = ${userId} OR "Post"."publishAt" < CURRENT_TIMESTAMP AND (
           "Post".status = ${PostStatus.PUBLIC} 
           OR "Post".status = ${PostStatus.ONLY_FOLLOWERS} AND "UserFollow"."leaderId" IS NOT NULL
         )
@@ -93,7 +91,7 @@ export async function GET(request: AuthenticatedRequest, { params }: Context) {
       },
     },
   })
-  if (!Value.Check(postResponseSchema, postORM))
+  if (!Value.Check(schemaResponseGETPostId, postORM))
     return new Response('422 Unprocessable Content', { status: 422, statusText: 'Unprocessable Content' })
 
   return Response.json(postORM)
@@ -126,9 +124,9 @@ type PostQuery = {
   referredPostAuthor_profileImageURLs: string[] | null
 }
 
-export type PostResponse = Static<typeof postResponseSchema>
+export type ResponseGETPostId = Static<typeof schemaResponseGETPostId>
 
-const postSchema = {
+const schemaPost = {
   id: Type.BigInt(),
   createdAt: Type.Optional(Type.Date()),
   updatedAt: Type.Optional(Type.Date()),
@@ -147,7 +145,7 @@ const postSchema = {
   ),
 }
 
-const postResponseSchema = Type.Object({
-  ...postSchema,
-  referredPost: Type.Optional(Type.Object(postSchema)),
+const schemaResponseGETPostId = Type.Object({
+  ...schemaPost,
+  referredPost: Type.Optional(Type.Object(schemaPost)),
 })
