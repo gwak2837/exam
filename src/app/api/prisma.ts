@@ -1,6 +1,8 @@
 import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient({ log: ['query'] })
+import { NODE_ENV } from '@/common/constants'
+
+const prisma = new PrismaClient({ log: NODE_ENV === 'test' ? [] : ['query'] })
 
 export default prisma
 

@@ -10,6 +10,7 @@
 - macOS 13.3
 - Node.js 20.9
 - Docker 20.10
+- Docker Compose 2.17
 - PostgreSQL 15
 
 #### Cloud
@@ -116,4 +117,32 @@ sudo docker run \
   -c ssl_key_file=/var/lib/postgresql/server.key \
   -c hba_file=/var/lib/postgresql/pg_hba.conf
   # -c config_file=/var/lib/postgresql/postgresql.conf
+```
+
+## Start
+
+#### Development
+
+```
+npm run dev
+```
+
+#### Build
+
+```
+npm run build && npm start
+```
+
+## Test
+
+### Unit
+
+### Integration
+
+#### Local
+
+```
+docker-compose up -d
+npm test
+docker-compose down
 ```
