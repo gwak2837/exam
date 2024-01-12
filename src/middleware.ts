@@ -16,10 +16,10 @@ export async function middleware(req: NextRequest) {
   const authorization = req.headers.get('Authorization')
   if (!authorization || !authorization.startsWith('Bearer ')) return NextResponse.next()
 
-  const accessToken = authorization.substring(7)
+  const token = authorization.substring(7)
 
   try {
-    const { sub: userId } = await verifyJWT(accessToken, AuthToken.ACCESS_TOKEN)
+    const { sub: userId } = await verifyJWT(token, AuthToken.ACCESS_TOKEN)
     if (!userId) {
       console.error('Fatal: Should not happen. No user id in the access token')
       return new Response('401 Unauthorized', { status: 401, statusText: 'Unauthorized' })
