@@ -62,7 +62,7 @@ export async function POST(request: Request) {
         select: { id: true },
       })
       .catch((error) => {
-        // NOTE(logan): OAuthUserRow 쿼리하고 같은 transaction 단위가 아니라서 발생하는데, 성능을 위해 transation 사용 안 함
+        // NOTE(logan): 위 쿼리가 여러 번 실행될 수 있어 UNIQUE_CONSTRAINT을 만족하지 못할 수 있다
         if (error.code === PrismaError.UNIQUE_CONSTRAINT_FAILED) return null
         throw error
       })

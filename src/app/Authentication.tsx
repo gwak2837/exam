@@ -50,10 +50,13 @@ export default function Authentication() {
       const response = await fetch('/api/auth/token', { method: 'POST', headers: { Authorization: refreshToken } })
       if (response.status === 401) {
         localStorage.removeItem('refreshToken')
-        toast.error('로그인 기간이 만료됐어요')
+        toast.error('로그인 유지 기간이 만료됐어요')
         return
-      }
-      if (!response.ok) return toast.error('일시적인 오류가 발생했어요') // TODO: 1, 2, 4초 간격으로 3번 retry하기
+      } else if (response.status === 403) {
+        localStorage.removeItem('refreshToken')
+        toast.error('로그아웃 됐어요')
+        return
+      } else if (!response.ok) return toast.error('일시적인 오류가 발생했어요') // TODO: 1, 2, 4초 간격으로 3번 retry하기
 
       const { accessToken } = await response.json()
       setAccessToken(accessToken)

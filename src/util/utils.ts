@@ -33,7 +33,8 @@ export function deleteDeepNullableKey<T extends Record<string, unknown>>(obj: T)
   for (const key in obj) {
     const value = obj[key]
     if (value == null) delete obj[key]
-    else if (typeof value === 'object') {
+    else if (Array.isArray(value) && value.length === 0) delete obj[key]
+    else if (value.constructor.name === 'Object') {
       const subObj = deleteDeepNullableKey(value as Record<string, unknown>)
       if (Object.keys(subObj).length === 0) delete obj[key]
     }

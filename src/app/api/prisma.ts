@@ -14,7 +14,7 @@ declare global {
 }
 
 /* eslint-disable no-extend-native */
-BigInt.prototype.toJSON = function (): string {
+BigInt.prototype.toJSON = function () {
   return this.toString()
 }
 

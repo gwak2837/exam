@@ -1,3 +1,5 @@
+import prisma from '@/app/api/prisma'
+import { UserSuspendedType } from '@/database/User'
 import { AuthToken, signJWT, verifyJWT } from '@/util/jwt'
 
 export async function POST(request: Request) {
@@ -11,8 +13,14 @@ export async function POST(request: Request) {
       return new Response('401 Unauthorized', { status: 401, statusText: 'Unauthorized' })
     }
 
+    const user = await prisma.user.findUnique({ select: { suspendedType: true }, where: { id: userId } })
+    if (!user || (user.suspendedType && noAccessToken.includes(user.suspendedType)))
+      return new Response('403 Forbidden', { status: 403, statusText: 'Forbidden' })
+
     return Response.json({ accessToken: await signJWT({ sub: userId }, AuthToken.ACCESS_TOKEN) })
   } catch (error) {
     return new Response('401 Unauthorized', { status: 401, statusText: 'Unauthorized' })
   }
 }
+
+const noAccessToken = [UserSuspendedType.BLOCK, UserSuspendedType.SLEEP, UserSuspendedType.DELETE]
