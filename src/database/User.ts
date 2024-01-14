@@ -34,6 +34,13 @@ export async function createOAuthUser({
   })
 }
 
+export async function getOAuthUser({ oAuthId = 'gwak2837', provider = OAuthProvider.BBATON }) {
+  const oAuth = await prisma.oAuth.findUnique({ where: { id_provider: { id: oAuthId, provider } } })
+  if (!oAuth?.userId) return null
+
+  return await prisma.user.findUnique({ where: { id: oAuth.userId } })
+}
+
 export async function deleteOAuthUser({ oAuthId = 'gwak2837', provider = OAuthProvider.BBATON }) {
   const deleteOAuth = await prisma.oAuth.delete({
     where: {

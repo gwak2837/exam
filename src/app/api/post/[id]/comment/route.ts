@@ -12,8 +12,8 @@ type Context = {
 }
 
 export async function GET(request: AuthenticatedRequest, { params }: Context) {
-  const postId = +params.id
-  if (!Value.Check(Type.Integer(), postId))
+  const postId = BigInt(params.id)
+  if (!Value.Check(Type.BigInt(), postId))
     return new Response('400 Bad Request', { status: 400, statusText: 'Bad Request' })
 
   const { searchParams } = new URL(request.url)
@@ -83,6 +83,7 @@ export async function GET(request: AuthenticatedRequest, { params }: Context) {
     GROUP BY "Comment".id, "Author".id, "ReferredPost".id, "ReferredAuthor".id, "ReplyPost".id, "ReplyAuthor".id
     ORDER BY "Comment".id < ${cursor} DESC
     LIMIT ${limit};`
-  console.log('👀 ~ comments:', comments)
   if (!comments.length) return new Response('404 Not Found', { status: 404, statusText: 'Not Found' })
+
+  return Response.json(comments)
 }

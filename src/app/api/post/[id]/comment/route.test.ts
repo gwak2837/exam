@@ -1,14 +1,42 @@
-import { GET } from '@/app/api/post/[id]/comment/route'
+import { GET as GETPostIdComment } from '@/app/api/post/[id]/comment/route'
+import { type ResponseGETPostId } from '@/app/api/post/[id]/type'
+import { POST as POSTPost, type POSTPostResponse, type POSTPostRequest } from '@/app/api/post/route'
 import prisma from '@/app/api/prisma'
-import { createOAuthUser, deleteOAuthUser } from '@/database/User'
+import { createOAuthUser, deleteOAuthUser, getOAuthUser } from '@/database/User'
 
 beforeAll(async () => {
   await createOAuthUser({})
 })
 
 describe('GET /api/post/[id]/comment', () => {
-  test('One comment', async () => {
-    // await GET({ url: 'http://.', user: { id: '123' } } as any, { params: { id: '1' } })
+  test('User = Author | One comment', async () => {
+    const user = await getOAuthUser({})
+    if (!user) throw new Error('User not found')
+
+    const response = await POSTPost({
+      user: { id: user.id },
+      json: () => ({ content: '새 글 내용' }) satisfies POSTPostRequest,
+    } as any)
+    const newPost = (await response.json()) as POSTPostResponse
+    console.log('👀 ~ newPost:', newPost)
+
+    const response2 = await POSTPost({
+      user: { id: user.id },
+      json: () => ({ content: '새 댓글 내용', parentPostId: BigInt(newPost.id) }) satisfies POSTPostRequest,
+    } as any)
+    const newComment = (await response2.json()) as POSTPostResponse
+    console.log('👀 ~ newComment:', newComment)
+
+    const response3 = await GETPostIdComment(
+      {
+        url: 'http://localhost:3000',
+        user: { id: user.id },
+      } as any,
+      { params: { id: String(newPost.id) } },
+    )
+    const comment = (await response3.json()) as ResponseGETPostId
+    console.log('👀 ~ comment:', comment)
+
     await expect(Promise.resolve(1)).resolves.toEqual(1)
   })
 
