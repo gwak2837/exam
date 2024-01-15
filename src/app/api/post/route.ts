@@ -18,13 +18,22 @@ export async function GET(request: AuthenticatedRequest) {
 
 export async function POST(request: AuthenticatedRequest) {
   const userId = request.user?.id
-  if (!userId) return new Response('401 Unauthorized', { status: 401, statusText: 'Unauthorized' })
+  // if (!userId) return new Response('401 Unauthorized', { status: 401, statusText: 'Unauthorized' })
 
-  const body: POSTPostRequest = await request.json()
-  if (!Value.Check(schemaPOSTPostRequest, body))
+  let body: POSTPostRequest
+  try {
+    body = await request.json()
+  } catch (error) {
     return new Response('400 Bad Request', { status: 400, statusText: 'Bad Request' })
+  }
+  console.log('👀 - body:', body)
+  if (!Value.Check(schemaPOSTPostRequest, body)) {
+    console.error(Array.from(Value.Errors(schemaPOSTPostRequest, body)))
+    return new Response('400 Bad Request', { status: 400, statusText: 'Bad Request' })
+  }
 
   const { publishAt } = body
+  console.log('👀 - publishAt:', publishAt)
 
   if (publishAt && new Date(publishAt) < new Date())
     return new Response('400 Bad Request', { status: 400, statusText: 'Bad Request' })
@@ -34,12 +43,13 @@ export async function POST(request: AuthenticatedRequest) {
   const relatedPosts = await prisma.$queryRaw<{ id: bigint }[]>`
     SELECT "Post".id
     FROM "Post"
-      LEFT JOIN "User" AS "Author" ON  "Author".id = "Post"."authorId" AND ("Post".id = ${parentPostId} OR "Post".id = ${referredPostId})
+      LEFT JOIN "User" AS "Author" ON  "Author".id = "Post"."authorId"
       LEFT JOIN "UserFollow" ON "UserFollow"."leaderId" = "Author"."id" AND "UserFollow"."followerId" = ${userId}::uuid
-    WHERE "Post".status = ${PostStatus.PUBLIC} OR 
+    WHERE "Post".id IN (${Prisma.join([parentPostId, referredPostId])}) AND (
+      "Post".status = ${PostStatus.PUBLIC} OR 
       "Post".status = ${PostStatus.ONLY_FOLLOWERS} AND "UserFollow"."leaderId" IS NOT NULL OR
-      "Post".status = ${PostStatus.PRIVATE} AND "Author".id = ${userId}::uuid;`
-  console.log('👀 ~ relatedPosts:', parentPostId, referredPostId, relatedPosts)
+      "Post".status = ${PostStatus.PRIVATE} AND "Author".id = ${userId}::uuid
+    );`
 
   const postIds = relatedPosts.map((post) => post.id)
   if ((parentPostId && !postIds.includes(parentPostId)) || (referredPostId && !postIds.includes(referredPostId)))
