@@ -15,6 +15,7 @@
 
 #### Cloud
 
+- Vercel
 - Oracle Cloud Instance
 - Ubuntu 22.04
 - [Docker](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository) 24.0
@@ -119,17 +120,31 @@ sudo docker run \
   # -c config_file=/var/lib/postgresql/postgresql.conf
 ```
 
+### Redis
+
+#### Local
+
+```
+
+```
+
+#### Cloud
+
+```
+
+```
+
 ## Start
 
 #### Development
 
-```
+```bash
 npm run dev
 ```
 
-#### Build
+#### Production
 
-```
+```bash
 npm run build && npm start
 ```
 
@@ -141,7 +156,15 @@ npm run build && npm start
 
 #### Local
 
+`.env.test` 파일 생성하기
+
 ```
+# .env.test
+PRISMA_DATABASE_URL=postgresql://prisma:prisma@localhost:5433/tests
+PRISMA_DATABASE_DIRECT_URL=postgresql://prisma:prisma@localhost:5433/tests
+```
+
+```bash
 docker-compose up -d
 npm test
 docker-compose down

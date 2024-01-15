@@ -18,7 +18,6 @@ describe('GET /api/post/[id]/comment', () => {
       json: () => ({ content: '새 글 내용' }) satisfies POSTPostRequest,
     } as any)
     const newPost = (await response.json()) as POSTPostResponse
-    console.log('👀 ~ newPost:', newPost)
 
     const response2 = await POSTPost({
       user: { id: user.id },
@@ -34,6 +33,7 @@ describe('GET /api/post/[id]/comment', () => {
       } as any,
       { params: { id: String(newPost.id) } },
     )
+    if (!response3.ok) return console.log('👀 ~ response3:', await response3.text())
     const comment = (await response3.json()) as ResponseGETPostId
     console.log('👀 ~ comment:', comment)
 
@@ -67,6 +67,7 @@ describe('GET /api/post/[id]/comment', () => {
 
 afterAll(async () => {
   await deleteOAuthUser({})
+  // await prisma.post.deleteMany()
 
   await prisma.$disconnect()
 })

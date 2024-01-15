@@ -63,13 +63,13 @@ export async function GET(request: AuthenticatedRequest, { params }: Context) {
       "ReplyAuthor"."profileImageURLs" AS "replyAuthor_profileImageURLs"
     FROM "Post" AS "Comment"
       LEFT JOIN "User" AS "Author" ON "Author".id = "Comment"."authorId"
-      LEFT JOIN "UserFollow" AS "AuthorFollow" ON "AuthorFollow"."leaderId" = "Author".id AND "AuthorFollow"."followerId" = ${userId}
+      LEFT JOIN "UserFollow" AS "AuthorFollow" ON "AuthorFollow"."leaderId" = "Author".id AND "AuthorFollow"."followerId" = ${userId}::uuid
       LEFT JOIN "Post" AS "ReferredPost" ON "ReferredPost".id = "Comment"."referredPostId"
       LEFT JOIN "User" AS "ReferredAuthor" ON "ReferredAuthor".id = "ReferredPost"."authorId"
-      LEFT JOIN "UserFollow" AS "ReferredAuthorFollow" ON "ReferredAuthorFollow"."leaderId" = "ReferredAuthor".id AND "ReferredAuthorFollow"."followerId" = ${userId}
+      LEFT JOIN "UserFollow" AS "ReferredAuthorFollow" ON "ReferredAuthorFollow"."leaderId" = "ReferredAuthor".id AND "ReferredAuthorFollow"."followerId" = ${userId}::uuid
       LEFT JOIN "Post" AS "ReplyPost" ON "ReplyPost".id = "Comment"."parentPostId"
       LEFT JOIN "User" AS "ReplyAuthor" ON "ReplyAuthor".id = "ReplyPost"."authorId"
-      LEFT JOIN "UserFollow" AS "ReplyAuthorFollow" ON "ReplyAuthorFollow"."leaderId" = "ReplyAuthor".id AND "ReplyAuthorFollow"."followerId" = ${userId}
+      LEFT JOIN "UserFollow" AS "ReplyAuthorFollow" ON "ReplyAuthorFollow"."leaderId" = "ReplyAuthor".id AND "ReplyAuthorFollow"."followerId" = ${userId}::uuid
     WHERE "Comment"."parentPostId" = ${postId} AND (
         "Comment".status = ${PostStatus.PUBLIC}
         OR "Comment".status = ${PostStatus.ONLY_FOLLOWERS} AND "AuthorFollow"."leaderId" IS NOT NULL
