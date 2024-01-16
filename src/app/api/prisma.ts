@@ -21,3 +21,5 @@ BigInt.prototype.toJSON = function () {
 export enum PrismaError {
   UNIQUE_CONSTRAINT_FAILED = 'P2002',
 }
+
+export const POSTGRES_MAX_BIGINT = 9223372036854775807n
