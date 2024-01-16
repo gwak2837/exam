@@ -21,7 +21,7 @@ export async function GET(request: AuthenticatedRequest, { params }: Context) {
 
   const userId = request.user?.id
 
-  const comments = await prisma.$queryRaw<CommentsQuery>`
+  const comments = await prisma.$queryRaw<CommentsQuery[]>`
     SELECT "Comment".id,
       "Comment"."createdAt",
       "Comment"."updatedAt",
