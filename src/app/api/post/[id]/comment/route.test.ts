@@ -25,7 +25,6 @@ describe('GET /api/post/[id]/comment', () => {
       json: () => ({ content: '새 댓글 내용', parentPostId: BigInt(newPost.id) }) satisfies POSTPostRequest,
     } as any)
     const newComment = (await response2.json()) as POSTPostResponse
-    console.log('👀 ~ newComment:', newComment)
 
     const response3 = await GETPostIdComment(
       {
@@ -38,7 +37,7 @@ describe('GET /api/post/[id]/comment', () => {
     const comment = (await response3.json()) as ResponseGETPostId
     console.log('👀 ~ comment:', comment)
 
-    await expect(Promise.resolve(1)).resolves.toEqual(1)
+    await expect(Promise.resolve(comment)).resolves.toEqual(newComment)
   })
 
   test('One comment with referring post', async () => {

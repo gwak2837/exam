@@ -1,6 +1,6 @@
 import { Value } from '@sinclair/typebox/value'
 
-import { schemaRequestGETPostIdComment } from '@/app/api/post/[id]/comment/type'
+import { type CommentsQuery, schemaGETPostIdCommentRequest } from '@/app/api/post/[id]/comment/type'
 import prisma, { POSTGRES_MAX_BIGINT } from '@/app/api/prisma'
 import { PostStatus } from '@/database/Post'
 import { type AuthenticatedRequest } from '@/middleware'
@@ -16,12 +16,12 @@ export async function GET(request: AuthenticatedRequest, { params }: Context) {
   const postId = BigInt(params.id)
   const cursor = BigInt(searchParams.get('cursor') ?? POSTGRES_MAX_BIGINT)
   const limit = +(searchParams.get('limit') ?? 20)
-  if (!Value.Check(schemaRequestGETPostIdComment, { postId, cursor, limit }))
+  if (!Value.Check(schemaGETPostIdCommentRequest, { postId, cursor, limit }))
     return new Response('400 Bad Request', { status: 400, statusText: 'Bad Request' })
 
   const userId = request.user?.id
 
-  const comments = await prisma.$queryRaw<any[]>`
+  const comments = await prisma.$queryRaw<CommentsQuery>`
     SELECT "Comment".id,
       "Comment"."createdAt",
       "Comment"."updatedAt",
@@ -42,10 +42,10 @@ export async function GET(request: AuthenticatedRequest, { params }: Context) {
       "ReferredPost".status AS "referredPost_status",
       "ReferredPost".content AS "referredPost_content",
       "ReferredPost"."imageURLs" AS "referredPost_imageURLs",
-      "ReferredAuthor".id AS "ReferredAuthor_id",
-      "ReferredAuthor".name AS "ReferredAuthor_name",
-      "ReferredAuthor".nickname AS "ReferredAuthor_nickname",
-      "ReferredAuthor"."profileImageURLs" AS "ReferredAuthor_profileImageURLs",
+      "ReferredAuthor".id AS "referredAuthor_id",
+      "ReferredAuthor".name AS "referredAuthor_name",
+      "ReferredAuthor".nickname AS "referredAuthor_nickname",
+      "ReferredAuthor"."profileImageURLs" AS "referredAuthor_profileImageURLs",
       "ReplyPost".id AS "replyPost_id",
       "ReplyPost"."createdAt" AS "replyPost_createdAt",
       "ReplyPost"."updatedAt" AS "replyPost_updatedAt",
