@@ -1,61 +1,13 @@
 import { type Static, Type } from '@sinclair/typebox'
 
-export type PostQuery = {
+export type CommentQuery = {
   id: bigint
-  createdAt: Date
-  updatedAt: Date | null
-  deletedAt: Date | null
-  publishAt: Date | null
-  status: number | null
-  content: string | null
-  imageURLs: string[] | null
-  author_id: string | null
-  author_name: string | null
-  author_nickname: string | null
-  author_profileImageURLs: string[] | null
-  referredPost_id: bigint | null
-  referredPost_createdAt: Date | null
-  referredPost_updatedAt: Date | null
-  referredPost_deletedAt: Date | null
-  referredPost_publishAt: Date | null
-  referredPost_status: number | null
-  referredPost_content: string | null
-  referredPost_imageURLs: string[] | null
-  referredPostAuthor_id: string | null
-  referredPostAuthor_name: string | null
-  referredPostAuthor_nickname: string | null
-  referredPostAuthor_profileImageURLs: string[] | null
 }
 
-export type GETP = Static<typeof schemaResponseGETPostId>
+export type RequestGETPostIdComment = Static<typeof schemaRequestGETPostIdComment>
 
-const schemaPost = {
-  id: Type.BigInt(),
-  createdAt: Type.Optional(Type.Date()),
-  updatedAt: Type.Optional(Type.Date()),
-  deletedAt: Type.Optional(Type.Date()),
-  publishAt: Type.Optional(Type.Date()),
-  status: Type.Optional(Type.Integer()),
-  content: Type.Optional(Type.String()),
-  imageURLs: Type.Optional(Type.Array(Type.String())),
-  author: Type.Optional(
-    Type.Object({
-      id: Type.String(),
-      name: Type.Optional(Type.String()),
-      nickname: Type.Optional(Type.String()),
-      profileImageURLs: Type.Optional(Type.Array(Type.String())),
-    }),
-  ),
-}
-
-export const schemaResponseGETPostId = Type.Object({
-  ...schemaPost,
-  referredPost: Type.Optional(Type.Object(schemaPost)),
-})
-
-export type ResponseDELETEPostId = Static<typeof schemaResponseDELETEPostId>
-
-export const schemaResponseDELETEPostId = Type.Object({
-  id: Type.BigInt(),
-  deletedAt: Type.Optional(Type.Date()),
+export const schemaRequestGETPostIdComment = Type.Object({
+  postId: Type.BigInt(),
+  cursor: Type.Optional(Type.BigInt()),
+  limit: Type.Optional(Type.Integer()),
 })
