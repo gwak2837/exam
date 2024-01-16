@@ -26,14 +26,13 @@ export async function POST(request: AuthenticatedRequest) {
   } catch (error) {
     return new Response('400 Bad Request', { status: 400, statusText: 'Bad Request' })
   }
-  console.log('👀 - body:', body)
+
   if (!Value.Check(schemaPOSTPostRequest, body)) {
-    console.error(Array.from(Value.Errors(schemaPOSTPostRequest, body)))
+    // console.error(Array.from(Value.Errors(schemaPOSTPostRequest, body)))
     return new Response('400 Bad Request', { status: 400, statusText: 'Bad Request' })
   }
 
   const { publishAt } = body
-  console.log('👀 - publishAt:', publishAt)
 
   if (publishAt && new Date(publishAt) < new Date())
     return new Response('400 Bad Request', { status: 400, statusText: 'Bad Request' })

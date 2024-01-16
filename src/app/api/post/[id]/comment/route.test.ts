@@ -5,7 +5,8 @@ import prisma from '@/app/api/prisma'
 import { createOAuthUser, deleteOAuthUser, getOAuthUser } from '@/database/User'
 
 beforeAll(async () => {
-  await createOAuthUser({})
+  // await prisma.post.deleteMany()
+  // await createOAuthUser({})
 })
 
 describe('GET /api/post/[id]/comment', () => {
@@ -66,7 +67,7 @@ describe('GET /api/post/[id]/comment', () => {
 })
 
 afterAll(async () => {
-  await deleteOAuthUser({})
+  // await deleteOAuthUser({})
   // await prisma.post.deleteMany()
 
   await prisma.$disconnect()
