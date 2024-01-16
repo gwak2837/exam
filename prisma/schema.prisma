@@ -55,6 +55,7 @@ model OAuth {
   user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   @@id([id, provider])
+  @@index([userId], type: Hash)
 }
 
 model Post {
@@ -75,4 +76,8 @@ model Post {
   referredPostId BigInt?
   referredPost   Post?   @relation("PostReference", fields: [referredPostId], references: [id])
   referringPosts Post[]  @relation("PostReference")
+
+  @@index([authorId], type: Hash)
 }
+
+// https://dba.stackexchange.com/questions/225271/does-it-make-sense-to-create-an-index-on-foreign-key-uuid-column-in-postgres
