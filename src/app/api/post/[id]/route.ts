@@ -1,11 +1,11 @@
 import { Type } from '@sinclair/typebox'
 import { Value } from '@sinclair/typebox/value'
 
-import { schemaResponseGETPostId, type PostQuery, schemaResponseDELETEPostId } from '@/app/api/post/[id]/type'
+import { schemaGETPostIdResponse, type PostQuery, schemaResponseDELETEPostId } from '@/app/api/post/[id]/type'
 import prisma from '@/app/api/prisma'
 import { PostStatus } from '@/database/Post'
 import { type AuthenticatedRequest } from '@/middleware'
-import { deleteDeepNullableKey } from '@/util/utils'
+import { deleteDeepNullKey, bigIntToString, stringToBigInt } from '@/util/utils'
 
 type Context = {
   params: {
@@ -14,7 +14,7 @@ type Context = {
 }
 
 export async function GET(request: AuthenticatedRequest, { params }: Context) {
-  const postId = BigInt(params.id)
+  const postId = stringToBigInt(params.id)
   if (!Value.Check(Type.BigInt(), postId))
     return new Response('400 Bad Request', { status: 400, statusText: 'Bad Request' })
 
@@ -51,17 +51,18 @@ export async function GET(request: AuthenticatedRequest, { params }: Context) {
       LEFT JOIN "User" AS "ReferredPostAuthor" ON "ReferredPostAuthor".id = "ReferredPost"."authorId"
       LEFT JOIN "UserFollow" ON "UserFollow"."leaderId" = "Author".id AND "UserFollow"."followerId" = ${userId}
     WHERE "Post".id = ${postId} AND (
-        "Post"."authorId" = ${userId} OR "Post"."publishAt" < CURRENT_TIMESTAMP AND (
-          "Post".status = ${PostStatus.PUBLIC} 
-          OR "Post".status = ${PostStatus.ONLY_FOLLOWERS} AND "UserFollow"."leaderId" IS NOT NULL
-        )
-      );`
+      "Post"."authorId" = ${userId} OR
+      "Post"."publishAt" < CURRENT_TIMESTAMP AND (
+        "Post".status = ${PostStatus.PUBLIC} OR 
+        "Post".status = ${PostStatus.ONLY_FOLLOWERS} AND "UserFollow"."leaderId" IS NOT NULL
+      ));`
   if (!post) return new Response('404 Not Found', { status: 404, statusText: 'Not Found' })
 
-  const isAuthor = post.author_id !== userId
+  const isAuthor = post.author_id === userId
+  const isReferredAuthor = post.referredPostAuthor_id === userId
 
-  const postORM = deleteDeepNullableKey({
-    id: post.id,
+  const postORM = deleteDeepNullKey({
+    id: String(post.id),
     createdAt: isAuthor ? post.createdAt : null,
     updatedAt: post.updatedAt,
     deletedAt: post.deletedAt,
@@ -76,12 +77,12 @@ export async function GET(request: AuthenticatedRequest, { params }: Context) {
       profileImageURLs: post.author_profileImageURLs,
     },
     referredPost: {
-      id: post.referredPost_id,
-      createdAt: post.referredPost_createdAt,
+      id: bigIntToString(post.referredPost_id),
+      createdAt: isReferredAuthor ? post.referredPost_createdAt : null,
       updatedAt: post.referredPost_updatedAt,
       deletedAt: post.referredPost_deletedAt,
       publishAt: post.referredPost_publishAt,
-      status: post.referredPost_status,
+      status: isReferredAuthor ? post.referredPost_status : null,
       content: post.referredPost_content,
       imageURLs: post.referredPost_imageURLs,
       author: {
@@ -92,14 +93,14 @@ export async function GET(request: AuthenticatedRequest, { params }: Context) {
       },
     },
   })
-  if (!Value.Check(schemaResponseGETPostId, postORM))
+  if (!Value.Check(schemaGETPostIdResponse, postORM))
     return new Response('422 Unprocessable Content', { status: 422, statusText: 'Unprocessable Content' })
 
   return Response.json(postORM)
 }
 
 export async function DELETE(request: AuthenticatedRequest, { params }: Context) {
-  const postId = BigInt(params.id)
+  const postId = stringToBigInt(params.id)
   if (!Value.Check(Type.BigInt(), postId))
     return new Response('400 Bad Request', { status: 400, statusText: 'Bad Request' })
 
@@ -107,7 +108,7 @@ export async function DELETE(request: AuthenticatedRequest, { params }: Context)
   if (!userId) return new Response('401 Unauthorized', { status: 401, statusText: 'Unauthorized' })
 
   const deletedPost = await prisma.post.delete({ where: { id: postId }, select: { id: true, deletedAt: true } })
-  if (!Value.Check(schemaResponseDELETEPostId, deleteDeepNullableKey(deletedPost)))
+  if (!Value.Check(schemaResponseDELETEPostId, deleteDeepNullKey(deletedPost)))
     return new Response('422 Unprocessable Content', { status: 422, statusText: 'Unprocessable Content' })
 
   return Response.json(deletedPost)

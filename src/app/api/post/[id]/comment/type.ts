@@ -1,11 +1,13 @@
 import { type Static, Type } from '@sinclair/typebox'
 
+import { schemaPost } from '@/app/api/post/[id]/type'
+
 export type GETPostIdCommentRequest = Static<typeof schemaGETPostIdCommentRequest>
 
 export const schemaGETPostIdCommentRequest = Type.Object({
-  postId: Type.BigInt(),
-  cursor: Type.Optional(Type.BigInt()),
-  limit: Type.Optional(Type.Integer()),
+  postId: Type.String(),
+  cursor: Type.Optional(Type.String()),
+  limit: Type.Optional(Type.String()),
 })
 
 export type CommentsQuery = {
@@ -49,8 +51,10 @@ export type CommentsQuery = {
 
 export type GETPostIdCommentResponse = Static<typeof schemaGETPostIdCommentResponse>
 
-export const schemaGETPostIdCommentResponse = Type.Object({
-  postId: Type.BigInt(),
-  cursor: Type.Optional(Type.BigInt()),
-  limit: Type.Optional(Type.Integer()),
-})
+export const schemaGETPostIdCommentResponse = Type.Array(
+  Type.Object({
+    ...schemaPost,
+    referredPost: Type.Optional(Type.Object(schemaPost)),
+    replyPost: Type.Optional(Type.Object(schemaPost)),
+  }),
+)

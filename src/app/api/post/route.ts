@@ -2,10 +2,11 @@ import { Prisma } from '@prisma/client'
 import { type Static, Type } from '@sinclair/typebox'
 import { Value } from '@sinclair/typebox/value'
 
+import { type POSTPostRequest, schemaPOSTPostRequest, schemaPOSTPostResponse } from '@/app/api/post/type'
 import prisma from '@/app/api/prisma'
 import { PostStatus } from '@/database/Post'
 import { type AuthenticatedRequest } from '@/middleware'
-import { deleteDeepNullableKey } from '@/util/utils'
+import { deleteDeepNullKey, stringToBigInt } from '@/util/utils'
 
 export async function GET(request: AuthenticatedRequest) {
   const { searchParams } = new URL(request.url)
@@ -27,17 +28,16 @@ export async function POST(request: AuthenticatedRequest) {
     return new Response('400 Bad Request', { status: 400, statusText: 'Bad Request' })
   }
 
-  if (!Value.Check(schemaPOSTPostRequest, body)) {
-    // console.error(Array.from(Value.Errors(schemaPOSTPostRequest, body)))
+  if (!Value.Check(schemaPOSTPostRequest, body))
     return new Response('400 Bad Request', { status: 400, statusText: 'Bad Request' })
-  }
 
   const { publishAt } = body
 
   if (publishAt && new Date(publishAt) < new Date())
     return new Response('400 Bad Request', { status: 400, statusText: 'Bad Request' })
 
-  const { parentPostId, referredPostId } = body
+  const parentPostId = stringToBigInt(body.parentPostId)
+  const referredPostId = stringToBigInt(body.referredPostId)
 
   const relatedPosts = await prisma.$queryRaw<{ id: bigint }[]>`
     SELECT "Post".id
@@ -64,44 +64,20 @@ export async function POST(request: AuthenticatedRequest) {
       parentPostId,
       referredPostId,
     },
+    select: {
+      id: true,
+      createdAt: true,
+      publishAt: true,
+    },
   })
-  const postORM = deleteDeepNullableKey({
+
+  const postORM = deleteDeepNullKey({
     id: String(createdPost.id),
     createdAt: createdPost.createdAt,
-    updatedAt: createdPost.updatedAt,
     publishAt: createdPost.publishAt,
-    status: createdPost.status,
-    content: createdPost.content,
-    authorId: createdPost.authorId,
-    parentPostId: createdPost.parentPostId ? String(createdPost.parentPostId) : null,
-    referredPostId: createdPost.referredPostId ? String(createdPost.referredPostId) : null,
   })
-  if (!Value.Errors(schemaPOSTPostResponse, deleteDeepNullableKey(postORM)))
+  if (!Value.Errors(schemaPOSTPostResponse, deleteDeepNullKey(postORM)))
     return new Response('422 Unprocessable Content', { status: 422, statusText: 'Unprocessable Content' })
 
   return Response.json(postORM)
 }
-
-export type POSTPostRequest = Static<typeof schemaPOSTPostRequest>
-
-const schemaPOSTPostRequest = Type.Object({
-  publishAt: Type.Optional(Type.String({ format: 'date-time' })),
-  status: Type.Optional(Type.Number()),
-  content: Type.String(),
-  parentPostId: Type.Optional(Type.BigInt()),
-  referredPostId: Type.Optional(Type.BigInt()),
-})
-
-export type POSTPostResponse = Static<typeof schemaPOSTPostResponse>
-
-const schemaPOSTPostResponse = Type.Object({
-  id: Type.String(),
-  createdAt: Type.Date(),
-  updatedAt: Type.Optional(Type.Date()),
-  publishAt: Type.Optional(Type.Date()),
-  status: Type.Integer(),
-  content: Type.String(),
-  authorId: Type.String(),
-  parentPostId: Type.Optional(Type.String()),
-  referredPostId: Type.Optional(Type.String()),
-})

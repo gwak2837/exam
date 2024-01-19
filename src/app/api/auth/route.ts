@@ -3,7 +3,7 @@ import { Value } from '@sinclair/typebox/value'
 
 import prisma from '@/app/api/prisma'
 import { type AuthenticatedRequest } from '@/middleware'
-import { deleteDeepNullableKey } from '@/util/utils'
+import { deleteDeepNullKey } from '@/util/utils'
 
 export async function GET(request: AuthenticatedRequest) {
   const userId = request.user?.id
@@ -12,7 +12,7 @@ export async function GET(request: AuthenticatedRequest) {
   const user = await prisma.user.findUnique({ where: { id: userId } })
   if (!user) return new Response('404 Not Found', { status: 404, statusText: 'Not Found' })
 
-  if (!Value.Check(schemaGETAuthResponse, deleteDeepNullableKey(user)))
+  if (!Value.Check(schemaGETAuthResponse, deleteDeepNullKey(user)))
     return new Response('422 Unprocessable Content', { status: 422, statusText: 'Unprocessable Content' })
 
   return Response.json(user)
@@ -30,6 +30,7 @@ const schemaGETAuthResponse = Type.Object({
   suspendedReason: Type.Optional(Type.String()),
   ageRange: Type.Integer(),
   bio: Type.Optional(Type.String()),
+  grade: Type.Integer(),
   name: Type.Optional(Type.String()),
   nickname: Type.Optional(Type.String()),
   profileImageURLs: Type.Optional(Type.Array(Type.String())),

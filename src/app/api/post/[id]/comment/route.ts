@@ -1,9 +1,15 @@
 import { Value } from '@sinclair/typebox/value'
 
-import { type CommentsQuery, schemaGETPostIdCommentRequest } from '@/app/api/post/[id]/comment/type'
+import {
+  type CommentsQuery,
+  schemaGETPostIdCommentRequest,
+  schemaGETPostIdCommentResponse,
+  type GETPostIdCommentRequest,
+} from '@/app/api/post/[id]/comment/type'
 import prisma, { POSTGRES_MAX_BIGINT } from '@/app/api/prisma'
 import { PostStatus } from '@/database/Post'
 import { type AuthenticatedRequest } from '@/middleware'
+import { bigIntToString, deleteDeepNullKey } from '@/util/utils'
 
 type Context = {
   params: {
@@ -13,12 +19,17 @@ type Context = {
 
 export async function GET(request: AuthenticatedRequest, { params }: Context) {
   const { searchParams } = new URL(request.url)
-  const postId = BigInt(params.id)
-  const cursor = BigInt(searchParams.get('cursor') ?? POSTGRES_MAX_BIGINT)
-  const limit = +(searchParams.get('limit') ?? 20)
-  if (!Value.Check(schemaGETPostIdCommentRequest, { postId, cursor, limit }))
+  const input = {
+    postId: params.id,
+    cursor: searchParams.get('cursor') ?? undefined,
+    limit: searchParams.get('limit') ?? undefined,
+  } satisfies GETPostIdCommentRequest
+  if (!Value.Check(schemaGETPostIdCommentRequest, input))
     return new Response('400 Bad Request', { status: 400, statusText: 'Bad Request' })
 
+  const postId = BigInt(input.postId)
+  const cursor = BigInt(input.cursor ?? POSTGRES_MAX_BIGINT)
+  const limit = +(input.limit ?? 20)
   const userId = request.user?.id
 
   const comments = await prisma.$queryRaw<CommentsQuery[]>`
@@ -68,24 +79,82 @@ export async function GET(request: AuthenticatedRequest, { params }: Context) {
       LEFT JOIN "Post" AS "ReplyPost2" ON "ReplyPost".id < "ReplyPost2".id
       LEFT JOIN "User" AS "ReplyAuthor" ON "ReplyAuthor".id = "ReplyPost"."authorId"
       LEFT JOIN "UserFollow" AS "ReplyAuthorFollow" ON "ReplyAuthorFollow"."leaderId" = "ReplyAuthor".id AND "ReplyAuthorFollow"."followerId" = ${userId}::uuid
-    WHERE "Comment".id < ${cursor} AND
-        "Comment"."parentPostId" = ${postId} AND (
+    WHERE "Comment".id < ${cursor} AND "Comment"."parentPostId" = ${postId} AND (
+      "Comment"."publishAt" < CURRENT_TIMESTAMP AND (
         "Comment".status = ${PostStatus.PUBLIC} OR
-        "Comment".status = ${PostStatus.ONLY_FOLLOWERS} AND "AuthorFollow"."leaderId" IS NOT NULL OR
-        "Comment".status = ${PostStatus.PRIVATE} AND "Author".id = ${userId}::uuid
-      ) AND (
-        "ReferredPost".id IS NULL OR 
+        "Comment".status = ${PostStatus.ONLY_FOLLOWERS} AND "AuthorFollow"."leaderId" IS NOT NULL
+      ) OR
+      "Comment".status = ${PostStatus.PRIVATE} AND "Author".id = ${userId}::uuid
+    ) AND (
+      "ReferredPost".id IS NULL OR 
+      "ReferredPost"."publishAt" < CURRENT_TIMESTAMP AND (
         "ReferredPost".status = ${PostStatus.PUBLIC} OR 
-        "ReferredPost".status = ${PostStatus.ONLY_FOLLOWERS} AND "ReferredAuthorFollow"."leaderId" IS NOT NULL OR
-        "ReferredPost".status = ${PostStatus.PRIVATE} AND "ReferredAuthor".id = ${userId}::uuid
-      ) AND (
-        "ReplyPost".id IS NULL OR 
+        "ReferredPost".status = ${PostStatus.ONLY_FOLLOWERS} AND "ReferredAuthorFollow"."leaderId" IS NOT NULL
+      ) OR
+      "ReferredPost".status = ${PostStatus.PRIVATE} AND "ReferredAuthor".id = ${userId}::uuid
+    ) AND (
+      "ReplyPost".id IS NULL OR
+      "ReferredPost"."publishAt" < CURRENT_TIMESTAMP AND (
         "ReplyPost".status = ${PostStatus.PUBLIC} OR 
-        "ReplyPost".status = ${PostStatus.ONLY_FOLLOWERS} AND "ReplyAuthorFollow"."leaderId" IS NOT NULL OR
-        "ReplyPost".status = ${PostStatus.PRIVATE} AND "ReplyAuthor".id = ${userId}::uuid
-      )
+        "ReplyPost".status = ${PostStatus.ONLY_FOLLOWERS} AND "ReplyAuthorFollow"."leaderId" IS NOT NULL
+      ) OR
+      "ReplyPost".status = ${PostStatus.PRIVATE} AND "ReplyAuthor".id = ${userId}::uuid
+    )
     LIMIT ${limit};`
-  if (!comments.length) return new Response('404 Not Found', { status: 404, statusText: 'Not Found' })
+  if (comments.length === 0) return new Response('404 Not Found', { status: 404, statusText: 'Not Found' })
 
-  return Response.json(comments)
+  const commentsORM = comments.map((comment) =>
+    deleteDeepNullKey({
+      id: String(comment.id),
+      createdAt: userId === comment.author_id ? comment.createdAt : null,
+      updatedAt: comment.updatedAt,
+      deletedAt: comment.deletedAt,
+      publishAt: comment.publishAt,
+      status: userId === comment.author_id ? comment.status : null,
+      content: comment.content,
+      imageURLs: comment.imageURLs,
+      author: {
+        id: comment.author_id,
+        name: comment.author_name,
+        nickname: comment.author_nickname,
+        profileImageURLs: comment.author_profileImageURLs,
+      },
+      referredPost: {
+        id: bigIntToString(comment.referredPost_id),
+        createdAt: userId === comment.referredAuthor_id ? comment.referredPost_createdAt : null,
+        updatedAt: comment.referredPost_updatedAt,
+        deletedAt: comment.referredPost_deletedAt,
+        publishAt: comment.referredPost_publishAt,
+        status: userId === comment.referredAuthor_id ? comment.referredPost_status : null,
+        content: comment.referredPost_content,
+        imageURLs: comment.referredPost_imageURLs,
+        author: {
+          id: comment.referredAuthor_id,
+          name: comment.referredAuthor_name,
+          nickname: comment.referredAuthor_nickname,
+          profileImageURLs: comment.referredAuthor_profileImageURLs,
+        },
+      },
+      replyPost: {
+        id: bigIntToString(comment.replyPost_id),
+        createdAt: userId === comment.replyAuthor_id ? comment.replyPost_createdAt : null,
+        updatedAt: comment.replyPost_updatedAt,
+        deletedAt: comment.replyPost_deletedAt,
+        publishAt: comment.replyPost_publishAt,
+        status: userId === comment.replyAuthor_id ? comment.replyPost_status : null,
+        content: comment.replyPost_content,
+        imageURLs: comment.replyPost_imageURLs,
+        author: {
+          id: comment.replyAuthor_id,
+          name: comment.replyAuthor_name,
+          nickname: comment.replyAuthor_nickname,
+          profileImageURLs: comment.replyAuthor_profileImageURLs,
+        },
+      },
+    }),
+  )
+  if (!Value.Check(schemaGETPostIdCommentResponse, commentsORM))
+    return new Response('422 Unprocessable Content', { status: 422, statusText: 'Unprocessable Content' })
+
+  return Response.json(commentsORM)
 }

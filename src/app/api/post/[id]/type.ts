@@ -27,10 +27,10 @@ export type PostQuery = {
   referredPostAuthor_profileImageURLs: string[] | null
 }
 
-export type ResponseGETPostId = Static<typeof schemaResponseGETPostId>
+export type GETPostIdResponse = Static<typeof schemaGETPostIdResponse>
 
-const schemaPost = {
-  id: Type.BigInt(),
+export const schemaPost = {
+  id: Type.String(),
   createdAt: Type.Optional(Type.Date()),
   updatedAt: Type.Optional(Type.Date()),
   deletedAt: Type.Optional(Type.Date()),
@@ -48,7 +48,7 @@ const schemaPost = {
   ),
 }
 
-export const schemaResponseGETPostId = Type.Object({
+export const schemaGETPostIdResponse = Type.Object({
   ...schemaPost,
   referredPost: Type.Optional(Type.Object(schemaPost)),
 })

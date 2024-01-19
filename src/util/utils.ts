@@ -29,16 +29,24 @@ export function toQuerystring(obj?: Record<string, string | string[] | undefined
 }
 
 /* eslint-disable @typescript-eslint/no-dynamic-delete */
-export function deleteDeepNullableKey<T extends Record<string, unknown>>(obj: T) {
+export function deleteDeepNullKey<T extends Record<string, unknown>>(obj: T) {
   for (const key in obj) {
     const value = obj[key]
     if (value == null) delete obj[key]
     else if (Array.isArray(value) && value.length === 0) delete obj[key]
     else if (value.constructor.name === 'Object') {
-      const subObj = deleteDeepNullableKey(value as Record<string, unknown>)
+      const subObj = deleteDeepNullKey(value as Record<string, unknown>)
       if (Object.keys(subObj).length === 0) delete obj[key]
     }
   }
 
   return obj
+}
+
+export function bigIntToString(value: bigint | null) {
+  return value ? String(value) : null
+}
+
+export function stringToBigInt(value?: string) {
+  return value ? BigInt(value) : undefined
 }
