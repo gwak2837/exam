@@ -22,19 +22,15 @@ export default function 다음Button({ add }: Props) {
   const { answers } = useAnswerStore()
   const answer = answers[questionCount] ?? {}
   const 답안 = Object.values(answer)
-  const hasUnsolvedQuestion = isSubmit && (답안.length !== questionCount || 답안.some((답안) => 답안.length === 0))
+  const hasUnsolvedQuestion = 답안.length !== questionCount || 답안.some((답안) => 답안.length === 0)
 
   const [showModal, setShowModal] = useState(false)
 
   const 좋아요ButtonRef = useRef<HTMLButtonElement>(null)
 
-  function handle다음ButtonClick() {
-    if (isSubmit) {
-      setShowModal(true)
-      좋아요ButtonRef.current?.focus()
-    } else {
-      router.replace(`?i=${questionIndex + add}`)
-    }
+  function handle제출ButtonClick() {
+    setShowModal(true)
+    좋아요ButtonRef.current?.focus()
   }
 
   function handle좋아요ButtonClick() {
@@ -57,14 +53,24 @@ export default function 다음Button({ add }: Props) {
   return (
     <>
       <div className="relative">
-        <button
-          ref={다음ButtonRef}
-          className="transition-color peer whitespace-nowrap rounded-lg bg-gray-300 px-4 py-3 text-sm text-gray-700 duration-300 hover:bg-gray-400/50 disabled:text-gray-400 disabled:hover:bg-gray-300"
-          disabled={hasUnsolvedQuestion}
-          onClick={handle다음ButtonClick}
-        >
-          {isSubmit ? '제출' : '다음'}
-        </button>
+        {isSubmit ? (
+          <button
+            ref={다음ButtonRef}
+            className="transition-color peer whitespace-nowrap rounded-lg bg-violet-200 px-4 py-3 text-sm text-violet-700 duration-300 hover:bg-violet-300 disabled:bg-gray-300 disabled:text-gray-400 disabled:hover:bg-gray-300"
+            disabled={hasUnsolvedQuestion}
+            onClick={handle제출ButtonClick}
+          >
+            제출
+          </button>
+        ) : (
+          <button
+            ref={다음ButtonRef}
+            className="transition-color peer whitespace-nowrap rounded-lg bg-gray-300 px-4 py-3 text-sm text-gray-700 duration-300 hover:bg-gray-400/50 disabled:text-gray-400 disabled:hover:bg-gray-300"
+            onClick={() => router.replace(`?i=${questionIndex + add}`)}
+          >
+            다음
+          </button>
+        )}
         {isSubmit && (
           <div
             className="max-w-64 pointer-events-none absolute left-full top-full z-50 translate-x-[-100%] p-2 text-sm text-gray-500 opacity-0 transition-opacity duration-300 hover:pointer-events-auto hover:opacity-100 peer-hover:peer-disabled:pointer-events-auto peer-hover:peer-disabled:opacity-100 peer-active:peer-disabled:opacity-100"
