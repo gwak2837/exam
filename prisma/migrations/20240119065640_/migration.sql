@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN     "grade" SMALLINT NOT NULL DEFAULT 0;

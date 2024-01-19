@@ -19,6 +19,7 @@ model User {
   ageRange         Int       @db.SmallInt
   bio              String?   @db.VarChar(255)
   birthDate        DateTime? @db.Date
+  grade            Int       @default(0) @db.SmallInt
   name             String?   @unique @db.VarChar(255)
   nickname         String?   @db.VarChar(255)
   profileImageURLs String[]
@@ -31,6 +32,8 @@ model User {
   followers UserFollow[] @relation("followers")
 }
 
+// invitation_code char(8) UNIQUE DEFAULT unique_random(8, 'user', 'invitation_code'),
+
 model UserFollow {
   leader     User   @relation("following", fields: [leaderId], references: [id])
   leaderId   String @db.Uuid
@@ -39,10 +42,6 @@ model UserFollow {
 
   @@id([leaderId, followerId])
 }
-
-// grade int DEFAULT 0,
-// invitation_code char(8) UNIQUE DEFAULT unique_random(8, 'user', 'invitation_code'),
-// last_attendance timestamptz,
 
 model OAuth {
   id              String
@@ -63,8 +62,8 @@ model Post {
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
   deletedAt DateTime?
-  publishAt DateTime? @default(now())
-  status    Int       @default(0) @db.SmallInt // visibility?
+  publishAt DateTime  @default(now())
+  status    Int       @default(0) @db.SmallInt // visibility? O: 지금은 맞아 보임 X: 나중에 기획이 바뀌면 범용적인 status가 좋을 수도
   content   String?
   imageURLs String[]
 
@@ -77,7 +76,6 @@ model Post {
   referredPost   Post?   @relation("PostReference", fields: [referredPostId], references: [id])
   referringPosts Post[]  @relation("PostReference")
 
+  // NOTE(logan): https://dba.stackexchange.com/questions/225271/does-it-make-sense-to-create-an-index-on-foreign-key-uuid-column-in-postgres
   @@index([authorId], type: Hash)
 }
-
-// https://dba.stackexchange.com/questions/225271/does-it-make-sense-to-create-an-index-on-foreign-key-uuid-column-in-postgres
