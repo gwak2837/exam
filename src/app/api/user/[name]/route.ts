@@ -1,6 +1,7 @@
+import { type NextRequest } from 'next/server'
+
 import prisma from '@/app/api/prisma'
 import { USER_NAME_MAX_LENGTH } from '@/database/User'
-import { type AuthenticatedRequest } from '@/middleware'
 
 type Context = {
   params: {
@@ -8,7 +9,7 @@ type Context = {
   }
 }
 
-export async function GET(request: AuthenticatedRequest, { params }: Context) {
+export async function GET(request: NextRequest, { params }: Context) {
   const username = params.name
   if (!username || username.length > USER_NAME_MAX_LENGTH)
     return new Response('400 Bad Request', { status: 400, statusText: 'Bad Request' })

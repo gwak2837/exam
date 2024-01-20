@@ -1,12 +1,13 @@
 import { type Static, Type } from '@sinclair/typebox'
 import { Value } from '@sinclair/typebox/value'
+import { type NextRequest } from 'next/server'
 
 import prisma from '@/app/api/prisma'
-import { type AuthenticatedRequest } from '@/middleware'
+import { verifyUserId } from '@/util/auth'
 import { deleteDeepNullKey } from '@/util/utils'
 
-export async function GET(request: AuthenticatedRequest) {
-  const userId = request.user?.id
+export async function GET(request: NextRequest) {
+  const userId = await verifyUserId(request)
   if (!userId) return new Response('401 Unauthorized', { status: 401, statusText: 'Unauthorized' })
 
   const user = await prisma.user.findUnique({ where: { id: userId } })
