@@ -12,15 +12,19 @@ const TinymceViewer = dynamic(async () => await import('@/components/TinymceView
 
 export default async function Page({ params, searchParams }: PageProps) {
   const postId = params.id
-
-  const response = await fetch(`http://localhost:3000/api/post/${postId}`)
-  const publicPost = await response.json()
-
-  console.log('👀 ~ publicPost:', publicPost)
+  const post = await getPost(postId)
 
   return (
     <main className="min-h-[100dvh] p-4 sm:p-8 md:p-16 lg:p-24">
-      <TinymceViewer initialValue={publicPost.content} />
+      {post.ok && <TinymceViewer initialValue={post.content} />}
+      {!post.ok && <div>{post.message}</div>}
     </main>
   )
+}
+
+async function getPost(postId: string) {
+  const response = await fetch(`http://localhost:3000/api/post/${postId}`)
+  if (!response.ok) return { ok: false, message: await response.text() }
+
+  return await response.json()
 }

@@ -32,12 +32,13 @@ export default function 글쓰기Button() {
           onSubmit={requestCreatingPost}
         >
           <div className="flex w-full max-w-screen-lg items-stretch justify-between">
-            <button className="px-2 text-lg" onClick={() => setShowModal(false)}>
+            <button className="px-2 text-lg" type="reset" onClick={() => setShowModal(false)}>
               취소
             </button>
             <button
               className="transition-color peer whitespace-nowrap rounded-full bg-violet-200 px-4 py-2 text-sm text-violet-700 duration-300 hover:bg-violet-300 disabled:bg-gray-300 disabled:text-gray-400 disabled:hover:bg-gray-300"
               disabled={content.length === 0}
+              type="submit"
             >
               게시하기
             </button>
