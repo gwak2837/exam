@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { type PageProps } from '@/common/types'
+import HideChannelTalkButton from '@/components/HideChannelTalkButton'
 import { TinymceEditorLoading } from '@/components/TinymceEditor'
 
 const TinymceEditor = dynamic(async () => await import('@/components/TinymceEditor'), {
@@ -12,8 +13,17 @@ const TinymceEditor = dynamic(async () => await import('@/components/TinymceEdit
 
 export default async function Page({ params, searchParams }: PageProps) {
   return (
-    <main className="min-h-[100dvh] p-4 sm:p-8 md:p-16 lg:p-24">
-      <TinymceEditor placeholder={placeholder} />
+    <main className="flex min-h-[100svh] flex-col items-center sm:p-8 lg:p-16 2xl:p-24">
+      <HideChannelTalkButton />
+      <div className="flex w-full max-w-screen-lg justify-between py-2">
+        <button className="px-4 py-2">취소</button>
+        <button className="transition-color peer whitespace-nowrap rounded-full bg-violet-200 px-4 py-2 text-sm text-violet-700 duration-300 hover:bg-violet-300 disabled:bg-gray-300 disabled:text-gray-400 disabled:hover:bg-gray-300">
+          게시하기
+        </button>
+      </div>
+      <div className="flex max-w-screen-lg flex-1">
+        <TinymceEditor placeholder={placeholder} />
+      </div>
     </main>
   )
 }

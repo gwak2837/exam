@@ -12,15 +12,15 @@ export default function TinymceEditor({ placeholder }: Props) {
   const editorRef = useRef<TinyMCEEditor | null>(null)
 
   return (
-    <form onSubmit={(e) => e.preventDefault()}>
+    <form className="flex flex-1 justify-center" onSubmit={(e) => e.preventDefault()}>
       <Editor
         init={{
           promotion: false,
           placeholder,
           plugins:
-            'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap emoticons accordion',
           toolbar:
-            'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+            'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough forecolor backcolor removeformat | link image media | align lineheight numlist bullist outdent indent | codesample save',
           content_style: 'body::before { white-space: pre-line }',
         }}
         tinymceScriptSrc="/script/tinymce/tinymce.min.js"
