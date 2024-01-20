@@ -56,7 +56,7 @@ export default function Authentication() {
         localStorage.removeItem('refreshToken')
         toast.error('로그아웃 됐어요')
         return
-      } else if (!response.ok) return toast.error('일시적인 오류가 발생했어요') // TODO: 1, 2, 4초 간격으로 3번 retry하기
+      } else if (!response.ok) return toast.error('일시적인 오류가 발생했어요') // TODO(taeuk): 1, 2, 4초 간격으로 3번 retry하기
 
       const { accessToken } = await response.json()
       setAccessToken(accessToken)
@@ -104,7 +104,10 @@ export async function fetchWithToken<T>(
       Authorization: `Bearer ${authStore.accessToken}`,
     },
   })
-  if (response.status === 401) return authStore.clearAccessToken()
+  if (response.status === 401) {
+    authStore.clearAccessToken()
+    return
+  }
 
   return (await response.json()) as T
 }

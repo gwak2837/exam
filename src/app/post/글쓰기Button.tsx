@@ -1,28 +1,44 @@
 'use client'
 
+import Link from 'next/link'
 import { type FormEvent, useState, useEffect } from 'react'
+import toast from 'react-hot-toast'
 import useSWR from 'swr'
 
+import { type GETUserResponse } from '@/app/api/user/type'
 import { fetchWithToken, useAuthStore } from '@/app/Authentication'
 import Modal from '@/components/atoms/Modal'
 import Squircle from '@/components/atoms/Squircle'
 import HideChannelTalkButton from '@/components/HideChannelTalkButton'
 import QuillIcon from '@/svg/QuillIcon'
-import { fetchJSON } from '@/util/swr'
+import { hashToColorHexCode } from '@/util/utils'
 
 export default function 글쓰기Button() {
-  const [showModal, setShowModal] = useState(false)
-  const [content, setContent] = useState('')
+  const authStore = useAuthStore((state) => state)
+  const { data: user } = useSWR(
+    authStore.accessToken ? '/api/user' : null,
+    async (url) => await fetchWithToken<GETUserResponse>(authStore, url),
+  )
 
-  async function requestCreatingPost(e: FormEvent) {
-    e.preventDefault()
-
-    await fetch('/api/post', { method: 'POST', body: JSON.stringify(content) })
+  function showModalWhenLogin() {
+    if (user) {
+      setShowModal(true)
+    } else {
+      toast.error(
+        <div>
+          로그인이 필요해요{' '}
+          <Link className="text-violet-700 underline underline-offset-2" href="/login">
+            로그인하기
+          </Link>
+        </div>,
+      )
+    }
   }
 
-  const authStore = useAuthStore((state) => state)
-  const { data } = useSWR('/api/user', async (url) => await fetchWithToken(authStore, url))
-  console.log('👀 - data:', data)
+  const [showModal, setShowModal] = useState(false)
+
+  //
+  const [content, setContent] = useState('')
 
   useEffect(() => {
     return () => {
@@ -38,12 +54,18 @@ export default function 글쓰기Button() {
     }
   }, [content])
 
+  async function requestCreatingPost(e: FormEvent) {
+    e.preventDefault()
+
+    await fetch('/api/post', { method: 'POST', body: JSON.stringify(content) })
+  }
+
   return (
     <>
       <HideChannelTalkButton />
       <button
         className="fixed bottom-8 right-8 rounded-full bg-violet-500 p-4 sm:relative sm:bottom-0 sm:right-0"
-        onClick={() => setShowModal(true)}
+        onClick={showModalWhenLogin}
       >
         <QuillIcon height="24" width="24" />
       </button>
@@ -66,9 +88,12 @@ export default function 글쓰기Button() {
           </div>
           <div className="flex w-full max-w-screen-lg flex-1 gap-2">
             <Squircle
-              href="https://blog.kakaocdn.net/dn/lJTm3/btqz9tNsJFf/v2DrpinJKt1o1JyysoEcM1/img.jpg"
+              fill={hashToColorHexCode(user?.nickname) ?? '#fae100'}
+              href={user?.profileImageURLs?.[0]}
               wrapperClassName="w-10"
-            />
+            >
+              {user?.nickname?.slice(0, 2) ?? 'DS'}
+            </Squircle>
             <textarea
               className="h-full w-full resize-none p-2 sm:max-h-screen sm:min-h-[10rem] sm:w-screen sm:max-w-prose sm:resize-y"
               placeholder="무슨 일이 일어나고 있나요?"

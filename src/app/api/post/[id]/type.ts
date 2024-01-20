@@ -1,5 +1,7 @@
 import { type Static, Type } from '@sinclair/typebox'
 
+import { schemaAuthor } from '@/app/api/user/type'
+
 export type PostQuery = {
   id: bigint
   createdAt: Date
@@ -38,14 +40,7 @@ export const schemaPost = {
   status: Type.Optional(Type.Integer()),
   content: Type.Optional(Type.String()),
   imageURLs: Type.Optional(Type.Array(Type.String())),
-  author: Type.Optional(
-    Type.Object({
-      id: Type.String(),
-      name: Type.Optional(Type.String()),
-      nickname: Type.Optional(Type.String()),
-      profileImageURLs: Type.Optional(Type.Array(Type.String())),
-    }),
-  ),
+  author: Type.Optional(schemaAuthor),
 }
 
 export const schemaGETPostIdResponse = Type.Object({

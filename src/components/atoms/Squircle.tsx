@@ -8,7 +8,7 @@ type Props = {
   className?: string
 }
 
-export default function Squircle({ href, fill, children, wrapperClassName, className }: Props) {
+export default function Squircle({ href, fill, children, wrapperClassName = '', className = '' }: Props) {
   return (
     <div className={`${styles.userImg} ${wrapperClassName}`}>
       <svg viewBox="0 0 88 88">
