@@ -10,7 +10,8 @@
   "files.autoSave": "onFocusChange",
   "files.eol": "\n",
   "search.exclude": {
-    "**/.git": true
+    "**/.git": true,
+    "**/public/script": true
   },
   "typescript.preferences.importModuleSpecifier": "non-relative",
 
