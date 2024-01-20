@@ -1,10 +1,11 @@
 import { Type } from '@sinclair/typebox'
 import { Value } from '@sinclair/typebox/value'
+import { type NextRequest } from 'next/server'
 
 import { schemaGETPostIdResponse, type PostQuery, schemaResponseDELETEPostId } from '@/app/api/post/[id]/type'
 import prisma from '@/app/api/prisma'
 import { PostStatus } from '@/database/Post'
-import { type AuthenticatedRequest } from '@/middleware'
+import { verifyUserId } from '@/util/auth'
 import { deleteDeepNullKey, bigIntToString, stringToBigInt } from '@/util/utils'
 
 type Context = {
@@ -13,12 +14,12 @@ type Context = {
   }
 }
 
-export async function GET(request: AuthenticatedRequest, { params }: Context) {
+export async function GET(request: NextRequest, { params }: Context) {
   const postId = stringToBigInt(params.id)
   if (!Value.Check(Type.BigInt(), postId))
     return new Response('400 Bad Request', { status: 400, statusText: 'Bad Request' })
 
-  const userId = request.user?.id
+  const userId = await verifyUserId(request)
 
   const [post] = await prisma.$queryRaw<[PostQuery?]>`
     SELECT "Post".id,
@@ -99,12 +100,12 @@ export async function GET(request: AuthenticatedRequest, { params }: Context) {
   return Response.json(postORM)
 }
 
-export async function DELETE(request: AuthenticatedRequest, { params }: Context) {
+export async function DELETE(request: NextRequest, { params }: Context) {
   const postId = stringToBigInt(params.id)
   if (!Value.Check(Type.BigInt(), postId))
     return new Response('400 Bad Request', { status: 400, statusText: 'Bad Request' })
 
-  const userId = request.user?.id
+  const userId = await verifyUserId(request)
   if (!userId) return new Response('401 Unauthorized', { status: 401, statusText: 'Unauthorized' })
 
   const deletedPost = await prisma.post.delete({ where: { id: postId }, select: { id: true, deletedAt: true } })

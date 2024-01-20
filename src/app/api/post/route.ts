@@ -1,24 +1,22 @@
 import { Prisma } from '@prisma/client'
-import { type Static, Type } from '@sinclair/typebox'
 import { Value } from '@sinclair/typebox/value'
+import { type NextRequest } from 'next/server'
 
 import { type POSTPostRequest, schemaPOSTPostRequest, schemaPOSTPostResponse } from '@/app/api/post/type'
 import prisma from '@/app/api/prisma'
 import { PostStatus } from '@/database/Post'
-import { type AuthenticatedRequest } from '@/middleware'
+import { verifyUserId } from '@/util/auth'
 import { deleteDeepNullKey, stringToBigInt } from '@/util/utils'
 
-export async function GET(request: AuthenticatedRequest) {
+export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const id = searchParams.get('id')
-
-  const userId = request.user?.id
 
   return Response.json({})
 }
 
-export async function POST(request: AuthenticatedRequest) {
-  const userId = request.user?.id
+export async function POST(request: NextRequest) {
+  const userId = await verifyUserId(request)
   if (!userId) return new Response('401 Unauthorized', { status: 401, statusText: 'Unauthorized' })
 
   let body: POSTPostRequest

@@ -1,8 +1,11 @@
-import prisma from '@/app/api/prisma'
-import { type AuthenticatedRequest } from '@/middleware'
+import { type NextRequest } from 'next/server'
 
-export async function GET(request: AuthenticatedRequest) {
-  const userId = request.user?.id
+import prisma from '@/app/api/prisma'
+import { verifyUserId } from '@/util/auth'
+
+export async function GET(request: NextRequest) {
+  const userId = await verifyUserId(request)
+  console.log('👀 ~ userId:', userId)
   if (!userId) return new Response('401 Unauthorized', { status: 401, statusText: 'Unauthorized' })
 
   const user = await prisma.user.findUnique({

@@ -1,4 +1,5 @@
 import { Value } from '@sinclair/typebox/value'
+import { type NextRequest } from 'next/server'
 
 import {
   type CommentsQuery,
@@ -8,7 +9,7 @@ import {
 } from '@/app/api/post/[id]/comment/type'
 import prisma, { POSTGRES_MAX_BIGINT } from '@/app/api/prisma'
 import { PostStatus } from '@/database/Post'
-import { type AuthenticatedRequest } from '@/middleware'
+import { verifyUserId } from '@/util/auth'
 import { bigIntToString, deleteDeepNullKey } from '@/util/utils'
 
 type Context = {
@@ -17,7 +18,7 @@ type Context = {
   }
 }
 
-export async function GET(request: AuthenticatedRequest, { params }: Context) {
+export async function GET(request: NextRequest, { params }: Context) {
   const { searchParams } = new URL(request.url)
   const input = {
     postId: params.id,
@@ -30,7 +31,7 @@ export async function GET(request: AuthenticatedRequest, { params }: Context) {
   const postId = BigInt(input.postId)
   const cursor = BigInt(input.cursor ?? POSTGRES_MAX_BIGINT)
   const limit = +(input.limit ?? 20)
-  const userId = request.user?.id
+  const userId = await verifyUserId(request)
 
   const comments = await prisma.$queryRaw<CommentsQuery[]>`
     SELECT "Comment".id,
