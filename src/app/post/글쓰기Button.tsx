@@ -69,7 +69,12 @@ export default function 글쓰기Button() {
       >
         <QuillIcon height="24" width="24" />
       </button>
-      <Modal fullscreen open={showModal} onClose={() => setShowModal(false)}>
+      <Modal
+        className="flex h-full w-full items-center justify-center sm:h-fit sm:w-fit"
+        fullscreen
+        open={showModal}
+        onClose={() => setShowModal(false)}
+      >
         <form
           className="flex h-full w-full flex-col items-center gap-2 bg-white p-3 sm:h-fit sm:w-fit sm:rounded-2xl"
           onSubmit={requestCreatingPost}

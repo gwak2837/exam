@@ -11,9 +11,18 @@ type Props = {
   showCloseButton?: boolean
   showDragButton?: boolean
   fullscreen?: boolean
+  className?: string
 }
 
-export default function Modal({ children, fullscreen, open, onClose, showCloseButton, showDragButton }: Props) {
+export default function Modal({
+  className = '',
+  children,
+  fullscreen,
+  open,
+  onClose,
+  showCloseButton,
+  showDragButton,
+}: Props) {
   function closeModal(e: MouseEvent) {
     e.stopPropagation()
     onClose?.()
@@ -86,7 +95,6 @@ export default function Modal({ children, fullscreen, open, onClose, showCloseBu
   const modalBackground = `fixed inset-0 z-20 flex items-center justify-center bg-black/20 transition duration-300 ${
     open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
   }`
-  const fullscreenStyle = fullscreen ? 'h-full w-full flex justify-center items-center' : ''
 
   // --
   const [isMounted, setIsMounted] = useState(false)
@@ -111,21 +119,20 @@ export default function Modal({ children, fullscreen, open, onClose, showCloseBu
       )}
       <div
         ref={showDragButton ? modalRef : null}
-        className={`absolute transition duration-300 ${open ? 'scale-100' : 'scale-90'} ${fullscreenStyle}`}
+        className={`absolute transition duration-300 ${open ? 'scale-100' : 'scale-90'} ${className}`}
+        onClick={(e) => e.stopPropagation()}
       >
-        <div onClick={(e) => e.stopPropagation()}>
-          {showDragButton && (
-            <div
-              className="absolute left-0 right-0 top-0 z-10 flex h-4 cursor-move justify-center p-2 pb-6"
-              onDragStart={(e) => e.preventDefault()}
-              onMouseDown={dragModalMouse}
-              onTouchStart={dragModalTouch}
-            >
-              <div className="h-1 w-8 rounded-full bg-slate-200" />
-            </div>
-          )}
-          {children}
-        </div>
+        {showDragButton && (
+          <div
+            className="absolute left-0 right-0 top-0 z-10 flex h-4 cursor-move justify-center p-2 pb-6"
+            onDragStart={(e) => e.preventDefault()}
+            onMouseDown={dragModalMouse}
+            onTouchStart={dragModalTouch}
+          >
+            <div className="h-1 w-8 rounded-full bg-slate-200" />
+          </div>
+        )}
+        {children}
       </div>
     </div>,
     document.getElementById('modal-root') ?? document.body,
