@@ -10,9 +10,10 @@ type Props = {
   onClose?: () => void
   showCloseButton?: boolean
   showDragButton?: boolean
+  fullscreen?: boolean
 }
 
-export default function Modal({ children, open, onClose, showCloseButton, showDragButton }: Props) {
+export default function Modal({ children, fullscreen, open, onClose, showCloseButton, showDragButton }: Props) {
   function closeModal(e: MouseEvent) {
     e.stopPropagation()
     onClose?.()
@@ -85,6 +86,7 @@ export default function Modal({ children, open, onClose, showCloseButton, showDr
   const modalBackground = `fixed inset-0 z-20 flex items-center justify-center bg-black/20 transition duration-300 ${
     open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
   }`
+  const fullscreenStyle = fullscreen ? 'h-full w-full flex justify-center items-center' : ''
 
   // --
   const [isMounted, setIsMounted] = useState(false)
@@ -109,7 +111,7 @@ export default function Modal({ children, open, onClose, showCloseButton, showDr
       )}
       <div
         ref={modalRef}
-        className={`absolute transition duration-300 ${open ? 'scale-100' : 'scale-90'}`}
+        className={`absolute transition duration-300 ${open ? 'scale-100' : 'scale-90'} ${fullscreenStyle}`}
         onClick={(e) => e.stopPropagation()}
       >
         {showDragButton && (
