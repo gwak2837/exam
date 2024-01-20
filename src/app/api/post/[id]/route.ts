@@ -58,8 +58,8 @@ export async function GET(request: AuthenticatedRequest, { params }: Context) {
       ));`
   if (!post) return new Response('404 Not Found', { status: 404, statusText: 'Not Found' })
 
-  const isAuthor = post.author_id === userId
-  const isReferredAuthor = post.referredPostAuthor_id === userId
+  const isAuthor = userId === post.author_id
+  const isReferredAuthor = userId === post.referredPostAuthor_id
 
   const postORM = deleteDeepNullKey({
     id: String(post.id),

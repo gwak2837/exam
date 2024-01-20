@@ -110,21 +110,22 @@ export default function Modal({ children, fullscreen, open, onClose, showCloseBu
         />
       )}
       <div
-        ref={modalRef}
+        ref={showDragButton ? modalRef : null}
         className={`absolute transition duration-300 ${open ? 'scale-100' : 'scale-90'} ${fullscreenStyle}`}
-        onClick={(e) => e.stopPropagation()}
       >
-        {showDragButton && (
-          <div
-            className="absolute left-0 right-0 top-0 z-10 flex h-4 cursor-move justify-center p-2 pb-6"
-            onDragStart={(e) => e.preventDefault()}
-            onMouseDown={dragModalMouse}
-            onTouchStart={dragModalTouch}
-          >
-            <div className="h-1 w-8 rounded-full bg-slate-200" />
-          </div>
-        )}
-        {children}
+        <div onClick={(e) => e.stopPropagation()}>
+          {showDragButton && (
+            <div
+              className="absolute left-0 right-0 top-0 z-10 flex h-4 cursor-move justify-center p-2 pb-6"
+              onDragStart={(e) => e.preventDefault()}
+              onMouseDown={dragModalMouse}
+              onTouchStart={dragModalTouch}
+            >
+              <div className="h-1 w-8 rounded-full bg-slate-200" />
+            </div>
+          )}
+          {children}
+        </div>
       </div>
     </div>,
     document.getElementById('modal-root') ?? document.body,

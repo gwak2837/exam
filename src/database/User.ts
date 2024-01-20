@@ -14,6 +14,8 @@ export enum UserSuspendedType {
   DELETE = 3, // 삭제 유예 기간
 }
 
+export const USER_NAME_MAX_LENGTH = 255
+
 export async function createOAuthUser({
   ageRange = 20,
   sex = 1,

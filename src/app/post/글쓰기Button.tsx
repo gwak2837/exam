@@ -1,11 +1,14 @@
 'use client'
 
-import { type FormEvent, useState } from 'react'
+import { type FormEvent, useState, useEffect } from 'react'
+import useSWR from 'swr'
 
+import { fetchWithToken, useAuthStore } from '@/app/Authentication'
 import Modal from '@/components/atoms/Modal'
 import Squircle from '@/components/atoms/Squircle'
 import HideChannelTalkButton from '@/components/HideChannelTalkButton'
 import QuillIcon from '@/svg/QuillIcon'
+import { fetchJSON } from '@/util/swr'
 
 export default function 글쓰기Button() {
   const [showModal, setShowModal] = useState(false)
@@ -14,8 +17,26 @@ export default function 글쓰기Button() {
   async function requestCreatingPost(e: FormEvent) {
     e.preventDefault()
 
-    await fetch('/api/post', {})
+    await fetch('/api/post', { method: 'POST', body: JSON.stringify(content) })
   }
+
+  const authStore = useAuthStore((state) => state)
+  const { data } = useSWR('/api/user', async (url) => await fetchWithToken(authStore, url))
+  console.log('👀 - data:', data)
+
+  useEffect(() => {
+    return () => {
+      window.onbeforeunload = null
+    }
+  }, [])
+
+  useEffect(() => {
+    if (content) {
+      window.onbeforeunload = () => true
+    } else {
+      window.onbeforeunload = null
+    }
+  }, [content])
 
   return (
     <>

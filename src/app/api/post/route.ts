@@ -19,7 +19,7 @@ export async function GET(request: AuthenticatedRequest) {
 
 export async function POST(request: AuthenticatedRequest) {
   const userId = request.user?.id
-  // if (!userId) return new Response('401 Unauthorized', { status: 401, statusText: 'Unauthorized' })
+  if (!userId) return new Response('401 Unauthorized', { status: 401, statusText: 'Unauthorized' })
 
   let body: POSTPostRequest
   try {
