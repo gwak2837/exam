@@ -119,9 +119,9 @@ export async function fetchWithToken<T>(
       Authorization: `Bearer ${authStore.accessToken}`,
     },
   })
-  if (response.status === 401) {
-    authStore.clearAccessToken()
-    return
+  if (!response.ok) {
+    if (response.status === 401) authStore.clearAccessToken()
+    throw Error(await response.text())
   }
 
   return (await response.json()) as T

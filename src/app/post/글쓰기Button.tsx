@@ -4,7 +4,9 @@ import Link from 'next/link'
 import { type FormEvent, useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 import useSWR from 'swr'
+import useSWRMutation from 'swr/mutation'
 
+import { type POSTPostResponse } from '@/app/api/post/type'
 import { type GETUserResponse } from '@/app/api/user/type'
 import { fetchWithToken, useAuthStore } from '@/app/Authentication'
 import Modal from '@/components/atoms/Modal'
@@ -20,6 +22,8 @@ export default function 글쓰기Button() {
     async (url) => await fetchWithToken<GETUserResponse>(authStore, url),
   )
 
+  const [showModal, setShowModal] = useState(false)
+
   function showModalWhenLogin() {
     if (user) {
       setShowModal(true)
@@ -34,8 +38,6 @@ export default function 글쓰기Button() {
       )
     }
   }
-
-  const [showModal, setShowModal] = useState(false)
 
   //
   const [content, setContent] = useState('')
@@ -54,10 +56,28 @@ export default function 글쓰기Button() {
     }
   }, [content])
 
+  //
+  const { trigger, isMutating } = useSWRMutation(
+    '/api/post',
+    async (url) =>
+      await fetchWithToken<POSTPostResponse>(authStore, url, {
+        method: 'POST',
+        body: JSON.stringify({ content }),
+      }),
+  )
+
   async function requestCreatingPost(e: FormEvent) {
     e.preventDefault()
+    if (!authStore.accessToken) return toast.error('로그인이 필요합니다')
 
-    await fetch('/api/post', { method: 'POST', body: JSON.stringify(content) })
+    try {
+      await trigger()
+      setShowModal(false)
+      setContent('')
+      toast.success('글을 작성했어요')
+    } catch (error) {
+      toast.error('글 작성에 실패했어요')
+    }
   }
 
   return (
@@ -88,7 +108,7 @@ export default function 글쓰기Button() {
               disabled={content.length === 0}
               type="submit"
             >
-              게시하기
+              게시하기{isMutating && <span>...</span>}
             </button>
           </div>
           <div className="flex w-full max-w-screen-lg flex-1 gap-2">
