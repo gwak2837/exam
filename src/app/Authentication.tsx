@@ -19,24 +19,41 @@ export default function Authentication() {
     if (!code || !provider) return
 
     void (async () => {
-      const response = await fetch(`/api/auth/${provider}?code=${code}`, { method: 'POST' })
-      if (response.status === 403) {
-        setLoginForbiddenReason(await response.text())
-        setShowLoginForbiddenModal(true)
-        return
+      // NOTE: https://stackoverflow.com/questions/26150232/resolve-javascript-promise-outside-the-promise-constructor-scope
+      let suceedLogin = (_?: unknown) => {}
+      let failLogin = (_?: unknown) => {}
+      const loginPromise = new Promise((resolve, reject) => {
+        suceedLogin = resolve
+        failLogin = reject
+      })
+      void toast.promise(loginPromise, {
+        loading: '로그인 중이에요',
+        success: '로그인에 성공했어요',
+        error: '로그인에 실패했어요',
+      })
+
+      try {
+        const response = await fetch(`/api/auth/${provider}?code=${code}`, { method: 'POST' })
+        if (response.status === 403) {
+          setLoginForbiddenReason(await response.text())
+          setShowLoginForbiddenModal(true)
+          throw Error()
+        } else if (response.status >= 500) {
+          throw Error()
+        }
+
+        const result = await response.json()
+        setAccessToken(result.accessToken)
+        localStorage.setItem('refreshToken', result.refreshToken)
+
+        const deletedSearchParams = new URLSearchParams(searchParams)
+        deletedSearchParams.delete('code')
+        deletedSearchParams.delete('provider')
+        router.replace(`?${deletedSearchParams}`)
+        suceedLogin()
+      } catch (error) {
+        failLogin()
       }
-      if (response.status >= 500) return
-
-      const result = await response.json()
-      setAccessToken(result.accessToken)
-      localStorage.setItem('refreshToken', result.refreshToken)
-
-      const deletedSearchParams = new URLSearchParams(searchParams)
-      deletedSearchParams.delete('code')
-      deletedSearchParams.delete('provider')
-      router.replace(`?${deletedSearchParams}`)
-
-      toast.success('로그인에 성공했어요')
     })()
   }, [code])
 
@@ -67,16 +84,14 @@ export default function Authentication() {
   const [loginForbiddenReason, setLoginForbiddenReason] = useState('')
 
   return (
-    <>
-      <Modal
-        open={showLoginForbiddenModal}
-        showCloseButton
-        showDragButton
-        onClose={() => setShowLoginForbiddenModal(false)}
-      >
-        <div className="rounded-lg bg-white p-4 shadow-xl">{loginForbiddenReason}</div>
-      </Modal>
-    </>
+    <Modal
+      open={showLoginForbiddenModal}
+      showCloseButton
+      showDragButton
+      onClose={() => setShowLoginForbiddenModal(false)}
+    >
+      <div className="rounded-lg bg-white p-4 shadow-xl">{loginForbiddenReason}</div>
+    </Modal>
   )
 }
 
