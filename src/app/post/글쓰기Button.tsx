@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { type FormEvent, useState, useEffect } from 'react'
+import { type FormEvent, useState, useEffect, useRef, type KeyboardEvent } from 'react'
 import toast from 'react-hot-toast'
 import useSWR from 'swr'
 import useSWRMutation from 'swr/mutation'
@@ -40,23 +40,15 @@ export default function 글쓰기Button() {
   }
 
   //
-  const [content, setContent] = useState('')
+  const formRef = useRef<HTMLFormElement>(null)
 
-  useEffect(() => {
-    return () => {
-      window.onbeforeunload = null
+  function submitWhenCommandEnter(e: KeyboardEvent<HTMLTextAreaElement>) {
+    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+      e.preventDefault()
+      formRef.current?.requestSubmit()
     }
-  }, [])
+  }
 
-  useEffect(() => {
-    if (content) {
-      window.onbeforeunload = () => true
-    } else {
-      window.onbeforeunload = null
-    }
-  }, [content])
-
-  //
   const { trigger, isMutating } = useSWRMutation(
     '/api/post',
     async (url) =>
@@ -80,6 +72,23 @@ export default function 글쓰기Button() {
     }
   }
 
+  //
+  const [content, setContent] = useState('')
+
+  useEffect(() => {
+    return () => {
+      window.onbeforeunload = null
+    }
+  }, [])
+
+  useEffect(() => {
+    if (content) {
+      window.onbeforeunload = () => true
+    } else {
+      window.onbeforeunload = null
+    }
+  }, [content])
+
   return (
     <>
       <HideChannelTalkButton />
@@ -96,6 +105,7 @@ export default function 글쓰기Button() {
         onClose={() => setShowModal(false)}
       >
         <form
+          ref={formRef}
           className="flex h-full w-full flex-col items-center gap-2 bg-white p-3 sm:h-fit sm:w-fit sm:rounded-2xl"
           onSubmit={requestCreatingPost}
         >
@@ -124,6 +134,7 @@ export default function 글쓰기Button() {
               placeholder="무슨 일이 일어나고 있나요?"
               value={content}
               onChange={(e) => setContent(e.target.value)}
+              onKeyDown={submitWhenCommandEnter}
             />
           </div>
         </form>
