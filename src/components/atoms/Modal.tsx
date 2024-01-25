@@ -10,19 +10,10 @@ type Props = {
   onClose?: () => void
   showCloseButton?: boolean
   showDragButton?: boolean
-  fullscreen?: boolean
   className?: string
 }
 
-export default function Modal({
-  className = '',
-  children,
-  fullscreen,
-  open,
-  onClose,
-  showCloseButton,
-  showDragButton,
-}: Props) {
+export default function Modal({ className = '', children, open, onClose, showCloseButton, showDragButton }: Props) {
   function closeModal(e: MouseEvent) {
     e.stopPropagation()
     onClose?.()

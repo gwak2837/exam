@@ -100,7 +100,6 @@ export default function 글쓰기Button() {
       </button>
       <Modal
         className="flex h-full w-full items-center justify-center sm:h-fit sm:w-fit"
-        fullscreen
         open={showModal}
         onClose={() => setShowModal(false)}
       >
