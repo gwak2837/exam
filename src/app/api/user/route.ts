@@ -1,10 +1,10 @@
 import { type NextRequest } from 'next/server'
 
 import prisma from '@/app/api/prisma'
-import { verifyUserId } from '@/util/auth'
+import { verifyAuthorizationHeader } from '@/util/auth'
 
 export async function GET(request: NextRequest) {
-  const userId = await verifyUserId(request)
+  const userId = await verifyAuthorizationHeader(request)
   if (!userId) return new Response('401 Unauthorized', { status: 401, statusText: 'Unauthorized' })
 
   const user = await prisma.user.findUnique({

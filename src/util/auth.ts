@@ -2,7 +2,7 @@ import { type NextRequest } from 'next/server'
 
 import { verifyJWT, AuthToken } from '@/util/jwt'
 
-export async function verifyUserId(req: NextRequest) {
+export async function verifyAuthorizationHeader(req: NextRequest) {
   const authorization = req.headers.get('Authorization')
   if (!authorization?.startsWith('Bearer ')) return
 

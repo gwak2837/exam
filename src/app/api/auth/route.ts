@@ -3,11 +3,12 @@ import { Value } from '@sinclair/typebox/value'
 import { type NextRequest } from 'next/server'
 
 import prisma from '@/app/api/prisma'
-import { verifyUserId } from '@/util/auth'
+import { UserSex } from '@/database/User'
+import { verifyAuthorizationHeader } from '@/util/auth'
 import { deleteDeepNullKey } from '@/util/utils'
 
 export async function GET(request: NextRequest) {
-  const userId = await verifyUserId(request)
+  const userId = await verifyAuthorizationHeader(request)
   if (!userId) return new Response('401 Unauthorized', { status: 401, statusText: 'Unauthorized' })
 
   const user = await prisma.user.findUnique({ where: { id: userId } })
@@ -35,6 +36,6 @@ const schemaGETAuthResponse = Type.Object({
   name: Type.Optional(Type.String()),
   nickname: Type.Optional(Type.String()),
   profileImageURLs: Type.Optional(Type.Array(Type.String())),
-  sex: Type.Integer(),
+  sex: Type.Enum(UserSex),
   config: Type.Optional(Type.String()),
 })

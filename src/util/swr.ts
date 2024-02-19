@@ -21,8 +21,11 @@ export async function fetchWithAuth(url: string, accessToken: string, init?: Req
   })
   if (response.status === 401) {
     localStorage.removeItem('accessToken')
-    location.reload()
-  } else if (response.status === 404) notFound()
-  else if (!response.ok) throw new Error(await response.text())
+    throw new Error(await response.text())
+  } else if (response.status === 404) {
+    notFound()
+  } else if (!response.ok) {
+    throw new Error(await response.text())
+  }
   return await response.json()
 }

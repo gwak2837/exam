@@ -9,7 +9,7 @@ import {
 } from '@/app/api/post/[id]/comment/type'
 import prisma, { POSTGRES_MAX_BIGINT } from '@/app/api/prisma'
 import { PostStatus } from '@/database/Post'
-import { verifyUserId } from '@/util/auth'
+import { verifyAuthorizationHeader } from '@/util/auth'
 import { bigIntToString, deleteDeepNullKey } from '@/util/utils'
 
 type Context = {
@@ -31,7 +31,7 @@ export async function GET(request: NextRequest, { params }: Context) {
   const postId = BigInt(input.postId)
   const cursor = BigInt(input.cursor ?? POSTGRES_MAX_BIGINT)
   const limit = +(input.limit ?? 20)
-  const userId = await verifyUserId(request)
+  const userId = await verifyAuthorizationHeader(request)
 
   const comments = await prisma.$queryRaw<CommentsQuery[]>`
     SELECT "Comment".id,

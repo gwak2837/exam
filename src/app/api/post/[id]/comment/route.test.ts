@@ -1,6 +1,7 @@
+import POSTPost from '../../POST'
+
 import { GET as GETPostIdComment } from '@/app/api/post/[id]/comment/route'
 import { type GETPostIdCommentResponse } from '@/app/api/post/[id]/comment/type'
-import { POST as POSTPost } from '@/app/api/post/route'
 import { type POSTPostRequest, type POSTPostResponse } from '@/app/api/post/type'
 import prisma from '@/app/api/prisma'
 import { createOAuthUser, getOAuthUser } from '@/database/User'

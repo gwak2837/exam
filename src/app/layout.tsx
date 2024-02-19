@@ -6,7 +6,6 @@ import type { Metadata, Viewport } from 'next'
 import dynamic from 'next/dynamic'
 import localFont from 'next/font/local'
 import Script from 'next/script'
-import { Suspense } from 'react'
 
 import Authentication from '@/app/Authentication'
 import {
@@ -116,9 +115,7 @@ export default function RootLayout({ children }: LayoutProps) {
         <SpeedInsights />
       </body>
 
-      <Suspense fallback={null}>
-        <Authentication />
-      </Suspense>
+      <Authentication />
       <Analytics />
       <GoogleAnalytics />
       <Script

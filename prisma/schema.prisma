@@ -63,6 +63,7 @@ model Post {
   updatedAt DateTime? @updatedAt
   deletedAt DateTime?
   publishAt DateTime  @default(now())
+  category  Int       @default(0) @db.SmallInt
   status    Int       @default(0) @db.SmallInt // visibility? O: 지금은 맞아 보임 X: 나중에 기획이 바뀌면 범용적인 status가 좋을 수도
   content   String?
   imageURLs String[]
@@ -76,6 +77,6 @@ model Post {
   referredPost   Post?   @relation("PostReference", fields: [referredPostId], references: [id])
   referringPosts Post[]  @relation("PostReference")
 
-  // NOTE(logan): https://dba.stackexchange.com/questions/225271/does-it-make-sense-to-create-an-index-on-foreign-key-uuid-column-in-postgres
+  // NOTE(gwak): https://dba.stackexchange.com/questions/225271/does-it-make-sense-to-create-an-index-on-foreign-key-uuid-column-in-postgres
   @@index([authorId], type: Hash)
 }

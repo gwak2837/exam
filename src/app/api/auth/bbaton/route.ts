@@ -62,7 +62,7 @@ export async function POST(request: Request) {
         select: { id: true },
       })
       .catch((error) => {
-        // NOTE(logan): 위 쿼리가 여러 번 실행될 수 있어 UNIQUE_CONSTRAINT을 만족하지 못할 수 있다
+        // NOTE(gwak): 위 쿼리가 여러 번 실행될 수 있어 UNIQUE_CONSTRAINT을 만족하지 못할 수 있다
         if (error.code === PrismaError.UNIQUE_CONSTRAINT_FAILED) return null
         throw error
       })
