@@ -1,5 +1,6 @@
 import { type Metadata } from 'next'
 import dynamic from 'next/dynamic'
+import { Suspense } from 'react'
 
 import { QuestionFallback } from '@/app/exam/[questionCount]/Question'
 import { SelectionsFallback } from '@/app/exam/[questionCount]/Selections'
@@ -40,9 +41,13 @@ export default async function Page({ params, searchParams }: PageProps) {
         <div className="text-sm">
           <b className="text-violet-900">{searchParams.i}</b> / {params.questionCount}
         </div>
-        <Question questions={questions} />
+        <Suspense fallback={<QuestionFallback />}>
+          <Question questions={questions} />
+        </Suspense>
       </div>
-      <Selections />
+      <Suspense fallback={<SelectionsFallback />}>
+        <Selections />
+      </Suspense>
       <HideChannelTalkButton />
     </main>
   )
