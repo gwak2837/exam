@@ -6,7 +6,6 @@ const prisma = new PrismaClient({ log: NODE_ENV === 'test' ? [] : ['query'] })
 
 export default prisma
 
-/* eslint-disable @typescript-eslint/consistent-type-definitions */
 declare global {
   interface BigInt {
     toJSON: () => string

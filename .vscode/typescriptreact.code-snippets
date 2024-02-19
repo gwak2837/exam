@@ -24,7 +24,7 @@
     "body": [
       "import { type ReactNode } from 'react'",
       "",
-      "type Props = {",
+      "interface Props {",
       "  children: ReactNode",
       "}",
       "",
@@ -40,7 +40,7 @@
     "body": [
       "'use client' // Error components must be Client Components",
       "",
-      "type Props = {",
+      "interface Props {",
       "  error: Error & { digest?: string }",
       "  reset: () => void",
       "}",
@@ -67,7 +67,7 @@
     "prefix": "fcp",
     "description": "Function Component with Props",
     "body": [
-      "type Props = {",
+      "interface Props {",
       "  $1",
       "}",
       "",

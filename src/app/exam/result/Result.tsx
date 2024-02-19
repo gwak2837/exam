@@ -6,7 +6,7 @@ import { useExamStore } from '@/app/exam/[questionCount]/zustand'
 import GreenChecked from '@/svg/GreenChecked'
 import RedX from '@/svg/RedX'
 
-type Props = {
+interface Props {
   result: {
     문제개수: number
     정답개수: number

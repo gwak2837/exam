@@ -6,7 +6,7 @@ import useRevalidateExam from '@/app/exam/[questionCount]/useRevalidateExam'
 import { useAnswerStore, useExamStore } from '@/app/exam/[questionCount]/zustand'
 import LoadingSpinner from '@/svg/LoadingSpinner'
 
-type Props = {
+interface Props {
   examId: string
 }
 

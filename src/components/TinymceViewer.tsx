@@ -2,7 +2,7 @@
 
 import { Editor } from '@tinymce/tinymce-react'
 
-type Props = {
+interface Props {
   initialValue: string
 }
 

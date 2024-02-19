@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { type MouseEvent, type ReactNode, type TouchEvent, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
-type Props = {
+interface Props {
   children: ReactNode
   open: boolean
   onClose?: () => void

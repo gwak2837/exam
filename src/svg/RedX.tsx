@@ -1,4 +1,4 @@
-type Props = {
+interface Props {
   className: string
   width?: string
   height?: string

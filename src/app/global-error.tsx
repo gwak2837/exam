@@ -3,7 +3,7 @@
 import ChannelTalk from '@/components/ChannelTalk'
 import WarningIcon from '@/svg/WarningIcon'
 
-type Props = {
+interface Props {
   error: Error & { digest?: string }
   reset: () => void
 }

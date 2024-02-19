@@ -4,7 +4,7 @@ import { type ChangeEventHandler, type FocusEventHandler, type Ref, forwardRef }
 
 import styles from './AppleCheckbox.module.css'
 
-type Props = {
+interface Props {
   checked?: boolean
   defaultChecked?: boolean
   disabled?: boolean

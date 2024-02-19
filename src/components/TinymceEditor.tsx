@@ -4,7 +4,7 @@ import { Editor } from '@tinymce/tinymce-react'
 import { useRef } from 'react'
 import { type Editor as TinyMCEEditor } from 'tinymce'
 
-type Props = {
+interface Props {
   placeholder?: string
 }
 

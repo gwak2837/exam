@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from 'next/navigation'
 
-type Props = {
+interface Props {
   add: number
 }
 

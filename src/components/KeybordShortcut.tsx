@@ -2,7 +2,7 @@
 
 import { useEffect, type ReactNode } from 'react'
 
-type Props = {
+interface Props {
   keyCode: string
   children: ReactNode
   onKeyDown?: () => void

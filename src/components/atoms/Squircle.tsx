@@ -1,6 +1,6 @@
 import styles from './Squircle.module.css'
 
-type Props = {
+interface Props {
   href?: string
   fill?: string
   children?: string
