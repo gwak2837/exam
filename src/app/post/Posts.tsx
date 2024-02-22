@@ -2,12 +2,12 @@
 
 import useSWR from 'swr'
 
-import { useAuthStore } from '@/app/Authentication'
+import { fetchWithToken, useAuthStore } from '@/app/Authentication'
 
 export default function Posts() {
-  const accessToken = useAuthStore((state) => state.accessToken)
+  const authStore = useAuthStore()
 
-  // const { data, error } = useSWR('/api/posts', fetcher)
+  const { data, error } = useSWR('/api/post', async (url) => await fetchWithToken(authStore, url))
 
   return <></>
 }

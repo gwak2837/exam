@@ -17,7 +17,7 @@ const schemaGETPostsRequest = Type.Object({
   cursor: Type.BigInt(),
   limit: Type.Number(),
   userId: Type.Optional(Type.String()),
-  only: Type.Optional(Type.Enum(PostsOnly)),
+  only: Type.Enum(PostsOnly),
 })
 
 export default async function GET(request: NextRequest) {

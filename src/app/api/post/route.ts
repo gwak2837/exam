@@ -1,5 +1,5 @@
-import GET1 from '@/app/api/post/GET'
-import POST1 from '@/app/api/post/POST'
+import getPosts from '@/app/api/post/GET'
+import createPost from '@/app/api/post/POST'
 
-export const GET = GET1
-export const POST = POST1
+export const GET = getPosts
+export const POST = createPost
