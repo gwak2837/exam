@@ -7,7 +7,7 @@ import { fetchWithToken, useAuthStore } from '@/app/Authentication'
 export default function Posts() {
   const authStore = useAuthStore()
 
-  const { data, error } = useSWR('/api/post', async (url) => await fetchWithToken(authStore, url))
+  const { data, error } = useSWR('/api/post', async (url) => await fetchWithToken(authStore, url), { suspense: true })
 
   return <></>
 }
