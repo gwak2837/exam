@@ -81,7 +81,7 @@ export const exam = [
     id: '7',
     문제: 'RACK 원칙은 무엇을 의미하나요?',
     선택지: [
-      { id: '1', label: 'Risk Accepted Consensual Kink' },
+      { id: '1', label: 'Risk Aware Consensual Kink' },
       { id: '2', label: 'Rigidly Administered Control Knowledge' },
       { id: '3', label: 'Reserved Act of Conscious Knowledge' },
       { id: '4', label: 'Relational Aesthetics of Consensual Kink' },
