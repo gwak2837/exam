@@ -21,9 +21,12 @@ export default function 글쓰기Button() {
   )
 
   const [showModal, setShowModal] = useState(false)
+  const divRef = useRef<HTMLDivElement>(null)
 
   function showModalWhenLogin() {
     if (user) {
+      // if (true) {
+      divRef.current?.focus()
       setShowModal(true)
     } else {
       toast.error(
@@ -40,7 +43,7 @@ export default function 글쓰기Button() {
   //
   const formRef = useRef<HTMLFormElement>(null)
 
-  function submitWhenCommandEnter(e: KeyboardEvent<HTMLTextAreaElement>) {
+  function submitWhenCommandEnter(e: KeyboardEvent<HTMLElement>) {
     if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
       e.preventDefault()
       formRef.current?.requestSubmit()
@@ -97,7 +100,7 @@ export default function 글쓰기Button() {
         <QuillIcon height="24" width="24" />
       </button>
       <Modal
-        className="flex h-full w-full items-center justify-center sm:h-fit sm:w-fit"
+        className="fixed inset-0 flex items-center justify-center sm:static sm:h-fit sm:w-fit"
         open={showModal}
         onClose={() => setShowModal(false)}
       >
@@ -106,7 +109,7 @@ export default function 글쓰기Button() {
           className="flex h-full w-full flex-col items-center gap-2 bg-white p-3 sm:h-fit sm:w-fit sm:rounded-2xl"
           onSubmit={requestCreatingPost}
         >
-          <div className="flex w-full max-w-screen-lg items-stretch justify-between">
+          <div className="sticky top-0 flex w-full max-w-screen-lg items-stretch justify-between">
             <button className="px-2 text-lg" type="reset" onClick={() => setShowModal(false)}>
               취소
             </button>
@@ -126,11 +129,13 @@ export default function 글쓰기Button() {
             >
               {user?.nickname?.slice(0, 2) ?? 'DS'}
             </Squircle>
-            <textarea
-              className="h-full w-full resize-none p-2 sm:max-h-screen sm:min-h-[10rem] sm:w-screen sm:max-w-prose sm:resize-y"
+            <div
+              ref={divRef}
+              className=" h-fit w-full p-2 sm:max-h-screen sm:min-h-[10rem] sm:w-screen sm:max-w-prose sm:resize-y"
+              contentEditable
               placeholder="무슨 일이 일어나고 있나요?"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
+              // value={content}
+              onChange={(e) => setContent((e.target as any).value)}
               onKeyDown={submitWhenCommandEnter}
             />
           </div>

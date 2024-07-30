@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -67,11 +68,18 @@ export default function Authentication() {
       const response = await fetch('/api/auth/token', { method: 'POST', headers: { Authorization: refreshToken } })
       if (response.status === 401) {
         localStorage.removeItem('refreshToken')
-        toast.error('로그인 유지 기간이 만료됐어요')
+        toast.error(
+          <div>
+            로그인 유지 기간이 만료됐어요{' '}
+            <Link className="text-violet-700 underline underline-offset-2" href="/login">
+              로그인하기
+            </Link>
+          </div>,
+        )
         return
       } else if (response.status === 403) {
         localStorage.removeItem('refreshToken')
-        toast.error('로그아웃 됐어요')
+        toast.error('로그인할 수 없어요')
         return
       } else if (!response.ok) return toast.error('일시적인 오류가 발생했어요') // TODO(taeuk): 1, 2, 4초 간격으로 3번 retry하기
 

@@ -72,6 +72,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: 'cover',
   colorScheme: 'light',
+  interactiveWidget: 'resizes-content',
 }
 
 const myFont = localFont({
