@@ -6,8 +6,6 @@ import toast from 'react-hot-toast'
 import useSWR from 'swr'
 import useSWRMutation from 'swr/mutation'
 
-import { type POSTPostResponse } from '@/app/api/post/type'
-import { type GETUserResponse } from '@/app/api/user/type'
 import { fetchWithToken, useAuthStore } from '@/app/Authentication'
 import Modal from '@/components/atoms/Modal'
 import Squircle from '@/components/atoms/Squircle'
@@ -19,7 +17,7 @@ export default function 글쓰기Button() {
   const authStore = useAuthStore((state) => state)
   const { data: user } = useSWR(
     authStore.accessToken ? '/api/user' : null,
-    async (url) => await fetchWithToken<GETUserResponse>(authStore, url),
+    async (url) => await fetchWithToken<any>(authStore, url),
   )
 
   const [showModal, setShowModal] = useState(false)
@@ -52,7 +50,7 @@ export default function 글쓰기Button() {
   const { trigger, isMutating } = useSWRMutation(
     '/api/post',
     async (url) =>
-      await fetchWithToken<POSTPostResponse>(authStore, url, {
+      await fetchWithToken(authStore, url, {
         method: 'POST',
         body: JSON.stringify({ content }),
       }),
