@@ -77,22 +77,8 @@ export const viewport: Viewport = {
 
 const myFont = localFont({
   src: './PretendardVariable.woff2',
-  fallback: [
-    'Pretendard',
-    '-apple-system',
-    'BlinkMacSystemFont',
-    'system-ui',
-    'Roboto',
-    'Helvetica Neue',
-    'Segoe UI',
-    'Apple SD Gothic Neo',
-    'Noto Sans KR',
-    'Malgun Gothic',
-    'Apple Color Emoji',
-    'Segoe UI Emoji',
-    'Segoe UI Symbol',
-    'sans-serif',
-  ],
+  display: 'swap',
+  weight: '100 900',
 })
 
 export default function RootLayout({ children }: LayoutProps) {
